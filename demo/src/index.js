@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import PrimitiveOutput from '../../src/PrimitiveOutput';
 
+
 class Demo extends Component {
   render() {
     return <div>
@@ -10,5 +11,6 @@ class Demo extends Component {
     </div>
   }
 }
+
 
 render(<Demo/>, document.querySelector('#demo'));

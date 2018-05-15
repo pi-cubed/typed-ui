@@ -25,6 +25,26 @@
               
                 
                 <li><a
+                  href='#errorboundary'
+                  class="">
+                  ErrorBoundary
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#booleanoutput'
+                  class="">
+                  BooleanOutput
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#primitiveoutput'
                   class="">
                   PrimitiveOutput
@@ -48,6 +68,169 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='errorboundary'>
+      ErrorBoundary
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns an error boundary that logs unhandled execptions to Sentry.</p>
+
+
+  <div class='pre p1 fill-light mt0'>ErrorBoundary(WrappedComponent: Component): Component</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>WrappedComponent</span> <code class='quiet'>(Component)</code>
+	    The composed component.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>Component</code>:
+        An error boundary.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='booleanoutput'>
+      BooleanOutput
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns a checkbox displaying the value of the supplied boolean.</p>
+
+
+  <div class='pre p1 fill-light mt0'>BooleanOutput</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The component props.
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>props.data</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  </td>
+  <td class='break-word'><span>The boolean data.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>Component</code>:
+        A chechbox displaying the data.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='primitiveoutput'>
       PrimitiveOutput
     </h3>
@@ -59,7 +242,7 @@
   <p>Returns a div surrounding the supplied data.</p>
 
 
-  <div class='pre p1 fill-light mt0'>new PrimitiveOutput(props: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): Component</div>
+  <div class='pre p1 fill-light mt0'>PrimitiveOutput</div>
   
   
 

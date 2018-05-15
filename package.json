@@ -19,12 +19,16 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "fuzzer": "^0.2.1"
+    "babel-plugin-inline-dotenv": "^1.1.2",
+    "fuzzer": "^0.2.1",
+    "raven-js": "^3.25.1"
   },
   "peerDependencies": {
     "react": "16.x"
   },
   "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "nwb": "0.21.x",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

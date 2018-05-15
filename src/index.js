@@ -1,1 +1,1 @@
-export PrimitiveOutput from './PrimitiveOutput';
+export * from './PrimitiveOutput';
