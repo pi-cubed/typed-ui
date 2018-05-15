@@ -4,22 +4,30 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import PrimitiveOutput from '../src/PrimitiveOutput';
 import { mutate } from 'fuzzer';
 
+const fuzz = x => mutate.object({ x })().x;
+
 describe('PrimitiveOutput', () => {
   let node;
-  let data;
 
   beforeEach(() => {
     node = document.createElement('div');
-    data = mutate.string('abc123');
   });
 
   afterEach(() => {
     unmountComponentAtNode(node);
   });
 
-  it('displays data', () => 
+  it('displays string', () => {
+    const data = fuzz('abc123');
     render(<PrimitiveOutput data={data} />, node, () =>
       expect(node.innerHTML).toContain(data)
-    )
-  );
+    );
+  });
+
+  it('displays integer', () => {
+    const data = fuzz(123);
+    render(<PrimitiveOutput data={data} />, node, () =>
+      expect(node.innerHTML).toContain(data)
+    );
+  });
 });

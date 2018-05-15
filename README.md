@@ -1,6 +1,6 @@
 # typed-ui
 
-[![Travis][build-badge]][build]
+[![Build Status][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
