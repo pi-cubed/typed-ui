@@ -3,6 +3,7 @@
 [![Build Status][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
+[![Greenkeeper badge](https://badges.greenkeeper.io/pi-cubed/typed-ui.svg)](https://greenkeeper.io/)
 
 Generic UI for the GraphQL Schema Language.
 
