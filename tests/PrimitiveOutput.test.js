@@ -1,6 +1,6 @@
 import expect from 'expect';
 import React from 'react';
-import PrimitiveOutput from 'src/PrimitiveOutput';
+import { PrimitiveOutput, BooleanOutput, EnumOutput } from 'src/PrimitiveOutput';
 import { fuzz } from './utils';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -12,10 +12,10 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('PrimitiveOutput', () => {
 
   /**
-   * Return the mounted PrimitiveOutput component with supplied data.
+   * Return a shallow PrimitiveOutput component with the supplied data.
    * 
    * @param {*} data - The primitive data.
-   * @returns {ShallowWrapper} The mounted component.
+   * @returns {ShallowWrapper} The shallow component.
    */
   const wrap = data => shallow(<PrimitiveOutput data={data} />);
 
@@ -37,6 +37,47 @@ describe('PrimitiveOutput', () => {
 
   
   it('displays float', contains(1.23));
+
+});
+
+
+describe('EnumOutput', () => {
+
+  /**
+   * Return a shallow EnumOutput component with the supplied data.
+   * 
+   * @param {Object.<string, boolean>} data - The enum data.
+   * @returns {ShallowWrapper} The shallow component.
+   */
+  const wrap = data => shallow(<EnumOutput data={data} />);
+
+  
+  it('displays enum', () => {
+    const data = {
+      a: false,
+      b: true,
+      c: true
+    };
+    const comp = <select multiple disabled>
+      <option value="a" selected={false}>a</option>
+      <option value="b" selected={true}>b</option>
+      <option value="c" selected={true}>c</option>
+    </select>;
+    expect(wrap(data).contains(comp)).toEqual(true);
+  });
+
+});
+
+
+describe('BooleanOutput', () => {
+
+  /**
+   * Return a shallow BooleanOutput component with the supplied data.
+   * 
+   * @param {boolean} data - The boolean data.
+   * @returns {ShallowWrapper} The shallow component.
+   */
+  const wrap = data => shallow(<BooleanOutput data={data} />);
 
   
   it('displays boolean', () => {
