@@ -1,8 +1,8 @@
 import expect from 'expect';
 import React from 'react';
 import { StringInput } from 'src/PrimitiveInput';
-import { fuzz } from './utils';
-import Enzyme, { shallow } from 'enzyme';
+import { fuzz, getInput, setInput } from './utils';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 // setup Enzyme
@@ -10,27 +10,15 @@ Enzyme.configure({ adapter: new Adapter() });
 
 
 describe('StringInput', () => {
-
-  /**
-   * Return a shallow StringInput component with the given onChange handler.
-   * 
-   * @callback onChange - The handle for change events.
-   * @returns {ShallowWrapper} The shallow component.
-   */
-  const wrap = onChange => shallow(<StringInput onChange={onChange} />);
-
+  const wrap = onChange => mount(<StringInput onChange={onChange} />);
   
-  it('handles strings', done => {
+  it('handles string', done => {
     const data = fuzz('abc');
-    wrap( event => {
-      expect(event).toEqual(data);
-      done(null);
-    }).find('input').simulate('change', { target: { value: data } });;
+    const wrapper = wrap(event => expect(event).toEqual(data) && done(null));
+    setInput(data, wrapper);
   });
-
 
   it('is empty by default', () => {
-    expect(wrap(() => {}).find('input').props().value).toEqual('');
+    expect(getInput(wrap()).value).toEqual('');
   });
-
 });

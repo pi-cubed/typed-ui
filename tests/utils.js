@@ -15,3 +15,11 @@ import { mutate } from 'fuzzer';
  * fuzz({ a: 5, b: 'abc' }) // => { a: 13, b: 'tnc' }
  */
 export const fuzz = x => mutate.object({ x })().x;
+
+
+// TODO docs
+export const getInput = mw => mw.find('input').instance();
+
+
+// TODO docs
+export const setInput  = (d, w) => w.find('input').simulate('change', { target: { value: d } });

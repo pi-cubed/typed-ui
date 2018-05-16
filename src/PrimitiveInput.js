@@ -12,7 +12,7 @@ import React, { Component } from 'react';
  * <StringInput onChange={console.log} />
  */
 export const StringInput = ({ onChange }) =>
-	<input type='text' value='' onChange={e => onChange(e.target.value)} />;
+	<input type='text' defaultValue='' onChange={e => onChange(e.target.value)} />;
 
 /**
  * This callback handles StringInput change events.
