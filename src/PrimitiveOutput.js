@@ -5,13 +5,13 @@ import React, { Component } from 'react';
  * Returns a div surrounding the supplied data.
  *
  * @param {Object} props - The component props.
- * @param {*} props.data - The primitive data.
+ * @param {string} props.data - The string data.
  * @returns {Component} A div surrounding the data.
  *
- * @example <caption>Display any kind of data</caption>
- * <PrimitiveOutput data="abc" />
+ * @example <caption>Display the string "abc"</caption>
+ * <StringOutput data="abc" />
  */
-export const PrimitiveOutput = ({ data }) =>
+export const StringOutput = ({ data }) =>
 	<div>{data}</div>;
 
 
