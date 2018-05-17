@@ -27,7 +27,7 @@ export const StringOutput = ({ data }) =>
  * 	  a: false,
  *    b: true,
  *    c: true
- * });
+ * };
  * <EnumOutput data={data} />
  */
 export const EnumOutput = ({ data }) =>

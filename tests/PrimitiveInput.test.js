@@ -67,12 +67,12 @@ describe('BooleanInput', () => {
 
 
 // TODO docs
-const getSelections = data => Object.entries(data).filter(x => x[1]).map(x => x[0]);
+const filterByKey = data => Object.entries(data).filter(x => x[1]).map(x => x[0]);
 
 
 // TODO docs
 const setEnum = async (data) => setTarget('select', 'change', {
-    value: getSelections(data)
+    value: filterByKey(data)
   })(res => <EnumInput options={Object.keys(data)} onChange={res} />);
 
 
@@ -88,7 +88,7 @@ describe('EnumInput', () => {
       c: true
     };
     const value = await setEnum(data);
-    expect(value).toEqual(getSelections(data));
+    expect(value).toEqual(filterByKey(data));
   });
 
   it('handles multiple selections', async () => {
@@ -98,7 +98,7 @@ describe('EnumInput', () => {
       c: true
     };
     const value = await setEnum(data);
-    expect(value).toEqual(getSelections(data));
+    expect(value).toEqual(filterByKey(data));
   });
 
   it('is empty by default', () => {
