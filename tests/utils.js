@@ -29,16 +29,19 @@ export const getInput = mw => mw.find('input').instance();
 
 
 // TODO docs
-export const setInput = async (data, Input) =>
+export const setInput = Input => value => setTarget('input', 'change', { value })(makeInput(Input));
+
+
+// TODO docs
+export const makeInput = Input => res => <Input onChange={res} />;
+
+
+// TODO docs
+export const setTarget = (selector, event, target = true) => async input =>
 	await new Promise(res =>
-		mount(<Input onChange={res} />)
-			.find('input')
-			.simulate('change', {
-				target: {
-					value: data
-				}
-			})
-);
+		mount(input(res))
+			.find(selector)
+			.simulate(event, { target }));
 
 
 // TODO docs

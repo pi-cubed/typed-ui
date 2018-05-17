@@ -19,7 +19,7 @@ export const StringOutput = ({ data }) =>
  * Returns a readonly multiple select component displaying the supplied data.
  *
  * @param {Object} props - The component props.
- * @param {{Object.<string, boolean>}} data - The enum data.
+ * @param {Object.<string, boolean>} data - The enum data.
  * @returns {Component} A select component displaying the data.
  *
  * @example <caption>Display an enum selection</caption>
