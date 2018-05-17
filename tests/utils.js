@@ -1,4 +1,11 @@
 import { mutate } from 'fuzzer';
+import React from 'react';
+import expect from 'expect';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+// setup Enzyme
+Enzyme.configure({ adapter: new Adapter() });
 
 
 /**
@@ -22,4 +29,17 @@ export const getInput = mw => mw.find('input').instance();
 
 
 // TODO docs
-export const setInput  = (d, w) => w.find('input').simulate('change', { target: { value: d } });
+export const setInput = async (data, Input) =>
+	await new Promise(res =>
+		mount(<Input onChange={res} />)
+			.find('input')
+			.simulate('change', {
+				target: {
+					value: data
+				}
+			})
+);
+
+
+// TODO docs
+export const isEmpty = Input => () => expect(getInput(mount(<Input />)).value).toEqual('');

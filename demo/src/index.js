@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import PrimitiveOutput from '../../src/PrimitiveOutput';
+import { StringOutput } from '../../src/PrimitiveOutput';
+import { IntegerInput } from '../../src/PrimitiveInput';
 
 
 class Demo extends Component {
   render() {
     return <div>
       <h1>typed-ui Demo</h1>
-      <PrimitiveOutput data="just an example" />
+      <StringOutput data="just an example" />
+      <IntegerInput onChange={console.log} />
     </div>
   }
 }
