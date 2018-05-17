@@ -32,8 +32,8 @@ export const StringOutput = ({ data }) =>
  */
 export const EnumOutput = ({ data }) =>
 	<select multiple disabled>
-		{ Array.from(new Map(Object.entries(data)), ([key, value]) =>
-			<option value={key} key={key} selected={value}>{key}</option>) }
+		{ Array.from(new Map(Object.entries(data)), ([k, v]) =>
+			<option value={k} key={k} selected={v}>{k}</option>) }
 	</select>;
 
 
