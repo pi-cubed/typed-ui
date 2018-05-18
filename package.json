@@ -14,7 +14,7 @@
     "test:watch": "nwb test-react --server",
     "docs": "yarn documentation build src/** -f html -o docs",
     "docs:watch": "yarn documentation serve src/** -f html",
-    "dev": "run-p docs:watch test:watch demo",
+    "dev": "yarn && run-p docs:watch test:watch demo",
     "precommit": "pretty-quick --staged"
   },
   "dependencies": {
