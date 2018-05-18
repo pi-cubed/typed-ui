@@ -8,7 +8,7 @@
 [![npm Downloads][npm-downloads-badge]][npm]
 [![Github Stars][github-stars-badge]][github]
 
-Generic UI for the GraphQL Schema Language.
+> Generic UI for the GraphQL Schema Language.
 
 [build-badge]: https://img.shields.io/travis/pi-cubed/typed-ui/master.png?style=flat-square
 [build]: https://travis-ci.org/pi-cubed/typed-ui
@@ -23,3 +23,45 @@ Generic UI for the GraphQL Schema Language.
 [license-badge]: https://img.shields.io/github/license/pi-cubed/typed-ui.svg?style=flat-square
 [license]: https://github.com/pi-cubed/typed-ui/blob/master/LICENSE
 [npm-downloads-badge]: https://img.shields.io/npm/dt/typed-ui.svg?style=flat-square
+
+## Install
+
+```
+$ yarn add typed-ui
+```
+
+## Usage
+
+```js
+import React, { Component } from "react";
+import { render } from "react-dom";
+import { StringOutput } from "../../src/PrimitiveOutput";
+import { EnumInput } from "../../src/PrimitiveInput";
+
+class Demo extends Component {
+  render() {
+    return (
+      <div>
+        <h1>typed-ui Demo</h1>
+        <StringOutput data="This is a StringOutput. Below is a EnumInput." />
+        <EnumInput options={["a", "b", "c"]} onChange={console.log} />
+      </div>
+    );
+  }
+}
+
+render(<Demo />, document.querySelector("#demo"));
+```
+
+## API
+
+## [Docs](https://pi-cubed.gitbook.io/typed-ui)
+
+## Maintainers
+
+* [Dylan Richardson](https://github.com/drich14)
+* [Craig Valenti](https://github.com/CrazyCreje)
+
+## License
+
+MIT © [Pi Cubed](https://pi-cubed.github.io)
