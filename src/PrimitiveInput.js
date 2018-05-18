@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 // TODO docs
-const Input = ({ onChange, ...props }) =>
-	<input {...props} onChange={e => onChange(e.target.value)} />;
-
+const Input = ({ onChange, ...props }) => (
+  <input {...props} onChange={e => onChange(e.target.value)} />
+);
 
 /**
  * Returns a text field with change events handled by the given callback.
@@ -16,8 +15,9 @@ const Input = ({ onChange, ...props }) =>
  * @example <caption>Logging to console</caption>
  * <StringInput onChange={console.log} />
  */
-export const StringInput = ({ onChange }) =>
-	<Input type='text' defaultValue='' onChange={onChange} />;
+export const StringInput = ({ onChange }) => (
+  <Input type="text" defaultValue="" onChange={onChange} />
+);
 
 /**
  * This callback handles StringInput change events.
@@ -25,8 +25,7 @@ export const StringInput = ({ onChange }) =>
  * @param {string} value
  */
 
-
- /**
+/**
  * Returns an integer input component with change events handled by the given callback.
  *
  * @param {Object} props - The component props.
@@ -36,15 +35,15 @@ export const StringInput = ({ onChange }) =>
  * @example <caption>Logging to console</caption>
  * <IntegerInput onChange={console.log} />
  */
-export const IntegerInput = ({ onChange }) =>
-	<Input type='number' pattern='\d+' onChange={onChange} />;
+export const IntegerInput = ({ onChange }) => (
+  <Input type="number" pattern="\d+" onChange={onChange} />
+);
 
 /**
  * This callback handles IntegerInput change events.
  * @callback IntegerInput~onChange
  * @param {integer} value
  */
-
 
 /**
  * Returns a float input component with change events handled by the given callback.
@@ -56,8 +55,9 @@ export const IntegerInput = ({ onChange }) =>
  * @example <caption>Logging to console</caption>
  * <FloatInput onChange={console.log} />
  */
-export const FloatInput = ({ onChange }) =>
-	<Input type='number' step={0.01} onChange={onChange} />;
+export const FloatInput = ({ onChange }) => (
+  <Input type="number" step={0.01} onChange={onChange} />
+);
 
 /**
  * This callback handles FloatInput change events.
@@ -65,8 +65,7 @@ export const FloatInput = ({ onChange }) =>
  * @param {float} value
  */
 
-
- /**
+/**
  * Returns a boolean input component with change events handled by the given callback.
  *
  * @param {Object} props - The component props.
@@ -76,15 +75,15 @@ export const FloatInput = ({ onChange }) =>
  * @example <caption>Logging to console</caption>
  * <BooleanInput onChange={console.log} />
  */
-export const BooleanInput = ({ onChange }) =>
-	<input type='checkbox' onClick={e => onChange(e.target)} />
+export const BooleanInput = ({ onChange }) => (
+  <input type="checkbox" onClick={e => onChange(e.target)} />
+);
 
 /**
  * This callback handles BooleanInput change events.
  * @callback BooleanInput~onChange
  * @param {boolean} value
  */
-
 
 /**
  * Returns a select component with change events handled by the given callback.
@@ -97,10 +96,15 @@ export const BooleanInput = ({ onChange }) =>
  * @example <caption>Logging to console</caption>
  * <EnumInput options={['a', 'b', 'c']} onChange={console.log} />
  */
-export const EnumInput = ({ options, onChange }) =>
-	<select multiple defaultValue={[]} onChange={e => onChange(e.target.value)}>
-		{ options.map(o => <option value={o} key={o}>{o}</option>) }
-	</select>;
+export const EnumInput = ({ options, onChange }) => (
+  <select multiple defaultValue={[]} onChange={e => onChange(e.target.value)}>
+    {options.map(o => (
+      <option value={o} key={o}>
+        {o}
+      </option>
+    ))}
+  </select>
+);
 
 /**
  * This callback handles EnumInput change events.

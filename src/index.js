@@ -1,1 +1,1 @@
-export * from './PrimitiveOutput';
+export * from "./PrimitiveOutput";

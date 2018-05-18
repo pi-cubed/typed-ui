@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 /**
  * Returns a div surrounding the supplied data.
@@ -11,9 +10,7 @@ import React, { Component } from 'react';
  * @example <caption>Display the string "abc"</caption>
  * <StringOutput data="abc" />
  */
-export const StringOutput = ({ data }) =>
-	<div>{data}</div>;
-
+export const StringOutput = ({ data }) => <div>{data}</div>;
 
 /**
  * Returns a readonly multiple select component displaying the supplied data.
@@ -30,12 +27,15 @@ export const StringOutput = ({ data }) =>
  * };
  * <EnumOutput data={data} />
  */
-export const EnumOutput = ({ data }) =>
-	<select multiple disabled>
-		{ Array.from(new Map(Object.entries(data)), ([k, v]) =>
-			<option value={k} key={k} selected={v}>{k}</option>) }
-	</select>;
-
+export const EnumOutput = ({ data }) => (
+  <select multiple disabled>
+    {Array.from(new Map(Object.entries(data)), ([k, v]) => (
+      <option value={k} key={k} selected={v}>
+        {k}
+      </option>
+    ))}
+  </select>
+);
 
 /**
  * Returns a readonly checkbox displaying the value of the supplied boolean.
@@ -47,9 +47,9 @@ export const EnumOutput = ({ data }) =>
  * @example <caption>Display true</caption>
  * <BooleanOutput data={true} />
  */
-export const BooleanOutput = ({ data }) => 
-	<input readOnly type='checkbox' value={data} />;
-
+export const BooleanOutput = ({ data }) => (
+  <input readOnly type="checkbox" value={data} />
+);
 
 /**
  * Returns a readonly number input component displaying the integer.
@@ -61,9 +61,9 @@ export const BooleanOutput = ({ data }) =>
  * @example <caption>Display an integer</caption>
  * <IntegerOutput data={true} />
  */
-export const IntegerOutput = ({ data }) => 
-	<input readOnly value={data} type='number' />;
-
+export const IntegerOutput = ({ data }) => (
+  <input readOnly value={data} type="number" />
+);
 
 /**
  * Returns a readonly number input component displaying the float.
@@ -75,5 +75,6 @@ export const IntegerOutput = ({ data }) =>
  * @example <caption>Display an float</caption>
  * <FloatOutput data={true} />
  */
-export const FloatOutput = ({ data }) => 
-	<input readOnly value={data} type='number' />;
+export const FloatOutput = ({ data }) => (
+  <input readOnly value={data} type="number" />
+);
