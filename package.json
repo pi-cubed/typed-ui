@@ -19,6 +19,7 @@
     "docs:build": "run-s docs:prepare docs:api && gitbook build",
     "docs:serve": "yarn docs:build && gitbook serve",
     "docs:clean": "rimraf _book",
+    "docs:publish": "yarn gh-pages -d _book",
     "dev": "yarn && run-p docs:serve test:watch demo"
   },
   "dependencies": {
@@ -37,6 +38,7 @@
     "documentation": "^6.3.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "gh-pages": "^1.1.0",
     "gitbook-cli": "^2.3.2",
     "gitbook-plugin-highlight": "^2.0.3",
     "husky": "^0.14.3",
