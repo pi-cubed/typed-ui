@@ -35,7 +35,7 @@ $ yarn add typed-ui
 
 ## Docs
 
-https://pi-cubed.gitbook.io/typed-ui
+https://typed-ui.js.org
 
 ## Usage
 
