@@ -5,6 +5,6 @@ module.exports = {
     umd: false
   },
   babel: {
-    plugins: "inline-dotenv"
+    plugins: ["inline-dotenv"]
   }
 };
