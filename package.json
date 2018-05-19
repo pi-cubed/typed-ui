@@ -1,6 +1,6 @@
 {
   "name": "typed-ui",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Generic UI for the GraphQL Schema Language",
   "main": "src/index.js",
   "module": "src/index.js",
@@ -53,5 +53,18 @@
   "homepage": "https://github.com/pi-cubed/typed-ui",
   "license": "MIT",
   "repository": "https://github.com/pi-cubed/typed-ui",
-  "keywords": ["react-component", "graphql", "react", "ui"]
+  "keywords": ["react-component", "graphql", "react", "ui"],
+  "bugs": "https://github.com/pi-cubed/typed-ui/issues",
+  "contributors": [
+    {
+      "name": "Dylan Richardson",
+      "email": "dylanrichardson1996@gmail.com",
+      "url": "https://github.com/drich14"
+    },
+    {
+      "name": "Craig Valenti",
+      "email": "cvalenti312@gmail.com",
+      "url": "https://github.com/CrazyCreje"
+    }
+  ]
 }
