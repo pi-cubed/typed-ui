@@ -55,7 +55,7 @@ render(<Demo />, document.querySelector("#demo"));
 
 ## API
 
-[Docs](https://pi-cubed.gitbook.io/api.html)
+[Docs](api.md)
 
 ## Maintainers
 
