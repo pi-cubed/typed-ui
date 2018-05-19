@@ -3,6 +3,7 @@
 [![Build Status][build-badge]][build]
 [![npm Package][npm-version-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
+[![Known Vulnerabilities][synk-badge]][synk]
 [![License][license-badge]][license]
 [![Contributors][contributors-badge]][contributors]
 [![npm Downloads][npm-downloads-badge]][npm]
@@ -23,6 +24,8 @@
 [license-badge]: https://img.shields.io/github/license/pi-cubed/typed-ui.svg?style=flat-square
 [license]: https://github.com/pi-cubed/typed-ui/blob/master/LICENSE
 [npm-downloads-badge]: https://img.shields.io/npm/dt/typed-ui.svg?style=flat-square
+[synk-badge]: https://snyk.io/test/github/pi-cubed/typed-ui/badge.svg?style=flat-square
+[synk]: https://snyk.io/test/github/pi-cubed/typed-ui
 
 ## Install
 
