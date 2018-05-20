@@ -1,8 +1,8 @@
-import { mutate } from "fuzzer";
-import React from "react";
-import expect from "expect";
-import Enzyme, { mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mutate } from 'fuzzer';
+import React from 'react';
+import expect from 'expect';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
 // setup Enzyme
 Enzyme.configure({ adapter: new Adapter() });
@@ -23,11 +23,11 @@ Enzyme.configure({ adapter: new Adapter() });
 export const fuzz = x => mutate.object({ x })().x;
 
 // TODO docs
-export const getInput = mw => mw.find("input").instance();
+export const getInput = mw => mw.find('input').instance();
 
 // TODO docs
 export const setInput = Input => value =>
-  setTarget("input", "change", { value })(makeInput(Input));
+  setTarget('input', 'change', { value })(makeInput(Input));
 
 // TODO docs
 export const makeInput = Input => res => <Input onChange={res} />;
@@ -42,4 +42,4 @@ export const setTarget = (selector, event, target = true) => async input =>
 
 // TODO docs
 export const isEmpty = Input => () =>
-  expect(getInput(mount(<Input />)).value).toEqual("");
+  expect(getInput(mount(<Input />)).value).toEqual('');

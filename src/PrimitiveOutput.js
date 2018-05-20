@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 /**
  * Returns a div surrounding the supplied data.

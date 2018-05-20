@@ -1,12 +1,12 @@
-import expect from "expect";
-import React from "react";
+import expect from 'expect';
+import React from 'react';
 import {
   StringInput,
   IntegerInput,
   FloatInput,
   BooleanInput,
   EnumInput
-} from "src/PrimitiveInput";
+} from 'src/PrimitiveInput';
 import {
   fuzz,
   getInput,
@@ -14,8 +14,8 @@ import {
   isEmpty,
   setTarget,
   makeInput
-} from "./utils";
-import { mount } from "enzyme";
+} from './utils';
+import { mount } from 'enzyme';
 
 // TODO docs
 const testInput = (Input, d) => async () => {
@@ -24,49 +24,49 @@ const testInput = (Input, d) => async () => {
   expect(value).toEqual(data);
 };
 
-describe("StringInput", () => {
-  it("handles string", testInput(StringInput, "abc"));
+describe('StringInput', () => {
+  it('handles string', testInput(StringInput, 'abc'));
 
-  it("is empty by default", isEmpty(StringInput));
+  it('is empty by default', isEmpty(StringInput));
 });
 
-describe("IntegerInput", () => {
-  it("handles integer", testInput(IntegerInput, 5));
+describe('IntegerInput', () => {
+  it('handles integer', testInput(IntegerInput, 5));
 
-  it("handles negative integer", testInput(IntegerInput, -5));
+  it('handles negative integer', testInput(IntegerInput, -5));
 
   // TODO
-  xit("ignores non-numeric input", async () => {
+  xit('ignores non-numeric input', async () => {
     const data = fuzz(5.4);
     const value = await setInput(IntegerInput)(data);
-    expect(value).toEqual("");
+    expect(value).toEqual('');
   });
 
-  it("is empty by default", isEmpty(IntegerInput));
+  it('is empty by default', isEmpty(IntegerInput));
 });
 
-describe("FloatInput", () => {
-  it("handles float", testInput(FloatInput, 5.4));
+describe('FloatInput', () => {
+  it('handles float', testInput(FloatInput, 5.4));
 
-  it("handles negative float", testInput(FloatInput, -5.4));
+  it('handles negative float', testInput(FloatInput, -5.4));
 
   // TODO
-  xit("ignores non-decimal input", async () => {
-    const data = fuzz("a");
+  xit('ignores non-decimal input', async () => {
+    const data = fuzz('a');
     const value = await setInput(data)(FloatInput);
-    expect(value).toEqual("");
+    expect(value).toEqual('');
   });
 
-  it("is empty by default", isEmpty(FloatInput));
+  it('is empty by default', isEmpty(FloatInput));
 });
 
-describe("BooleanInput", () => {
-  it("handles boolean", async () => {
-    const value = await setTarget("input", "click")(makeInput(BooleanInput));
+describe('BooleanInput', () => {
+  it('handles boolean', async () => {
+    const value = await setTarget('input', 'click')(makeInput(BooleanInput));
     expect(value).toEqual(true);
   });
 
-  it("is false by default", () => {
+  it('is false by default', () => {
     expect(getInput(mount(<BooleanInput />)).checked).toEqual(false);
   });
 });
@@ -79,19 +79,19 @@ const filterByKey = data =>
 
 // TODO docs
 const setEnum = async data =>
-  setTarget("select", "change", {
+  setTarget('select', 'change', {
     value: filterByKey(data)
   })(res => <EnumInput options={Object.keys(data)} onChange={res} />);
 
 // TODO docs
 const getSelected = w =>
   w
-    .find("option")
+    .find('option')
     .map(e => e.instance().selected)
     .filter(Boolean);
 
-describe("EnumInput", () => {
-  it("handles selection", async () => {
+describe('EnumInput', () => {
+  it('handles selection', async () => {
     const data = {
       a: false,
       b: false,
@@ -101,7 +101,7 @@ describe("EnumInput", () => {
     expect(value).toEqual(filterByKey(data));
   });
 
-  it("handles multiple selections", async () => {
+  it('handles multiple selections', async () => {
     const data = {
       a: true,
       b: false,
@@ -111,8 +111,8 @@ describe("EnumInput", () => {
     expect(value).toEqual(filterByKey(data));
   });
 
-  it("is empty by default", () => {
-    const wrapper = mount(<EnumInput options={["a", "b", "c"]} />);
+  it('is empty by default', () => {
+    const wrapper = mount(<EnumInput options={['a', 'b', 'c']} />);
     expect(getSelected(wrapper)).toEqual([]);
   });
 });
