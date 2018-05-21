@@ -20,7 +20,10 @@
     "docs:serve": "yarn docs:build && gitbook serve",
     "docs:clean": "rimraf _book",
     "docs:publish": "yarn gh-pages -d _book",
-    "dev": "yarn && run-p docs:serve test:watch demo"
+    "dev": "yarn && run-p docs:serve test:watch demo",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release",
+    "cz": "git-cz"
   },
   "dependencies": {
     "fuzzer": "^0.2.1",
@@ -35,6 +38,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "cz-conventional-changelog": "^2.1.0",
     "documentation": "^6.3.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -49,7 +53,9 @@
     "prettier": "^1.12.1",
     "pretty-quick": "^1.4.1",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "semantic-release": "^15.4.2",
+    "travis-deploy-once": "^5.0.0"
   },
   "author": "Pi Cubed",
   "homepage": "https://github.com/pi-cubed/typed-ui",
@@ -68,5 +74,10 @@
       "email": "cvalenti312@gmail.com",
       "url": "https://github.com/CrazyCreje"
     }
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
