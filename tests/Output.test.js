@@ -8,6 +8,7 @@ import {
   GraphQLEnumType,
   GraphQLID,
   GraphQLList,
+  GraphQLObjectType,
   getNamedType,
   isListType
 } from 'graphql';
@@ -19,7 +20,7 @@ import {
   BooleanOutput,
   EnumOutput
 } from 'src/PrimitiveOutput';
-import { ListOutput } from 'src/HigherOrderOutput';
+import { ListOutput, ObjectOutput } from 'src/HigherOrderOutput';
 
 describe('getOutput', () => {
   it('is StringOutput for string', () => {
@@ -72,5 +73,19 @@ describe('getOutput', () => {
     ).toEqual(
       <ListOutput ofType={new GraphQLList(GraphQLString)} data={data} />
     );
+  });
+
+  it('is ObjectOutput for object with single integer field', () => {
+    const data = 5;
+    const name = 'name';
+    const fields = { data: { type: GraphQLInt } };
+    expect(
+      getOutput(
+        new GraphQLObjectType({
+          name,
+          fields
+        })
+      )(data)
+    ).toEqual(<ObjectOutput name={name} fields={fields} data={data} />);
   });
 });

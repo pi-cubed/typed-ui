@@ -19,7 +19,11 @@ export const getOutput = ofType => {
   }
   if (isObjectType(ofType)) {
     return data => (
-      <ObjectOutput name={ofType.name} fields={ofType.fields} data={data} />
+      <ObjectOutput
+        name={ofType.name}
+        fields={ofType._typeConfig.fields}
+        data={data}
+      />
     );
   }
   switch (getNamedType(ofType).name) {
