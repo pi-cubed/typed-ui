@@ -1,5 +1,5 @@
 import React from 'react';
-import { getNamedType, GraphQLInt, isListType } from 'graphql';
+import { getNamedType, isListType, isInputObjectType } from 'graphql';
 import {
   StringInput,
   IntegerInput,
@@ -7,7 +7,7 @@ import {
   BooleanInput,
   EnumInput
 } from './PrimitiveInput';
-import { ListInput } from './HigherOrderInput';
+import { ListInput, ObjectInput } from './HigherOrderInput';
 
 // TODO docs
 const input = Component => onChange => <Component onChange={onChange} />;
@@ -16,6 +16,15 @@ const input = Component => onChange => <Component onChange={onChange} />;
 export const getInput = ofType => {
   if (isListType(ofType)) {
     return onChange => <ListInput ofType={ofType.ofType} onChange={onChange} />;
+  }
+  if (isInputObjectType(ofType)) {
+    return onChange => (
+      <ObjectInput
+        name={ofType.name}
+        fields={ofType._typeConfig.fields}
+        onChange={onChange}
+      />
+    );
   }
   switch (getNamedType(ofType).name) {
     case 'Int':
@@ -28,7 +37,6 @@ export const getInput = ofType => {
       return input(EnumInput);
     case 'String':
     case 'ID':
-      return input(StringInput);
     default:
       return input(StringInput);
   }

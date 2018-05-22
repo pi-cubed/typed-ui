@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { GraphQLList, GraphQLString, GraphQLObjectType } from 'graphql';
-import { StringOutput, ObjectOutput } from '../../src';
+import { GraphQLInputObjectType, GraphQLString } from 'graphql';
+import { StringOutput, ObjectInput } from '../../src';
 
 class Demo extends Component {
   render() {
     return (
       <div>
         <h1>typed-ui Demo</h1>
-        <StringOutput data="This is a StringOutput. Below is an ObjectOutput." />
-        <ObjectOutput
-          name="This is the name of the object."
+        <StringOutput data="This is a StringOutput. Below is a nested ObjectInput." />
+        <ObjectInput
+          name="This is the name of the outer object."
           fields={{
-            hew: { type: GraphQLString }
+            top: {
+              type: new GraphQLInputObjectType({
+                name: 'This is the name of the inner object',
+                fields: { hew: { type: GraphQLString } }
+              })
+            }
           }}
-          data={{ hew: 'This is a string field called hew.' }}
+          onChange={console.log}
         />
       </div>
     );

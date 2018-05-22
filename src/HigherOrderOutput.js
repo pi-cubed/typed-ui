@@ -61,7 +61,7 @@ const objectOutput = (name, data, makeOutput) => (
  * @param {GraphQLObject<*>} props.data - The object data.
  * @returns {Component} A object surrounding the object items.
  *
- * @example <caption>Display a object of strings</caption>
+ * @example <caption>Display a object of one string</caption>
  * <ObjectOutput
  *     name="This is the name of the object."
  *     fields={{

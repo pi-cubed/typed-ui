@@ -3,6 +3,7 @@
 [![Build Status][build-badge]][build]
 [![npm Package][npm-version-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
+[![Known Vulnerabilities][synk-badge]][synk]
 [![License][license-badge]][license]
 [![Contributors][contributors-badge]][contributors]
 [![npm Downloads][npm-downloads-badge]][npm]
@@ -23,6 +24,8 @@
 [license-badge]: https://img.shields.io/github/license/pi-cubed/typed-ui.svg?style=flat-square
 [license]: https://github.com/pi-cubed/typed-ui/blob/master/LICENSE
 [npm-downloads-badge]: https://img.shields.io/npm/dt/typed-ui.svg?style=flat-square
+[synk-badge]: https://snyk.io/test/github/pi-cubed/typed-ui/badge.svg?style=flat-square
+[synk]: https://snyk.io/test/github/pi-cubed/typed-ui
 
 ## Install
 
@@ -33,24 +36,35 @@ $ yarn add typed-ui
 ## Usage
 
 ```js
-import React, { Component } from "react";
-import { render } from "react-dom";
-import { StringOutput } from "../../src/PrimitiveOutput";
-import { EnumInput } from "../../src/PrimitiveInput";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { GraphQLInputObjectType, GraphQLString } from 'graphql';
+import { StringOutput, ObjectInput } from '../../src';
 
 class Demo extends Component {
   render() {
     return (
       <div>
         <h1>typed-ui Demo</h1>
-        <StringOutput data="This is a StringOutput. Below is a EnumInput." />
-        <EnumInput options={["a", "b", "c"]} onChange={console.log} />
+        <StringOutput data="This is a StringOutput. Below is a nested ObjectInput." />
+        <ObjectInput
+          name="This is the name of the outer object."
+          fields={{
+            top: {
+              type: new GraphQLInputObjectType({
+                name: 'This is the name of the inner object',
+                fields: { hew: { type: GraphQLString } }
+              })
+            }
+          }}
+          onChange={console.log}
+        />
       </div>
     );
   }
 }
 
-render(<Demo />, document.querySelector("#demo"));
+render(<Demo />, document.querySelector('#demo'));
 ```
 
 ## API

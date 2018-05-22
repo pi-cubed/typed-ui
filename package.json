@@ -26,7 +26,8 @@
     "cz": "git-cz"
   },
   "dependencies": {
-    "graphql": "^0.13.2"
+    "graphql": "^0.13.2",
+    "lodash": "^4.17.10"
   },
   "peerDependencies": {
     "react": "16.x"

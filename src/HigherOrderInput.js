@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { getInput, defaultInput } from './Input';
 
 // TODO docs
@@ -47,8 +48,8 @@ export class ListInput extends Component {
     return (
       <div>
         <ul>
-          {this.state.list.map((_, k) => (
-            <li key={k}>{this.input(this.onChange(k))}</li>
+          {this.state.list.map((_, key) => (
+            <li key={key}>{this.input(this.onChange(key))}</li>
           ))}
         </ul>
         <input type="button" value="+" onClick={() => this.addItem()} />
@@ -61,4 +62,64 @@ export class ListInput extends Component {
  * This callback handles ListInput change events.
  * @callback ListInput~onChange
  * @param {Array.<*>} value
+ */
+
+/**
+ * Returns an object input component with change events handled by the given callback.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.name - The name of the input object.
+ * @param {Object} props.fields - The input object fields.
+ * @param {ObjectInput~onChange} props.onChange - The handler for change events.
+ * @returns {Component} An object input component.
+ *
+ * @example <caption>Logging to console</caption>
+ * <ObjectInput
+ *     name="This is the name of the input object."
+ *     fields={{
+ *         name: { type: GraphQLString }
+ *     }}
+ *     onChange={console.log}
+ * />;
+ */
+export class ObjectInput extends Component {
+  constructor(props) {
+    super(props);
+    this.input = _.mapValues(props.fields, (_, key) =>
+      getInput(props.fields[key].type)
+    );
+    this.state = {
+      fields: _.mapValues(props.fields, val => defaultInput(val.type))
+    };
+  }
+
+  onChange(key) {
+    return value => {
+      this.setState(
+        {
+          fields: _.assign({}, this.state.fields, { [key]: value })
+        },
+        () => this.props.onChange(this.state.fields)
+      );
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <div>{this.props.name}</div>
+        <ul>
+          {Object.keys(this.state.fields).map(key => (
+            <li key={key}>{this.input[key](this.onChange(key))}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+/**
+ * This callback handles ObjectInput change events.
+ * @callback ObjectInput~onChange
+ * @param {Object} value
  */

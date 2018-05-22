@@ -16,6 +16,9 @@
   * [EnumOutput](api.md#EnumOutput)
   * [EnumInput](api.md#EnumInput)
   * [ListOutput](api.md#ListOutput)
+  * [ListInput](api.md#ListInput)
+  * [ObjectOutput](api.md#ObjectOutput)
+  * [ObjectInput](api.md#ObjectInput)
 
 ---
 

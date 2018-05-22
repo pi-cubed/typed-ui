@@ -4,6 +4,9 @@
 <dt><a href="#ListInput">ListInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list input component with change events handled by the given callback.</p>
 </dd>
+<dt><a href="#ObjectInput">ObjectInput</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns an object input component with change events handled by the given callback.</p>
+</dd>
 <dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
 </dd>
@@ -75,6 +78,46 @@ This callback handles ListInput change events.
 | ----- | ----------------------------- |
 | value | <code>Array.&lt;\*&gt;</code> |
 
+<a name="ObjectInput"></a>
+
+## ObjectInput ⇒ <code>Component</code>
+
+Returns an object input component with change events handled by the given callback.
+
+**Kind**: global variable  
+**Returns**: <code>Component</code> - An object input component.
+
+| Param          | Type                                            | Description                    |
+| -------------- | ----------------------------------------------- | ------------------------------ |
+| props          | <code>Object</code>                             | The component props.           |
+| props.name     | <code>string</code>                             | The name of the input object.  |
+| props.fields   | <code>Object</code>                             | The input object fields.       |
+| props.onChange | [<code>onChange</code>](#ObjectInput..onChange) | The handler for change events. |
+
+**Example** _(Logging to console)_
+
+```js
+<ObjectInput
+  name="This is the name of the input object."
+  fields={{
+    name: { type: GraphQLString }
+  }}
+  onChange={console.log}
+/>
+```
+
+<a name="ObjectInput..onChange"></a>
+
+### ObjectInput~onChange : <code>function</code>
+
+This callback handles ObjectInput change events.
+
+**Kind**: inner typedef of [<code>ObjectInput</code>](#ObjectInput)
+
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>Object</code> |
+
 <a name="ListOutput"></a>
 
 ## ListOutput ⇒ <code>Component</code>
@@ -121,7 +164,7 @@ Returns a object surrounding the supplied object data.
 | props.fields | <code>Object</code>                   | The type of fields of the object. |
 | props.data   | <code>GraphQLObject.&lt;\*&gt;</code> | The object data.                  |
 
-**Example** _(Display a object of strings)_
+**Example** _(Display a object of one string)_
 
 ```js
 <ObjectOutput
