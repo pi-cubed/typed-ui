@@ -29,3 +29,46 @@ const listOutput = (makeOutput, data) => (
  */
 export const ListOutput = ({ ofType, data }) =>
   listOutput(getOutput(ofType), data);
+
+/**
+ * Return an object component around the given data using the component producer.
+ *
+ * @param {Function} makeOutput - produces components for object items.
+ * @param {Object} data - The object data.
+ * @param {string} data.name - The object name.
+ * @param {Object} data.fields - The object fields.
+ * @returns {Component} A component containing the object.
+ *
+ * @private
+ */
+const objectOutput = (name, data, makeOutput) => (
+  <div>
+    <div>{name}</div>
+    <ul>
+      {Object.entries(data).map(d => (
+        <li key={d[0]}>{makeOutput(d[0])(d[1])}</li>
+      ))}
+    </ul>
+  </div>
+);
+
+/**
+ * Returns a object surrounding the supplied object data.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.name - The name of the object.
+ * @param {Object} props.fields - The type of fields of the object.
+ * @param {GraphQLObject<*>} props.data - The object data.
+ * @returns {Component} A object surrounding the object items.
+ *
+ * @example <caption>Display a object of strings</caption>
+ * <ObjectOutput
+ *     name="This is the name of the object."
+ *     fields={{
+ *         hew: { type: GraphQLString }
+ *     }}
+ *     data={{ hew: 'This is a string field called hew.' }}
+ * />;
+ */
+export const ObjectOutput = ({ name, fields, data }) =>
+  objectOutput(name, data, key => getOutput(fields[key].type));

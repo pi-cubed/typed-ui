@@ -1,5 +1,5 @@
 import React from 'react';
-import { getNamedType, GraphQLInt, isListType } from 'graphql';
+import { getNamedType, GraphQLInt, isListType, isObjectType } from 'graphql';
 import {
   StringOutput,
   IntegerOutput,
@@ -7,7 +7,7 @@ import {
   BooleanOutput,
   EnumOutput
 } from './PrimitiveOutput';
-import { ListOutput } from './HigherOrderOutput';
+import { ListOutput, ObjectOutput } from './HigherOrderOutput';
 
 // TODO docs
 const output = Component => data => <Component data={data} />;
@@ -16,6 +16,11 @@ const output = Component => data => <Component data={data} />;
 export const getOutput = ofType => {
   if (isListType(ofType)) {
     return data => <ListOutput ofType={ofType.ofType} data={data} />;
+  }
+  if (isObjectType(ofType)) {
+    return data => (
+      <ObjectOutput name={ofType.name} fields={ofType.fields} data={data} />
+    );
   }
   switch (getNamedType(ofType).name) {
     case 'Int':
@@ -28,7 +33,6 @@ export const getOutput = ofType => {
       return output(EnumOutput);
     case 'String':
     case 'ID':
-      return output(StringOutput);
     default:
       return output(StringOutput);
   }

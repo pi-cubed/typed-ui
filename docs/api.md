@@ -7,6 +7,9 @@
 <dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
 </dd>
+<dt><a href="#ObjectOutput">ObjectOutput</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns a object surrounding the supplied object data.</p>
+</dd>
 <dt><a href="#StringInput">StringInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a text field with change events handled by the given callback.</p>
 </dd>
@@ -98,6 +101,36 @@ Returns a list surrounding the supplied list data.
 ```js
 <ListOutput
   ofType={new GraphQLList(GraphQLInt)}
+  data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
+/>
+```
+
+<a name="ObjectOutput"></a>
+
+## ObjectOutput ⇒ <code>Component</code>
+
+Returns a object surrounding the supplied object data.
+
+**Kind**: global variable  
+**Returns**: <code>Component</code> - A object surrounding the object items.
+
+| Param        | Type                                  | Description                   |
+| ------------ | ------------------------------------- | ----------------------------- |
+| props        | <code>Object</code>                   | The component props.          |
+| props.ofType | <code>GraphQLType</code>              | The type of the object items. |
+| props.data   | <code>GraphQLObject.&lt;\*&gt;</code> | The object data.              |
+
+**Example** _(Display a object of strings)_
+
+```js
+<ObjectOutput ofType={GraphQLString} data={['abc', 'd', 'xyz']} />
+```
+
+**Example** _(Display a object of object of integers)_
+
+```js
+<ObjectOutput
+  ofType={new GraphQLObject(GraphQLInt)}
   data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
 />
 ```
