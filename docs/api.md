@@ -114,24 +114,22 @@ Returns a object surrounding the supplied object data.
 **Kind**: global variable  
 **Returns**: <code>Component</code> - A object surrounding the object items.
 
-| Param        | Type                                  | Description                   |
-| ------------ | ------------------------------------- | ----------------------------- |
-| props        | <code>Object</code>                   | The component props.          |
-| props.ofType | <code>GraphQLType</code>              | The type of the object items. |
-| props.data   | <code>GraphQLObject.&lt;\*&gt;</code> | The object data.              |
+| Param        | Type                                  | Description                       |
+| ------------ | ------------------------------------- | --------------------------------- |
+| props        | <code>Object</code>                   | The component props.              |
+| props.name   | <code>string</code>                   | The name of the object.           |
+| props.fields | <code>Object</code>                   | The type of fields of the object. |
+| props.data   | <code>GraphQLObject.&lt;\*&gt;</code> | The object data.                  |
 
 **Example** _(Display a object of strings)_
 
 ```js
-<ObjectOutput ofType={GraphQLString} data={['abc', 'd', 'xyz']} />
-```
-
-**Example** _(Display a object of object of integers)_
-
-```js
 <ObjectOutput
-  ofType={new GraphQLObject(GraphQLInt)}
-  data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
+  name="This is the name of the object."
+  fields={{
+    hew: { type: GraphQLString }
+  }}
+  data={{ hew: 'This is a string field called hew.' }}
 />
 ```
 
