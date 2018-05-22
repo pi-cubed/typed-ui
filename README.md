@@ -40,24 +40,29 @@ https://typed-ui.js.org
 ## Usage
 
 ```js
-import React, { Component } from "react";
-import { render } from "react-dom";
-import { StringOutput } from "../../src/PrimitiveOutput";
-import { EnumInput } from "../../src/PrimitiveInput";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { GraphQLList, GraphQLInt } from 'graphql';
+import { StringOutput } from '../../src';
+import { EnumInput } from '../../src';
+import { ListOutput } from '../../src';
 
 class Demo extends Component {
   render() {
     return (
       <div>
         <h1>typed-ui Demo</h1>
-        <StringOutput data="This is a StringOutput. Below is a EnumInput." />
-        <EnumInput options={["a", "b", "c"]} onChange={console.log} />
+        <StringOutput data="This is a StringOutput. Below is a ListOutput of a list of integer lists." />
+        <ListOutput
+          ofType={new GraphQLList(GraphQLInt)}
+          data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
+        />
       </div>
     );
   }
 }
 
-render(<Demo />, document.querySelector("#demo"));
+render(<Demo />, document.querySelector('#demo'));
 ```
 
 ## API
@@ -65,6 +70,9 @@ render(<Demo />, document.querySelector("#demo"));
 ## Members
 
 <dl>
+<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns a list surrounding the supplied list data.</p>
+</dd>
 <dt><a href="#StringInput">StringInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a text field with change events handled by the given callback.</p>
 </dd>
@@ -96,6 +104,36 @@ render(<Demo />, document.querySelector("#demo"));
 <dd><p>Returns a readonly number input component displaying the float.</p>
 </dd>
 </dl>
+
+<a name="ListOutput"></a>
+
+## ListOutput ⇒ <code>Component</code>
+
+Returns a list surrounding the supplied list data.
+
+**Kind**: global variable  
+**Returns**: <code>Component</code> - A list surrounding the list items.
+
+| Param        | Type                                | Description                 |
+| ------------ | ----------------------------------- | --------------------------- |
+| props        | <code>Object</code>                 | The component props.        |
+| props.ofType | <code>GraphQLType</code>            | The type of the list items. |
+| props.data   | <code>GraphQLList.&lt;\*&gt;</code> | The list data.              |
+
+**Example** _(Display a list of strings)_
+
+```js
+<ListOutput ofType={GraphQLString} data={['abc', 'd', 'xyz']} />
+```
+
+**Example** _(Display a list of list of integers)_
+
+```js
+<ListOutput
+  ofType={new GraphQLList(GraphQLInt)}
+  data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
+/>
+```
 
 <a name="StringInput"></a>
 
@@ -243,7 +281,7 @@ Returns a select component with change events handled by the given callback.
 **Example** _(Logging to console)_
 
 ```js
-<EnumInput options={["a", "b", "c"]} onChange={console.log} />
+<EnumInput options={['a', 'b', 'c']} onChange={console.log} />
 ```
 
 <a name="EnumInput..onChange"></a>

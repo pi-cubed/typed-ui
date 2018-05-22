@@ -1,20 +1,21 @@
 # Table of content
 
-### typed-ui (0.1.1)
+### typed-ui (0.1.2)
 
 ---
 
 * [API Reference](api.md)
-  * [StringInput](api.md#StringInput)
-  * [IntegerInput](api.md#IntegerInput)
-  * [FloatInput](api.md#FloatInput)
-  * [BooleanInput](api.md#BooleanInput)
-  * [EnumInput](api.md#EnumInput)
   * [StringOutput](api.md#StringOutput)
-  * [EnumOutput](api.md#EnumOutput)
-  * [BooleanOutput](api.md#BooleanOutput)
+  * [StringInput](api.md#StringInput)
   * [IntegerOutput](api.md#IntegerOutput)
+  * [IntegerInput](api.md#IntegerInput)
   * [FloatOutput](api.md#FloatOutput)
+  * [FloatInput](api.md#FloatInput)
+  * [BooleanOutput](api.md#BooleanOutput)
+  * [BooleanInput](api.md#BooleanInput)
+  * [EnumOutput](api.md#EnumOutput)
+  * [EnumInput](api.md#EnumInput)
+  * [ListOutput](api.md#ListOutput)
 
 ---
 

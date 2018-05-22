@@ -1,0 +1,47 @@
+import expect from 'expect';
+import React from 'react';
+import { ListOutput } from 'src/HigherOrderOutput';
+import { fuzz, getInput } from './utils';
+import { mount } from 'enzyme';
+import { GraphQLString, GraphQLList, GraphQLInt } from 'graphql';
+
+describe('ListOutput', () => {
+  const wrap = (ofType, data) =>
+    mount(<ListOutput ofType={ofType} data={data} />);
+
+  it('displays list of strings', () => {
+    const data = ['abc', '1', 'xyz'];
+    expect(
+      wrap(GraphQLString, data)
+        .find('li')
+        .at(0)
+        .contains('abc')
+    ).toEqual(true);
+  });
+
+  it('displays list of list of integers', () => {
+    const data = [[0, 1, 2], [10, 11, 12], [50, 100]];
+    const wrapper = wrap(new GraphQLList(GraphQLInt), data);
+    expect(
+      wrapper.containsMatchingElement(
+        <input readOnly type="number" value={0} />
+      )
+    ).toEqual(true);
+  });
+
+  it('is ul', () =>
+    expect(
+      wrap(GraphQLInt, [])
+        .find('ul')
+        .exists()
+    ).toEqual(true));
+
+  it("of list of list is ul's within ul", () =>
+    expect(
+      wrap(new GraphQLList(GraphQLInt), [[], []])
+        .find('ul')
+        .at(0)
+        .find('ul')
+        .exists()
+    ).toEqual(true));
+});

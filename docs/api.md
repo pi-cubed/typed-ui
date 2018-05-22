@@ -1,6 +1,9 @@
 ## Members
 
 <dl>
+<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns a list surrounding the supplied list data.</p>
+</dd>
 <dt><a href="#StringInput">StringInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a text field with change events handled by the given callback.</p>
 </dd>
@@ -32,6 +35,36 @@
 <dd><p>Returns a readonly number input component displaying the float.</p>
 </dd>
 </dl>
+
+<a name="ListOutput"></a>
+
+## ListOutput ⇒ <code>Component</code>
+
+Returns a list surrounding the supplied list data.
+
+**Kind**: global variable  
+**Returns**: <code>Component</code> - A list surrounding the list items.
+
+| Param        | Type                                | Description                 |
+| ------------ | ----------------------------------- | --------------------------- |
+| props        | <code>Object</code>                 | The component props.        |
+| props.ofType | <code>GraphQLType</code>            | The type of the list items. |
+| props.data   | <code>GraphQLList.&lt;\*&gt;</code> | The list data.              |
+
+**Example** _(Display a list of strings)_
+
+```js
+<ListOutput ofType={GraphQLString} data={['abc', 'd', 'xyz']} />
+```
+
+**Example** _(Display a list of list of integers)_
+
+```js
+<ListOutput
+  ofType={new GraphQLList(GraphQLInt)}
+  data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
+/>
+```
 
 <a name="StringInput"></a>
 
@@ -179,7 +212,7 @@ Returns a select component with change events handled by the given callback.
 **Example** _(Logging to console)_
 
 ```js
-<EnumInput options={["a", "b", "c"]} onChange={console.log} />
+<EnumInput options={['a', 'b', 'c']} onChange={console.log} />
 ```
 
 <a name="EnumInput..onChange"></a>
