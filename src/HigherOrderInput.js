@@ -29,9 +29,18 @@ export class ListInput extends Component {
 
   onChange(index) {
     return value =>
-      this.setState({
-        list: updateArray(this.state.list, index, value)
-      });
+      this.setState(
+        {
+          list: updateArray(this.state.list, index, value)
+        },
+        () => this.props.onChange(this.state.list)
+      );
+  }
+
+  addItem() {
+    this.setState({
+      list: this.state.list.concat(this.default)
+    });
   }
 
   render() {
@@ -42,15 +51,7 @@ export class ListInput extends Component {
             <li key={k}>{this.input(this.onChange(k))}</li>
           ))}
         </ul>
-        <input
-          type="button"
-          value="+"
-          onClick={() =>
-            this.setState({
-              list: this.state.list.concat(this.default)
-            })
-          }
-        />
+        <input type="button" value="+" onClick={() => this.addItem()} />
       </div>
     );
   }

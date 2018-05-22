@@ -11,7 +11,10 @@ class Demo extends Component {
       <div>
         <h1>typed-ui Demo</h1>
         <StringOutput data="This is a StringOutput. Below is a ListOutput of a list of integer lists." />
-        <ListInput ofType={GraphQLString} onChange={console.log} />
+        <ListInput
+          ofType={new GraphQLList(GraphQLString)}
+          onChange={console.log}
+        />
       </div>
     );
   }
