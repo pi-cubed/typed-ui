@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { GraphQLList, GraphQLInt } from 'graphql';
+import { GraphQLList, GraphQLString } from 'graphql';
 import { StringOutput } from '../../src';
 import { EnumInput } from '../../src';
-import { ListOutput } from '../../src';
+import { ListInput } from '../../src';
 
 class Demo extends Component {
   render() {
@@ -11,10 +11,7 @@ class Demo extends Component {
       <div>
         <h1>typed-ui Demo</h1>
         <StringOutput data="This is a StringOutput. Below is a ListOutput of a list of integer lists." />
-        <ListOutput
-          ofType={new GraphQLList(GraphQLInt)}
-          data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
-        />
+        <ListInput ofType={GraphQLString} onChange={console.log} />
       </div>
     );
   }

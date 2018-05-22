@@ -1,6 +1,9 @@
 ## Members
 
 <dl>
+<dt><a href="#ListInput">ListInput</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns a list input component with change events handled by the given callback.</p>
+</dd>
 <dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
 </dd>
@@ -35,6 +38,39 @@
 <dd><p>Returns a readonly number input component displaying the float.</p>
 </dd>
 </dl>
+
+<a name="ListInput"></a>
+
+## ListInput ⇒ <code>Component</code>
+
+Returns a list input component with change events handled by the given callback.
+
+**Kind**: global variable  
+**Returns**: <code>Component</code> - A list input component.
+
+| Param          | Type                                          | Description                    |
+| -------------- | --------------------------------------------- | ------------------------------ |
+| props          | <code>Object</code>                           | The component props.           |
+| props.ofType   | <code>GraphQLType</code>                      | The type of items in the list. |
+| props.onChange | [<code>onChange</code>](#ListInput..onChange) | The handler for change events. |
+
+**Example** _(Logging to console)_
+
+```js
+<ListInput ofType={GraphQLString} onChange={console.log} />
+```
+
+<a name="ListInput..onChange"></a>
+
+### ListInput~onChange : <code>function</code>
+
+This callback handles ListInput change events.
+
+**Kind**: inner typedef of [<code>ListInput</code>](#ListInput)
+
+| Param | Type                          |
+| ----- | ----------------------------- |
+| value | <code>Array.&lt;\*&gt;</code> |
 
 <a name="ListOutput"></a>
 
