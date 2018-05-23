@@ -7,6 +7,8 @@
 [![License][license-badge]][license]
 [![Contributors][contributors-badge]][contributors]
 [![npm Downloads][npm-downloads-badge]][npm]
+[![Semantic Release][semantic-release-badge]][semantic-release]
+[![Commitizen Friendly][commitizen-badge]][commitizen]
 [![Github Stars][github-stars-badge]][github]
 
 > Generic UI for the GraphQL Schema Language.
@@ -26,6 +28,10 @@
 [npm-downloads-badge]: https://img.shields.io/npm/dt/typed-ui.svg?style=flat-square
 [synk-badge]: https://snyk.io/test/github/pi-cubed/typed-ui/badge.svg?style=flat-square
 [synk]: https://snyk.io/test/github/pi-cubed/typed-ui
+[semantic-release-badge]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square
+[semantic-release]: https://github.com/semantic-release/semantic-release
+[commitizen-badge]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square
+[commitizen]: http://commitizen.github.io/cz-cli/
 
 ## Install
 
