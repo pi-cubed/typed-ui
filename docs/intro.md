@@ -3,9 +3,13 @@
 [![Build Status][build-badge]][build]
 [![npm Package][npm-version-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
+[![BitHound][bithound-badge]][bithound]
+[![Known Vulnerabilities][synk-badge]][synk]
 [![License][license-badge]][license]
 [![Contributors][contributors-badge]][contributors]
 [![npm Downloads][npm-downloads-badge]][npm]
+[![Semantic Release][semantic-release-badge]][semantic-release]
+[![Commitizen Friendly][commitizen-badge]][commitizen]
 [![Github Stars][github-stars-badge]][github]
 
 > Generic UI for the GraphQL Schema Language.
@@ -23,6 +27,14 @@
 [license-badge]: https://img.shields.io/github/license/pi-cubed/typed-ui.svg?style=flat-square
 [license]: https://github.com/pi-cubed/typed-ui/blob/master/LICENSE
 [npm-downloads-badge]: https://img.shields.io/npm/dt/typed-ui.svg?style=flat-square
+[synk-badge]: https://snyk.io/test/github/pi-cubed/typed-ui/badge.svg?style=flat-square
+[synk]: https://snyk.io/test/github/pi-cubed/typed-ui
+[semantic-release-badge]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square
+[semantic-release]: https://github.com/semantic-release/semantic-release
+[commitizen-badge]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square
+[commitizen]: http://commitizen.github.io/cz-cli/
+[bithound-badge]: https://www.bithound.io/github/pi-cubed/typed-ui/badges/score.svg?style=flat-square
+[bithound]: https://www.bithound.io/github/pi-cubed/typed-ui
 
 ## Install
 
@@ -33,24 +45,35 @@ $ yarn add typed-ui
 ## Usage
 
 ```js
-import React, { Component } from "react";
-import { render } from "react-dom";
-import { StringOutput } from "../../src/PrimitiveOutput";
-import { EnumInput } from "../../src/PrimitiveInput";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { GraphQLInputObjectType, GraphQLString } from 'graphql';
+import { StringOutput, ObjectInput } from '../../src';
 
 class Demo extends Component {
   render() {
     return (
       <div>
         <h1>typed-ui Demo</h1>
-        <StringOutput data="This is a StringOutput. Below is a EnumInput." />
-        <EnumInput options={["a", "b", "c"]} onChange={console.log} />
+        <StringOutput data="This is a StringOutput. Below is a nested ObjectInput." />
+        <ObjectInput
+          name="This is the name of the outer object."
+          fields={{
+            top: {
+              type: new GraphQLInputObjectType({
+                name: 'This is the name of the inner object',
+                fields: { hew: { type: GraphQLString } }
+              })
+            }
+          }}
+          onChange={console.log}
+        />
       </div>
     );
   }
 }
 
-render(<Demo />, document.querySelector("#demo"));
+render(<Demo />, document.querySelector('#demo'));
 ```
 
 ## API
