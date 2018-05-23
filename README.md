@@ -3,6 +3,7 @@
 [![Build Status][build-badge]][build]
 [![npm Package][npm-version-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
+[![BitHound][bithound-badge]][bithound]
 [![Known Vulnerabilities][synk-badge]][synk]
 [![License][license-badge]][license]
 [![Contributors][contributors-badge]][contributors]
@@ -32,6 +33,8 @@
 [semantic-release]: https://github.com/semantic-release/semantic-release
 [commitizen-badge]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square
 [commitizen]: http://commitizen.github.io/cz-cli/
+[bithound-badge]: https://www.bithound.io/github/pi-cubed/typed-ui/badges/score.svg?style=flat-square
+[bithound]: https://www.bithound.io/github/pi-cubed/typed-ui
 
 ## Install
 
