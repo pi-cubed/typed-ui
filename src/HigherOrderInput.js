@@ -49,7 +49,7 @@ export class ListInput extends Component {
       <div>
         <ul>
           {this.state.list.map((_, key) => (
-            <li key={key}>{this.input(this.onChange(key))}</li>
+            <li key={key}>{this.input(this.state.list, this.onChange(key))}</li>
           ))}
         </ul>
         <input type="button" value="+" onClick={() => this.addItem()} />
@@ -96,9 +96,7 @@ export class ObjectInput extends Component {
   onChange(key) {
     return value => {
       this.setState(
-        {
-          fields: _.assign({}, this.state.fields, { [key]: value })
-        },
+        { fields: _.assign({}, this.state.fields, { [key]: value }) },
         () => this.props.onChange(this.state.fields)
       );
     };
@@ -110,7 +108,9 @@ export class ObjectInput extends Component {
         <div>{this.props.name}</div>
         <ul>
           {Object.keys(this.state.fields).map(key => (
-            <li key={key}>{this.input[key](this.onChange(key))}</li>
+            <li key={key}>
+              {this.input[key](this.state.fields, this.onChange(key))}
+            </li>
           ))}
         </ul>
       </div>

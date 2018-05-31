@@ -10,8 +10,8 @@ import { getOutput } from './Output';
  *
  * @private
  */
-const listOutput = (makeOutput, data) => (
-  <ul>{data.map((d, i) => <li key={i}>{makeOutput(d)}</li>)}</ul>
+const listOutput = (makeOutput, data, onChange) => (
+  <ul>{data.map((d, i) => <li key={i}>{makeOutput(d, onChange)}</li>)}</ul>
 );
 
 /**
@@ -27,8 +27,8 @@ const listOutput = (makeOutput, data) => (
  * @example <caption>Display a list of list of integers</caption>
  * <ListOutput ofType={new GraphQLList(GraphQLInt)} data={[[0, 1, 2], [10, 11, 12], [50, 100]]} />
  */
-export const ListOutput = ({ ofType, data }) =>
-  listOutput(getOutput(ofType), data);
+export const ListOutput = ({ ofType, data, onChange }) =>
+  listOutput(getOutput(ofType), data, onChange);
 
 /**
  * Return an object component around the given data using the component producer.
@@ -41,12 +41,16 @@ export const ListOutput = ({ ofType, data }) =>
  *
  * @private
  */
-const objectOutput = (name, data, makeOutput) => (
+const objectOutput = (makeOutput, { name, data, onChange }) => (
   <div>
     <div>{name}</div>
     <ul>
       {Object.entries(data).map(d => (
-        <li key={d[0]}>{makeOutput(d[0])(d[1])}</li>
+        <li key={d[0]}>
+          {makeOutput(d[0])(d[1], val =>
+            onChange(_.assign({}, data, { [d[0]]: val }))
+          )}
+        </li>
       ))}
     </ul>
   </div>
@@ -70,5 +74,5 @@ const objectOutput = (name, data, makeOutput) => (
  *     data={{ hew: 'This is a string field called hew.' }}
  * />;
  */
-export const ObjectOutput = ({ name, fields, data }) =>
-  objectOutput(name, data, key => getOutput(fields[key].type));
+export const ObjectOutput = ({ fields, ...props }) =>
+  objectOutput(key => getOutput(fields[key].type), props);

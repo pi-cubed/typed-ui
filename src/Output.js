@@ -1,5 +1,11 @@
-import React from 'react';
-import { getNamedType, GraphQLInt, isListType, isObjectType } from 'graphql';
+import React, { Component } from 'react';
+import {
+  getNamedType,
+  GraphQLInt,
+  isListType,
+  isObjectType,
+  isInputObjectType
+} from 'graphql';
 import {
   StringOutput,
   IntegerOutput,
@@ -8,20 +14,36 @@ import {
   EnumOutput
 } from './PrimitiveOutput';
 import { ListOutput, ObjectOutput } from './HigherOrderOutput';
+import { ObjectInput } from './HigherOrderInput';
 
 // TODO docs
-const output = Component => data => <Component data={data} />;
+const output = Component => (data, onChange) => (
+  <Component data={data} onChange={onChange} />
+);
 
 // TODO docs
 export const getOutput = ofType => {
   if (isListType(ofType)) {
-    return data => <ListOutput ofType={ofType.ofType} data={data} />;
+    return (data, onChange) => (
+      <ListOutput ofType={ofType.ofType} data={data} onChange={onChange} />
+    );
   }
   if (isObjectType(ofType)) {
-    return data => (
+    return (data, onChange) => (
       <ObjectOutput
         name={ofType.name}
         fields={ofType._typeConfig.fields}
+        data={data}
+        onChange={onChange}
+      />
+    );
+  }
+  if (isInputObjectType(ofType)) {
+    return (data, onChange) => (
+      <ObjectInput
+        name={ofType.name}
+        fields={ofType._typeConfig.fields}
+        onChange={onChange}
         data={data}
       />
     );
@@ -41,3 +63,21 @@ export const getOutput = ofType => {
       return output(StringOutput);
   }
 };
+
+// TODO docs
+export class Output extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data
+    };
+  }
+
+  onChange = data => {
+    this.setState({ data }, () => this.props.onChange(this.state.data));
+  };
+
+  render() {
+    return getOutput(this.props.type)(this.state.data, this.onChange);
+  }
+}
