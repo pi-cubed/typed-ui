@@ -62,3 +62,8 @@ typings/
 
 # GitBook generated files
 _book
+
+# nwb builds
+demo/dist
+es
+lib

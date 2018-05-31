@@ -1,10 +1,10 @@
 {
   "name": "typed-ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Generic UI for the GraphQL Schema Language",
-  "main": "src/index.js",
+  "browser": "src/index.js",
   "module": "src/index.js",
-  "files": ["css", "es", "lib", "umd"],
+  "files": ["css", "es", "lib", "umd", "src"],
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
@@ -19,7 +19,7 @@
     "docs:build": "run-s docs:prepare docs:api && gitbook build",
     "docs:serve": "yarn docs:build && gitbook serve",
     "docs:clean": "rimraf _book",
-    "docs:publish": "yarn gh-pages -d _book",
+    "docs:publish": "yarn docs:build && yarn gh-pages -d _book",
     "dev": "yarn && run-p docs:serve test:watch demo",
     "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release",
