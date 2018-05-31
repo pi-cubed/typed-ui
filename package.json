@@ -1,10 +1,10 @@
 {
   "name": "typed-ui",
-  "version": "0.2.4",
+  "version": "0.3.1",
   "description": "Generic UI for the GraphQL Schema Language",
   "browser": "lib/index.js",
   "module": "es/index.js",
-  "files": ["es", "lib"],
+  "files": ["es", "lib", "umd"],
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
