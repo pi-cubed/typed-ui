@@ -1,10 +1,10 @@
 {
   "name": "typed-ui",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Generic UI for the GraphQL Schema Language",
-  "browser": "src/index.js",
-  "module": "src/index.js",
-  "files": ["css", "es", "lib", "umd", "src"],
+  "browser": "lib/index.js",
+  "module": "es/index.js",
+  "files": ["es", "lib"],
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
@@ -23,7 +23,8 @@
     "dev": "yarn && run-p docs:serve test:watch demo",
     "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release",
-    "cz": "git-cz"
+    "cz": "git-cz",
+    "prepublish": "run-s clean build test clean build"
   },
   "dependencies": {
     "@babel/preset-env": "^7.0.0-beta.47",
