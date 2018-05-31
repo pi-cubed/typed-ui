@@ -12,7 +12,7 @@ import {
   getNamedType,
   isListType
 } from 'graphql';
-import { getInput } from 'src/Input';
+import { Input } from 'src/Input';
 import {
   StringInput,
   IntegerInput,
@@ -21,63 +21,56 @@ import {
   EnumInput
 } from 'src/PrimitiveInput';
 import { ListInput, ObjectInput } from 'src/HigherOrderInput';
+import { _ } from './utils';
+import { mount } from 'enzyme';
 
-describe('getInput', () => {
-  it('is StringInput for string', () => {
-    const onChange = () => {};
-    const data = 'abc';
-    expect(getInput(GraphQLString)(data, onChange)).toEqual(
-      <StringInput data={data} onChange={onChange} />
-    );
-  });
+const inputEquals = (data, type, Expected) => () =>
+  expect(mount(<Input type={type} data={data} onChange={() => {}} />)).toEqual(
+    mount(<Expected data={data} onChange={() => {}} />)
+  );
 
-  it('is IntegerInput for integer', () => {
-    const onChange = () => {};
-    const data = 5;
-    expect(getInput(GraphQLInt)(data, onChange)).toEqual(
-      <IntegerInput data={data} onChange={onChange} />
-    );
-  });
+describe('Input', () => {
+  it(
+    'is StringInput for string',
+    inputEquals('abc', GraphQLString, StringInput)
+  );
 
-  it('is FloatInput for float', () => {
-    const onChange = () => {};
-    const data = 5.4;
-    expect(getInput(GraphQLFloat)(data, onChange)).toEqual(
-      <FloatInput data={data} onChange={onChange} />
-    );
-  });
+  it('is IntegerInput for integer', inputEquals(5, GraphQLInt, IntegerInput));
 
-  it('is BooleanInput for boolean', () => {
-    const onChange = () => {};
-    const data = true;
-    expect(getInput(GraphQLBoolean)(data, onChange)).toEqual(
-      <BooleanInput data={data} onChange={onChange} />
-    );
-  });
+  it('is FloatInput for float', inputEquals(5.4, GraphQLFloat, FloatInput));
 
-  it('is EnumInput for Enum', () => {
-    const onChange = () => {};
-    const data = {
-      a: true
-    };
-    expect(getInput(GraphQLEnumType)(data, onChange)).toEqual(
-      <EnumInput data={data} onChange={onChange} />
-    );
-  });
+  it(
+    'is BooleanInput for boolean',
+    inputEquals(true, GraphQLBoolean, BooleanInput)
+  );
 
-  it('is StringInput for ID', () => {
-    const onChange = () => {};
-    const data = 'abc';
-    expect(getInput(GraphQLID)(data, onChange)).toEqual(
-      <StringInput data={data} onChange={onChange} />
-    );
-  });
+  it(
+    'is EnumInput for Enum',
+    inputEquals(
+      ['a'],
+      new GraphQLEnumType({
+        name: '',
+        values: { a: { value: 0 } }
+      }),
+      EnumInput
+    )
+  );
+
+  it('is StringInput for ID', inputEquals('abc', GraphQLID, StringInput));
 
   it('is ListInput for List of integers', () => {
     const onChange = () => {};
     const data = [0, 1, 2];
-    expect(getInput(new GraphQLList(GraphQLInt))(data, onChange)).toEqual(
-      <ListInput ofType={GraphQLInt} data={data} onChange={onChange} />
+    expect(
+      mount(
+        <Input
+          type={new GraphQLList(GraphQLInt)}
+          data={data}
+          onChange={onChange}
+        />
+      )
+    ).toEqual(
+      mount(<ListInput ofType={GraphQLInt} data={data} onChange={onChange} />)
     );
   });
 
@@ -85,13 +78,21 @@ describe('getInput', () => {
     const onChange = () => {};
     const data = [['a', 'b'], ['c']];
     expect(
-      getInput(new GraphQLList(new GraphQLList(GraphQLString)))(data, onChange)
+      mount(
+        <Input
+          type={new GraphQLList(new GraphQLList(GraphQLString))}
+          data={data}
+          onChange={onChange}
+        />
+      )
     ).toEqual(
-      <ListInput
-        ofType={new GraphQLList(GraphQLString)}
-        data={data}
-        onChange={onChange}
-      />
+      mount(
+        <ListInput
+          ofType={new GraphQLList(GraphQLString)}
+          data={data}
+          onChange={onChange}
+        />
+      )
     );
   });
 
@@ -101,19 +102,27 @@ describe('getInput', () => {
     const fields = { data: { type: GraphQLInt } };
     const data = { data: 5 };
     expect(
-      getInput(
-        new GraphQLInputObjectType({
-          name,
-          fields
-        })
-      )(data, onChange)
+      mount(
+        <Input
+          type={
+            new GraphQLInputObjectType({
+              name,
+              fields
+            })
+          }
+          data={data}
+          onChange={onChange}
+        />
+      )
     ).toEqual(
-      <ObjectInput
-        name={name}
-        fields={fields}
-        data={data}
-        onChange={onChange}
-      />
+      mount(
+        <ObjectInput
+          name={name}
+          fields={fields}
+          data={data}
+          onChange={onChange}
+        />
+      )
     );
   });
 });

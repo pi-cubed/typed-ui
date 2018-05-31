@@ -4,7 +4,7 @@ import {
   GraphQLInputObjectType,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList
+  GraphQLEnumType
 } from 'graphql';
 import { Output } from '../../src';
 
@@ -12,8 +12,17 @@ const Demo = () => (
   <div>
     <h1>typed-ui Demo</h1>
     <Output
-      type={GraphQLString}
-      data="This is a StringOutput. Below is a nested ObjectInput."
+      type={
+        new GraphQLEnumType({
+          name: 'This is an Enum',
+          values: {
+            a: { value: 0 },
+            b: { value: 1 },
+            c: { value: 2 }
+          }
+        })
+      }
+      data={{ a: true, b: false, c: true }}
       onChange={console.log}
     />
     <Output
@@ -21,7 +30,6 @@ const Demo = () => (
         new GraphQLObjectType({
           name: 'This is the name of the outer object.',
           fields: {
-            a: { type: new GraphQLList(GraphQLString) },
             top: {
               type: new GraphQLInputObjectType({
                 name: 'This is the name of the inner object',
@@ -31,7 +39,7 @@ const Demo = () => (
           }
         })
       }
-      data={{ a: ['b', 'c'], top: { hew: '' } }}
+      data={{ top: { hew: '' } }}
       onChange={console.log}
     />
   </div>

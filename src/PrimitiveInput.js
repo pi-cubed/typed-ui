@@ -89,16 +89,16 @@ export const BooleanInput = ({ onChange }) => (
  * Returns a select component with change events handled by the given callback.
  *
  * @param {Object} props - The component props.
- * @param {string[]} props.options = The enum options.
+ * @param {string[]} props.data = The enum options.
  * @param {EnumInput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A select component.
  *
  * @example <caption>Logging to console</caption>
- * <EnumInput options={['a', 'b', 'c']} onChange={console.log} />
+ * <EnumInput data={['a', 'b', 'c']} onChange={console.log} />
  */
-export const EnumInput = ({ options, onChange }) => (
+export const EnumInput = ({ data, onChange }) => (
   <select multiple defaultValue={[]} onChange={e => onChange(e.target.value)}>
-    {options.map(o => (
+    {data.map(o => (
       <option value={o} key={o}>
         {o}
       </option>

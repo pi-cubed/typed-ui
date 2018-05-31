@@ -81,7 +81,7 @@ const filterByKey = data =>
 const setEnum = async data =>
   setTarget('select', 'change', {
     value: filterByKey(data)
-  })(res => <EnumInput options={Object.keys(data)} onChange={res} />);
+  })(res => <EnumInput data={Object.keys(data)} onChange={res} />);
 
 // TODO docs
 const getSelected = w =>
@@ -112,7 +112,7 @@ describe('EnumInput', () => {
   });
 
   it('is empty by default', () => {
-    const wrapper = mount(<EnumInput options={['a', 'b', 'c']} />);
+    const wrapper = mount(<EnumInput data={['a', 'b', 'c']} />);
     expect(getSelected(wrapper)).toEqual([]);
   });
 });

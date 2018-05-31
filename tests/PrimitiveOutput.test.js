@@ -37,16 +37,10 @@ describe('EnumOutput', () => {
   it('displays enum', () =>
     expect(
       wrapper.contains(
-        <select multiple disabled>
-          <option value="a" selected={false}>
-            a
-          </option>
-          <option value="b" selected={true}>
-            b
-          </option>
-          <option value="c" selected={true}>
-            c
-          </option>
+        <select multiple disabled defaultValue={['b', 'c']}>
+          <option value="a">a</option>
+          <option value="b">b</option>
+          <option value="c">c</option>
         </select>
       )
     ).toEqual(true));

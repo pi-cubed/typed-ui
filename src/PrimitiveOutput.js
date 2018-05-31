@@ -21,16 +21,16 @@ export const StringOutput = ({ data }) => <div>{data}</div>;
  *
  * @example <caption>Display an enum selection</caption>
  * const data = {
- * 	  a: false,
+ *    a: false,
  *    b: true,
  *    c: true
  * };
  * <EnumOutput data={data} />
  */
 export const EnumOutput = ({ data }) => (
-  <select multiple disabled>
-    {Array.from(new Map(Object.entries(data)), ([k, v]) => (
-      <option value={k} key={k} selected={v}>
+  <select multiple disabled defaultValue={_.keys(_.pickBy(data, _.isTruthy))}>
+    {_.keys(data).map(k => (
+      <option value={k} key={k}>
         {k}
       </option>
     ))}

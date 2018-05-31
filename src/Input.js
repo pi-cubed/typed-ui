@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   getNamedType,
   isListType,
+  isEnumType,
   isInputObjectType,
   isObjectType
 } from 'graphql';
@@ -21,10 +22,32 @@ const input = Component => (data, onChange) => (
 );
 
 // TODO docs
+const componentNames = {
+  Int: IntegerInput,
+  Float: FloatInput,
+  Boolean: BooleanInput,
+  String: StringInput,
+  ID: StringInput
+};
+
+// TODO docs
 export const getInput = ofType => {
   if (isListType(ofType)) {
     return (data, onChange) => (
       <ListInput ofType={ofType.ofType} data={data} onChange={onChange} />
+    );
+  }
+  if (isEnumType(ofType)) {
+    return input(EnumInput);
+  }
+  if (isObjectType(ofType)) {
+    return (data, onChange) => (
+      <ObjectOutput
+        name={ofType.name}
+        fields={ofType._typeConfig.fields}
+        data={data}
+        onChange={onChange}
+      />
     );
   }
   if (isInputObjectType(ofType)) {
@@ -37,35 +60,27 @@ export const getInput = ofType => {
       />
     );
   }
-  if (isObjectType(ofType)) {
-    return (data, onChange) => (
-      <ObjectOutput
-        name={ofType.name}
-        fields={ofType._typeConfig.fields}
-        data={data}
-        onChange={onChange}
-      />
-    );
-  }
-  switch (getNamedType(ofType).name) {
-    case 'Int':
-      return input(IntegerInput);
-    case 'Float':
-      return input(FloatInput);
-    case 'Boolean':
-      return input(BooleanInput);
-    case 'GraphQLEnumType':
-      return input(EnumInput);
-    case 'String':
-    case 'ID':
-    default:
-      return input(StringInput);
-  }
+  return input(componentNames[getNamedType(ofType).name]);
 };
 
 // TODO docs and do
 export const defaultInput = ofType => null;
 
 // TODO docs
-export const Input = ({ type, data, onChange }) =>
-  getInput(type)(data, onChange);
+export class Input extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data
+    };
+    this.input = getInput(this.props.type);
+  }
+
+  onChange = data => {
+    this.setState({ data }, () => this.props.onChange(this.state.data));
+  };
+
+  render() {
+    return this.input(this.state.data, this.onChange);
+  }
+}

@@ -10,9 +10,6 @@
 <dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
 </dd>
-<dt><a href="#ObjectOutput">ObjectOutput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns a object surrounding the supplied object data.</p>
-</dd>
 <dt><a href="#StringInput">StringInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a text field with change events handled by the given callback.</p>
 </dd>
@@ -42,6 +39,14 @@
 </dd>
 <dt><a href="#FloatOutput">FloatOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a readonly number input component displaying the float.</p>
+</dd>
+</dl>
+
+## Functions
+
+<dl>
+<dt><a href="#ObjectOutput">ObjectOutput(props)</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns a object surrounding the supplied object data.</p>
 </dd>
 </dl>
 
@@ -145,34 +150,6 @@ Returns a list surrounding the supplied list data.
 <ListOutput
   ofType={new GraphQLList(GraphQLInt)}
   data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
-/>
-```
-
-<a name="ObjectOutput"></a>
-
-## ObjectOutput ⇒ <code>Component</code>
-
-Returns a object surrounding the supplied object data.
-
-**Kind**: global variable  
-**Returns**: <code>Component</code> - A object surrounding the object items.
-
-| Param        | Type                                  | Description                       |
-| ------------ | ------------------------------------- | --------------------------------- |
-| props        | <code>Object</code>                   | The component props.              |
-| props.name   | <code>string</code>                   | The name of the object.           |
-| props.fields | <code>Object</code>                   | The type of fields of the object. |
-| props.data   | <code>GraphQLObject.&lt;\*&gt;</code> | The object data.                  |
-
-**Example** _(Display a object of one string)_
-
-```js
-<ObjectOutput
-  name="This is the name of the object."
-  fields={{
-    hew: { type: GraphQLString }
-  }}
-  data={{ hew: 'This is a string field called hew.' }}
 />
 ```
 
@@ -316,13 +293,13 @@ Returns a select component with change events handled by the given callback.
 | Param          | Type                                          | Description                    |
 | -------------- | --------------------------------------------- | ------------------------------ |
 | props          | <code>Object</code>                           | The component props.           |
-| props.options  | <code>Array.&lt;string&gt;</code>             | = The enum options.            |
+| props.data     | <code>Array.&lt;string&gt;</code>             | = The enum options.            |
 | props.onChange | [<code>onChange</code>](#EnumInput..onChange) | The handler for change events. |
 
 **Example** _(Logging to console)_
 
 ```js
-<EnumInput options={['a', 'b', 'c']} onChange={console.log} />
+<EnumInput data={['a', 'b', 'c']} onChange={console.log} />
 ```
 
 <a name="EnumInput..onChange"></a>
@@ -440,4 +417,32 @@ Returns a readonly number input component displaying the float.
 
 ```js
 <FloatOutput data={true} />
+```
+
+<a name="ObjectOutput"></a>
+
+## ObjectOutput(props) ⇒ <code>Component</code>
+
+Returns a object surrounding the supplied object data.
+
+**Kind**: global function  
+**Returns**: <code>Component</code> - A object surrounding the object items.
+
+| Param        | Type                                  | Description                       |
+| ------------ | ------------------------------------- | --------------------------------- |
+| props        | <code>Object</code>                   | The component props.              |
+| props.name   | <code>string</code>                   | The name of the object.           |
+| props.fields | <code>Object</code>                   | The type of fields of the object. |
+| props.data   | <code>GraphQLObject.&lt;\*&gt;</code> | The object data.                  |
+
+**Example** _(Display a object of one string)_
+
+```js
+<ObjectOutput
+  name="This is the name of the object."
+  fields={{
+    hew: { type: GraphQLString }
+  }}
+  data={{ hew: 'This is a string field called hew.' }}
+/>
 ```

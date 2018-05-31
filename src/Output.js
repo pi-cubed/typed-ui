@@ -3,6 +3,7 @@ import {
   getNamedType,
   GraphQLInt,
   isListType,
+  isEnumType,
   isObjectType,
   isInputObjectType
 } from 'graphql';
@@ -22,11 +23,23 @@ const output = Component => (data, onChange) => (
 );
 
 // TODO docs
+const componentNames = {
+  Int: IntegerOutput,
+  Float: FloatOutput,
+  Boolean: BooleanOutput,
+  String: StringOutput,
+  ID: StringOutput
+};
+
+// TODO docs
 export const getOutput = ofType => {
   if (isListType(ofType)) {
     return (data, onChange) => (
       <ListOutput ofType={ofType.ofType} data={data} onChange={onChange} />
     );
+  }
+  if (isEnumType(ofType)) {
+    return output(EnumOutput);
   }
   if (isObjectType(ofType)) {
     return (data, onChange) => (
@@ -48,20 +61,7 @@ export const getOutput = ofType => {
       />
     );
   }
-  switch (getNamedType(ofType).name) {
-    case 'Int':
-      return output(IntegerOutput);
-    case 'Float':
-      return output(FloatOutput);
-    case 'Boolean':
-      return output(BooleanOutput);
-    case 'GraphQLEnumType':
-      return output(EnumOutput);
-    case 'String':
-    case 'ID':
-    default:
-      return output(StringOutput);
-  }
+  return output(componentNames[getNamedType(ofType).name]);
 };
 
 // TODO docs
@@ -71,6 +71,7 @@ export class Output extends Component {
     this.state = {
       data: props.data
     };
+    this.output = getOutput(this.props.type);
   }
 
   onChange = data => {
@@ -78,6 +79,6 @@ export class Output extends Component {
   };
 
   render() {
-    return getOutput(this.props.type)(this.state.data, this.onChange);
+    return this.output(this.state.data, this.onChange);
   }
 }
