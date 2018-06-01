@@ -338,6 +338,8 @@ Returns a div surrounding the supplied data.
 
 ## EnumOutput ⇒ <code>Component</code>
 
+<<<<<<< Updated upstream
+
 Returns a readonly component displaying the supplied data.
 
 **Kind**: global variable  
@@ -348,10 +350,33 @@ Returns a readonly component displaying the supplied data.
 | props | <code>Object</code> | The component props. |
 | data  | <code>string</code> | The enum data.       |
 
-**Example** _(Display an enum)_
+# **Example** _(Display an enum)_
+
+Returns a readonly multiple select component displaying the supplied data.
+
+**Kind**: global variable  
+**Returns**: <code>Component</code> - A select component displaying the data.
+
+| Param | Type                                        | Description          |
+| ----- | ------------------------------------------- | -------------------- |
+| props | <code>Object</code>                         | The component props. |
+| data  | <code>Object.&lt;string, boolean&gt;</code> | The enum data.       |
+
+> > > > > > > Stashed changes
+
+**Example** _(Display an enum selection)_
 
 ```js
+<<<<<<< Updated upstream
 <EnumOutput data="ABC" />
+=======
+const data = {
+   a: false,
+   b: true,
+   c: true
+};
+<EnumOutput data={data} />
+>>>>>>> Stashed changes
 ```
 
 <a name="BooleanOutput"></a>

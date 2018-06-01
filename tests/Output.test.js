@@ -7,6 +7,7 @@ import {
   GraphQLBoolean,
   GraphQLEnumType,
   GraphQLID,
+  GraphQLNonNull,
   GraphQLList,
   GraphQLObjectType,
   getNamedType,
@@ -33,6 +34,11 @@ describe('Output', () => {
   it(
     'is StringOutput for string',
     outputEquals('abc', GraphQLString, StringOutput)
+  );
+
+  it(
+    'is StringOutput for non-null string',
+    outputEquals('abc', GraphQLNonNull(GraphQLString), StringOutput)
   );
 
   it(

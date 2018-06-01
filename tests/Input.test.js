@@ -6,6 +6,7 @@ import {
   GraphQLFloat,
   GraphQLBoolean,
   GraphQLEnumType,
+  GraphQLNonNull,
   GraphQLID,
   GraphQLList,
   GraphQLInputObjectType,
@@ -33,6 +34,11 @@ describe('Input', () => {
   it(
     'is StringInput for string',
     inputEquals('abc', GraphQLString, StringInput)
+  );
+
+  it(
+    'is StringInput for non-null string',
+    inputEquals('abc', GraphQLNonNull(GraphQLString), StringInput)
   );
 
   it('is IntegerInput for integer', inputEquals(5, GraphQLInt, IntegerInput));

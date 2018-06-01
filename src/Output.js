@@ -5,7 +5,8 @@ import {
   isListType,
   isEnumType,
   isObjectType,
-  isInputObjectType
+  isInputObjectType,
+  isWrappingType
 } from 'graphql';
 import {
   StringOutput,
@@ -60,6 +61,9 @@ export const getOutput = ofType => {
         data={data}
       />
     );
+  }
+  if (isWrappingType(ofType)) {
+    return getOutput(ofType.ofType);
   }
   return output(componentNames[getNamedType(ofType).name]);
 };
