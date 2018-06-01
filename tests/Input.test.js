@@ -6,6 +6,7 @@ import {
   GraphQLFloat,
   GraphQLBoolean,
   GraphQLEnumType,
+  GraphQLNonNull,
   GraphQLID,
   GraphQLList,
   GraphQLInputObjectType,
@@ -24,15 +25,20 @@ import { ListInput, ObjectInput } from 'src/HigherOrderInput';
 import { _ } from './utils';
 import { mount } from 'enzyme';
 
-const inputEquals = (data, type, Expected) => () =>
+const inputEquals = (data, type, Expected, options) => () =>
   expect(mount(<Input type={type} data={data} onChange={() => {}} />)).toEqual(
-    mount(<Expected data={data} onChange={() => {}} />)
+    mount(<Expected data={data} onChange={() => {}} options={options} />)
   );
 
 describe('Input', () => {
   it(
     'is StringInput for string',
     inputEquals('abc', GraphQLString, StringInput)
+  );
+
+  it(
+    'is StringInput for non-null string',
+    inputEquals('abc', GraphQLNonNull(GraphQLString), StringInput)
   );
 
   it('is IntegerInput for integer', inputEquals(5, GraphQLInt, IntegerInput));
@@ -47,12 +53,13 @@ describe('Input', () => {
   it(
     'is EnumInput for Enum',
     inputEquals(
-      ['a'],
+      'a',
       new GraphQLEnumType({
-        name: '',
+        name: 'abc',
         values: { a: { value: 0 } }
       }),
-      EnumInput
+      EnumInput,
+      ['a']
     )
   );
 

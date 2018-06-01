@@ -13,29 +13,16 @@ import React, { Component } from 'react';
 export const StringOutput = ({ data }) => <div>{data}</div>;
 
 /**
- * Returns a readonly multiple select component displaying the supplied data.
+ * Returns a readonly component displaying the supplied data.
  *
  * @param {Object} props - The component props.
- * @param {Object.<string, boolean>} data - The enum data.
- * @returns {Component} A select component displaying the data.
+ * @param {string} data - The enum data.
+ * @returns {Component} A component displaying the enum.
  *
- * @example <caption>Display an enum selection</caption>
- * const data = {
- *    a: false,
- *    b: true,
- *    c: true
- * };
- * <EnumOutput data={data} />
+ * @example <caption>Display an enum</caption>
+ * <EnumOutput data='ABC' />
  */
-export const EnumOutput = ({ data }) => (
-  <select multiple disabled defaultValue={_.keys(_.pickBy(data, _.isTruthy))}>
-    {_.keys(data).map(k => (
-      <option value={k} key={k}>
-        {k}
-      </option>
-    ))}
-  </select>
-);
+export const EnumOutput = StringOutput;
 
 /**
  * Returns a readonly checkbox displaying the value of the supplied boolean.

@@ -4,7 +4,8 @@ import {
   isListType,
   isEnumType,
   isInputObjectType,
-  isObjectType
+  isObjectType,
+  isWrappingType
 } from 'graphql';
 import {
   StringInput,
@@ -38,7 +39,13 @@ export const getInput = ofType => {
     );
   }
   if (isEnumType(ofType)) {
-    return input(EnumInput);
+    return (data, onChange) => (
+      <EnumInput
+        options={_.keys(ofType._enumConfig.values)}
+        data={data}
+        onChange={onChange}
+      />
+    );
   }
   if (isObjectType(ofType)) {
     return (data, onChange) => (
@@ -59,6 +66,9 @@ export const getInput = ofType => {
         data={data}
       />
     );
+  }
+  if (isWrappingType(ofType)) {
+    return getInput(ofType.ofType);
   }
   return input(componentNames[getNamedType(ofType).name]);
 };

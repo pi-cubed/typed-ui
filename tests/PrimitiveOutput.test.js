@@ -24,28 +24,12 @@ describe('StringOutput', () => {
 });
 
 describe('EnumOutput', () => {
-  const wrapper = shallow(
-    <EnumOutput
-      data={{
-        a: false,
-        b: true,
-        c: true
-      }}
-    />
-  );
+  const data = 'abc';
+  const wrapper = shallow(<EnumOutput data={data} />);
 
-  it('displays enum', () =>
-    expect(
-      wrapper.contains(
-        <select multiple disabled defaultValue={['b', 'c']}>
-          <option value="a">a</option>
-          <option value="b">b</option>
-          <option value="c">c</option>
-        </select>
-      )
-    ).toEqual(true));
+  it('displays enum', () => expect(wrapper.contains(data)).toEqual(true));
 
-  it('is readonly', () => expect(wrapper.prop('disabled')).toEqual(true));
+  it('is div', () => expect(wrapper.is('div')).toEqual(true));
 });
 
 describe('BooleanOutput', () => {
