@@ -46,7 +46,7 @@ export const getOutput = ofType => {
     return (data, onChange) => (
       <ObjectOutput
         name={ofType.name}
-        fields={ofType._typeConfig.fields}
+        fields={ofType.getFields()}
         data={data}
         onChange={onChange}
       />
@@ -56,7 +56,7 @@ export const getOutput = ofType => {
     return (data, onChange) => (
       <ObjectInput
         name={ofType.name}
-        fields={ofType._typeConfig.fields}
+        fields={ofType.getFields()}
         onChange={onChange}
         data={data}
       />

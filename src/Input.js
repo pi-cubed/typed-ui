@@ -41,7 +41,7 @@ export const getInput = ofType => {
   if (isEnumType(ofType)) {
     return (data, onChange) => (
       <EnumInput
-        options={_.keys(ofType._enumConfig.values)}
+        options={_.keys(ofType.getValues())}
         data={data}
         onChange={onChange}
       />
@@ -51,7 +51,7 @@ export const getInput = ofType => {
     return (data, onChange) => (
       <ObjectOutput
         name={ofType.name}
-        fields={ofType._typeConfig.fields}
+        fields={ofType.getFields()}
         data={data}
         onChange={onChange}
       />
@@ -61,7 +61,7 @@ export const getInput = ofType => {
     return (data, onChange) => (
       <ObjectInput
         name={ofType.name}
-        fields={ofType._typeConfig.fields}
+        fields={ofType.getFields()}
         onChange={onChange}
         data={data}
       />
