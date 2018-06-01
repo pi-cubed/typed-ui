@@ -64,7 +64,6 @@ typings/
 _book
 
 # nwb builds
-demo/dist
 es
 lib
 umd
