@@ -293,13 +293,14 @@ Returns a select component with change events handled by the given callback.
 | Param          | Type                                          | Description                    |
 | -------------- | --------------------------------------------- | ------------------------------ |
 | props          | <code>Object</code>                           | The component props.           |
-| props.data     | <code>Array.&lt;string&gt;</code>             | = The enum options.            |
+| props.options  | <code>Array.&lt;string&gt;</code>             | = The enum options.            |
+| props.data     | <code>string</code>                           | = The enum data.               |
 | props.onChange | [<code>onChange</code>](#EnumInput..onChange) | The handler for change events. |
 
 **Example** _(Logging to console)_
 
 ```js
-<EnumInput data={['a', 'b', 'c']} onChange={console.log} />
+<EnumInput options={['a', 'b', 'c']} data="b" onChange={console.log} />
 ```
 
 <a name="EnumInput..onChange"></a>
@@ -310,9 +311,9 @@ This callback handles EnumInput change events.
 
 **Kind**: inner typedef of [<code>EnumInput</code>](#EnumInput)
 
-| Param | Type                                        |
-| ----- | ------------------------------------------- |
-| value | <code>Object.&lt;string, boolean&gt;</code> |
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>string</code> |
 
 <a name="StringOutput"></a>
 
@@ -338,8 +339,6 @@ Returns a div surrounding the supplied data.
 
 ## EnumOutput ⇒ <code>Component</code>
 
-<<<<<<< Updated upstream
-
 Returns a readonly component displaying the supplied data.
 
 **Kind**: global variable  
@@ -350,33 +349,10 @@ Returns a readonly component displaying the supplied data.
 | props | <code>Object</code> | The component props. |
 | data  | <code>string</code> | The enum data.       |
 
-# **Example** _(Display an enum)_
-
-Returns a readonly multiple select component displaying the supplied data.
-
-**Kind**: global variable  
-**Returns**: <code>Component</code> - A select component displaying the data.
-
-| Param | Type                                        | Description          |
-| ----- | ------------------------------------------- | -------------------- |
-| props | <code>Object</code>                         | The component props. |
-| data  | <code>Object.&lt;string, boolean&gt;</code> | The enum data.       |
-
-> > > > > > > Stashed changes
-
-**Example** _(Display an enum selection)_
+**Example** _(Display an enum)_
 
 ```js
-<<<<<<< Updated upstream
 <EnumOutput data="ABC" />
-=======
-const data = {
-   a: false,
-   b: true,
-   c: true
-};
-<EnumOutput data={data} />
->>>>>>> Stashed changes
 ```
 
 <a name="BooleanOutput"></a>
