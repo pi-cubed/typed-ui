@@ -72,16 +72,10 @@ describe('BooleanInput', () => {
 });
 
 // TODO docs
-const filterByKey = data =>
-  Object.entries(data)
-    .filter(x => x[1])
-    .map(x => x[0]);
-
-// TODO docs
 const setEnum = async data =>
   setTarget('select', 'change', {
-    value: filterByKey(data)
-  })(res => <EnumInput data={Object.keys(data)} onChange={res} />);
+    value: _.findKey(data)
+  })(res => <EnumInput options={_.keys(data)} data="" onChange={res} />);
 
 // TODO docs
 const getSelected = w =>
@@ -98,21 +92,6 @@ describe('EnumInput', () => {
       c: true
     };
     const value = await setEnum(data);
-    expect(value).toEqual(filterByKey(data));
-  });
-
-  it('handles multiple selections', async () => {
-    const data = {
-      a: true,
-      b: false,
-      c: true
-    };
-    const value = await setEnum(data);
-    expect(value).toEqual(filterByKey(data));
-  });
-
-  it('is empty by default', () => {
-    const wrapper = mount(<EnumInput data={['a', 'b', 'c']} />);
-    expect(getSelected(wrapper)).toEqual([]);
+    expect(value).toEqual(_.findKey(data));
   });
 });

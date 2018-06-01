@@ -1,6 +1,6 @@
 {
   "name": "typed-ui",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Generic UI for the GraphQL Schema Language",
   "browser": "lib/index.js",
   "module": "es/index.js",

@@ -29,7 +29,7 @@
 <dd><p>Returns a div surrounding the supplied data.</p>
 </dd>
 <dt><a href="#EnumOutput">EnumOutput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns a readonly multiple select component displaying the supplied data.</p>
+<dd><p>Returns a readonly component displaying the supplied data.</p>
 </dd>
 <dt><a href="#BooleanOutput">BooleanOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a readonly checkbox displaying the value of the supplied boolean.</p>
@@ -338,25 +338,20 @@ Returns a div surrounding the supplied data.
 
 ## EnumOutput ⇒ <code>Component</code>
 
-Returns a readonly multiple select component displaying the supplied data.
+Returns a readonly component displaying the supplied data.
 
 **Kind**: global variable  
-**Returns**: <code>Component</code> - A select component displaying the data.
+**Returns**: <code>Component</code> - A component displaying the enum.
 
-| Param | Type                                        | Description          |
-| ----- | ------------------------------------------- | -------------------- |
-| props | <code>Object</code>                         | The component props. |
-| data  | <code>Object.&lt;string, boolean&gt;</code> | The enum data.       |
+| Param | Type                | Description          |
+| ----- | ------------------- | -------------------- |
+| props | <code>Object</code> | The component props. |
+| data  | <code>string</code> | The enum data.       |
 
-**Example** _(Display an enum selection)_
+**Example** _(Display an enum)_
 
 ```js
-const data = {
-  a: false,
-  b: true,
-  c: true
-};
-<EnumOutput data={data} />;
+<EnumOutput data="ABC" />
 ```
 
 <a name="BooleanOutput"></a>

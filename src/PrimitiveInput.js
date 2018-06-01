@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // TODO docs
-const Input = ({ onChange, ...props }) => (
-  <input {...props} onChange={e => onChange(e.target.value)} />
+const Input = props => (
+  <input {...props} onChange={e => props.onChange(e.target.value)} />
 );
 
 /**
@@ -89,18 +89,22 @@ export const BooleanInput = ({ onChange }) => (
  * Returns a select component with change events handled by the given callback.
  *
  * @param {Object} props - The component props.
- * @param {string[]} props.data = The enum options.
+ * @param {string[]} props.options = The enum options.
+ * @param {string} props.data = The enum data.
  * @param {EnumInput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A select component.
  *
  * @example <caption>Logging to console</caption>
- * <EnumInput data={['a', 'b', 'c']} onChange={console.log} />
+ * <EnumInput options={['a', 'b', 'c']} data='b' onChange={console.log} />
  */
-export const EnumInput = ({ data, onChange }) => (
-  <select multiple defaultValue={[]} onChange={e => onChange(e.target.value)}>
-    {data.map(o => (
-      <option value={o} key={o}>
-        {o}
+export const EnumInput = ({ options, data, onChange }) => (
+  <select
+    defaultValue={data || options[0]}
+    onChange={e => onChange(e.target.value)}
+  >
+    {options.map(option => (
+      <option value={option} key={option}>
+        {option}
       </option>
     ))}
   </select>
@@ -109,5 +113,5 @@ export const EnumInput = ({ data, onChange }) => (
 /**
  * This callback handles EnumInput change events.
  * @callback EnumInput~onChange
- * @param {Object.<string, boolean>} value
+ * @param {string} value
  */
