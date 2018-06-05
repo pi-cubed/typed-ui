@@ -4,19 +4,25 @@ import { graphql, compose } from 'react-apollo';
 import { buildClientSchema } from 'graphql';
 import { Put } from './Put';
 
+/**
+ * TODO docs
+ */
 const withSchema = url =>
   graphql(
     gql`
-      query GetSchema($url: String!) {
-        getSchema(url: $url)
+      query Schema($url: String!) {
+        schema(url: $url)
       }
     `,
     {
-      name: 'getSchema',
+      name: 'schema',
       options: { variables: { url } }
     }
   );
 
+/**
+ * TODO docs
+ */
 const withQuery = (url, query) =>
   graphql(
     gql`
@@ -35,6 +41,9 @@ const withQuery = (url, query) =>
     }
   );
 
+/**
+ * TODO docs
+ */
 const withMutation = (url, mutation) =>
   graphql(
     gql`
@@ -53,6 +62,9 @@ const withMutation = (url, mutation) =>
     }
   );
 
+/**
+ * TODO docs
+ */
 const withMutationHandler = WC =>
   class Handler extends Component {
     state = { mutate: null };
@@ -79,34 +91,52 @@ const withMutationHandler = WC =>
     }
   };
 
+/**
+ * TODO docs
+ */
 const withAction = (url, action) =>
   isQuery(action)
     ? [withQuery(url, action)]
     : [withMutation(url, action), withMutationHandler];
 
+/**
+ * TODO docs
+ */
 const isQuery = action => gql(action).definitions[0].operation === 'query';
 
+/**
+ * TODO docs
+ */
 const getType = (action, schema) =>
   buildClientSchema(JSON.parse(schema))
     [isQuery(action) ? 'getQueryType' : 'getMutationType']()
     .getFields()[getName(action)].type;
 
+/**
+ * TODO docs
+ */
 const getName = action =>
   gql(action).definitions[0].selectionSet.selections[0].name.value;
 
-const withPluck = WC => ({ query, getSchema, ...props }) => (
+/**
+ * TODO docs
+ */
+const withPluck = WC => ({ query, schema, ...props }) => (
   <WC
     query={query && query.query}
-    schema={getSchema && getSchema.getSchema}
+    schema={schema && schema.schema}
     {...props}
   />
 );
 
+/**
+ * TODO docs
+ */
 const withLoadingHandler = WC => props => {
-  const { query, getSchema, loading = 'loading...' } = props;
+  const { query, schema, loading = 'loading...' } = props;
   return (
     <div>
-      {(query && query.loading) || (getSchema && getSchema.loading) ? (
+      {(query && query.loading) || (schema && schema.loading) ? (
         loading
       ) : (
         <WC loading={loading} {...props} />
@@ -115,14 +145,17 @@ const withLoadingHandler = WC => props => {
   );
 };
 
+/**
+ * TODO docs
+ */
 const withErrorHandler = WC => props => {
-  const { query, getSchema, onError = e => e } = props;
+  const { query, schema, onError = e => e } = props;
   return (
     <div>
       {query && query.error ? (
         onError(query.error.message)
-      ) : getSchema && getSchema.error ? (
-        onError(getSchema.error.message)
+      ) : schema && schema.error ? (
+        onError(schema.error.message)
       ) : (
         <WC onError={onError} {...props} />
       )}
@@ -130,6 +163,9 @@ const withErrorHandler = WC => props => {
   );
 };
 
+/**
+ * TODO docs
+ */
 const PutAction = action => ({ query, mutate, schema, ...props }) => {
   const name = getName(action);
   return (
@@ -140,6 +176,9 @@ const PutAction = action => ({ query, mutate, schema, ...props }) => {
   );
 };
 
+/**
+ * TODO docs
+ */
 const makeAction = ({ url, action }) =>
   compose(
     ...withAction(url, action),
@@ -149,9 +188,10 @@ const makeAction = ({ url, action }) =>
     withPluck
   )(PutAction(action));
 
-const Action = props => {
+/**
+ * TODO docs NOTE: must be passed an Apollo client
+ */
+export const Action = props => {
   const _ = makeAction(props);
   return <_ />;
 };
-
-export default Action;

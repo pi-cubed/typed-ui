@@ -10,6 +10,27 @@
 <dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
 </dd>
+<dt><a href="#componentNames">componentNames</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#getInput">getInput</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#defaultInput">defaultInput</a></dt>
+<dd><p>TODO docs and do</p>
+</dd>
+<dt><a href="#Input">Input</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#componentNames">componentNames</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#getOutput">getOutput</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#Output">Output</a></dt>
+<dd><p>TODO docs</p>
+</dd>
 <dt><a href="#StringInput">StringInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a text field with change events handled by the given callback.</p>
 </dd>
@@ -45,8 +66,65 @@
 ## Functions
 
 <dl>
+<dt><a href="#withSchema">withSchema()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withQuery">withQuery()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withMutation">withMutation()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withMutationHandler">withMutationHandler()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withAction">withAction()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#isQuery">isQuery()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#getType">getType()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#getName">getName()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withPluck">withPluck()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withLoadingHandler">withLoadingHandler()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withErrorHandler">withErrorHandler()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#PutAction">PutAction()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#makeAction">makeAction()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#Action">Action()</a></dt>
+<dd><p>TODO docs NOTE: must be passed an Apollo client</p>
+</dd>
+<dt><a href="#updateArray">updateArray()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
 <dt><a href="#ObjectOutput">ObjectOutput(props)</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a object surrounding the supplied object data.</p>
+</dd>
+<dt><a href="#input">input()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#output">output()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#Input">Input()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#Put">Put()</a></dt>
+<dd><p>TODO docs</p>
 </dd>
 </dl>
 
@@ -153,6 +231,55 @@ Returns a list surrounding the supplied list data.
 />
 ```
 
+<a name="componentNames"></a>
+
+## componentNames
+
+TODO docs
+
+**Kind**: global variable  
+<a name="getInput"></a>
+
+## getInput
+
+TODO docs
+
+**Kind**: global variable  
+<a name="defaultInput"></a>
+
+## defaultInput
+
+TODO docs and do
+
+**Kind**: global variable  
+<a name="Input"></a>
+
+## Input
+
+TODO docs
+
+**Kind**: global variable  
+<a name="componentNames"></a>
+
+## componentNames
+
+TODO docs
+
+**Kind**: global variable  
+<a name="getOutput"></a>
+
+## getOutput
+
+TODO docs
+
+**Kind**: global variable  
+<a name="Output"></a>
+
+## Output
+
+TODO docs
+
+**Kind**: global variable  
 <a name="StringInput"></a>
 
 ## StringInput ⇒ <code>Component</code>
@@ -415,6 +542,111 @@ Returns a readonly number input component displaying the float.
 <FloatOutput data={true} />
 ```
 
+<a name="withSchema"></a>
+
+## withSchema()
+
+TODO docs
+
+**Kind**: global function  
+<a name="withQuery"></a>
+
+## withQuery()
+
+TODO docs
+
+**Kind**: global function  
+<a name="withMutation"></a>
+
+## withMutation()
+
+TODO docs
+
+**Kind**: global function  
+<a name="withMutationHandler"></a>
+
+## withMutationHandler()
+
+TODO docs
+
+**Kind**: global function  
+<a name="withAction"></a>
+
+## withAction()
+
+TODO docs
+
+**Kind**: global function  
+<a name="isQuery"></a>
+
+## isQuery()
+
+TODO docs
+
+**Kind**: global function  
+<a name="getType"></a>
+
+## getType()
+
+TODO docs
+
+**Kind**: global function  
+<a name="getName"></a>
+
+## getName()
+
+TODO docs
+
+**Kind**: global function  
+<a name="withPluck"></a>
+
+## withPluck()
+
+TODO docs
+
+**Kind**: global function  
+<a name="withLoadingHandler"></a>
+
+## withLoadingHandler()
+
+TODO docs
+
+**Kind**: global function  
+<a name="withErrorHandler"></a>
+
+## withErrorHandler()
+
+TODO docs
+
+**Kind**: global function  
+<a name="PutAction"></a>
+
+## PutAction()
+
+TODO docs
+
+**Kind**: global function  
+<a name="makeAction"></a>
+
+## makeAction()
+
+TODO docs
+
+**Kind**: global function  
+<a name="Action"></a>
+
+## Action()
+
+TODO docs NOTE: must be passed an Apollo client
+
+**Kind**: global function  
+<a name="updateArray"></a>
+
+## updateArray()
+
+TODO docs
+
+**Kind**: global function  
 <a name="ObjectOutput"></a>
 
 ## ObjectOutput(props) ⇒ <code>Component</code>
@@ -442,3 +674,32 @@ Returns a object surrounding the supplied object data.
   data={{ hew: 'This is a string field called hew.' }}
 />
 ```
+
+<a name="input"></a>
+
+## input()
+
+TODO docs
+
+**Kind**: global function  
+<a name="output"></a>
+
+## output()
+
+TODO docs
+
+**Kind**: global function  
+<a name="Input"></a>
+
+## Input()
+
+TODO docs
+
+**Kind**: global function  
+<a name="Put"></a>
+
+## Put()
+
+TODO docs
+
+**Kind**: global function
