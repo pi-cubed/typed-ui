@@ -166,7 +166,7 @@ const withErrorHandler = WC => props => {
 /**
  * TODO docs
  */
-const PutAction = action => ({ query, mutate, schema, ...props }) => {
+const PutAction = ({ action, query, mutate, schema, ...props }) => {
   const name = getName(action);
   return (
     <Put
@@ -186,7 +186,7 @@ const makeAction = ({ url, action }) =>
     withLoadingHandler,
     withErrorHandler,
     withPluck
-  )(PutAction(action));
+  )(PutAction);
 
 /**
  * TODO docs NOTE: must be passed an Apollo client

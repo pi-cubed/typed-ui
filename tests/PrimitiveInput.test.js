@@ -17,7 +17,6 @@ import {
 } from './utils';
 import { mount } from 'enzyme';
 
-// TODO docs
 const testInput = (Input, d) => async () => {
   const data = fuzz(d);
   const value = await setInput(Input)(data);

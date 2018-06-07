@@ -13,7 +13,7 @@ const Demo = () => (
     <ApolloProvider client={new ApolloClient({ uri })}>
       <Action
         url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
-        action={'query Q { users { name } }'}
+        action={'query Q { users { id name } }'}
       />
     </ApolloProvider>
   </div>

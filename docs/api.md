@@ -1,6 +1,9 @@
 ## Members
 
 <dl>
+<dt><a href="#Action">Action</a></dt>
+<dd><p>TODO docs NOTE: must be passed an Apollo client</p>
+</dd>
 <dt><a href="#ListInput">ListInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list input component with change events handled by the given callback.</p>
 </dd>
@@ -105,9 +108,6 @@
 <dt><a href="#makeAction">makeAction()</a></dt>
 <dd><p>TODO docs</p>
 </dd>
-<dt><a href="#Action">Action()</a></dt>
-<dd><p>TODO docs NOTE: must be passed an Apollo client</p>
-</dd>
 <dt><a href="#updateArray">updateArray()</a></dt>
 <dd><p>TODO docs</p>
 </dd>
@@ -128,6 +128,13 @@
 </dd>
 </dl>
 
+<a name="Action"></a>
+
+## Action
+
+TODO docs NOTE: must be passed an Apollo client
+
+**Kind**: global variable  
 <a name="ListInput"></a>
 
 ## ListInput ⇒ <code>Component</code>
@@ -631,13 +638,6 @@ TODO docs
 ## makeAction()
 
 TODO docs
-
-**Kind**: global function  
-<a name="Action"></a>
-
-## Action()
-
-TODO docs NOTE: must be passed an Apollo client
 
 **Kind**: global function  
 <a name="updateArray"></a>

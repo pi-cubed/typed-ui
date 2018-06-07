@@ -40,6 +40,8 @@
     "@babel/core": "^7.0.0-beta.47",
     "@babel/preset-env": "^7.0.0-beta.49",
     "apollo-boost": "^0.1.7",
+    "apollo-cache-inmemory": "^1.2.2",
+    "apollo-link-http": "^1.5.4",
     "babel-core": "^6.26.3",
     "babel-plugin-inline-dotenv": "^1.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -62,7 +64,8 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "semantic-release": "^15.4.2",
-    "travis-deploy-once": "^5.0.0"
+    "travis-deploy-once": "^5.0.0",
+    "unfetch": "^3.0.0"
   },
   "author": "Pi Cubed",
   "homepage": "https://github.com/pi-cubed/typed-ui",

@@ -3,14 +3,14 @@ import { isInputObjectType, isWrappingType } from 'graphql';
 import { Input } from './Input';
 import { Output } from './Output';
 
+const isInput = type =>
+  isInputObjectType(type) ||
+  (isWrappingType(type) && isInputObjectType(type.ofType));
+
 /**
  * TODO docs
  */
 export const Put = ({ type, onChange = () => {}, ...props }) => {
-  const Component =
-    isInputObjectType(type) ||
-    (isWrappingType(type) && isInputObjectType(type.ofType))
-      ? Input
-      : Output;
-  return <Component {...props} type={type} onChange={onChange} />;
+  const Component = isInput(type) ? Input : Output;
+  return <Component type={type} onChange={onChange} {...props} />;
 };
