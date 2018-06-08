@@ -10,17 +10,21 @@ const updateArray = (array, index, value) => {
 };
 
 /**
- * Returns a list input component with change events handled by the given callback.
- *
- * @param {Object} props - The component props.
- * @param {GraphQLType} props.ofType - The type of items in the list.
- * @param {ListInput~onChange} props.onChange - The handler for change events.
- * @returns {Component} A list input component.
- *
- * @example <caption>Logging to console</caption>
- * <ListInput ofType={GraphQLString} onChange={console.log} />
+ * Component for outputting GraphQLList data.
+ * @extends Component
  */
 export class ListInput extends Component {
+  /**
+   * Returns a list input component with change events handled by the given callback.
+   *
+   * @param {Object} props - The component props.
+   * @param {GraphQLType} props.ofType - The type of items in the list.
+   * @param {ListInput~onChange} props.onChange - The handler for change events.
+   * @returns {Component} A list input component.
+   *
+   * @example <caption>Logging to console</caption>
+   * <ListInput ofType={GraphQLString} onChange={console.log} />
+   */
   constructor(props) {
     super(props);
     this.default = defaultInput(props.ofType);
@@ -29,6 +33,11 @@ export class ListInput extends Component {
       list: [this.default]
     };
   }
+  /**
+   * This callback handles ListInput change events.
+   * @callback ListInput~onChange
+   * @param {Array.<*>} value
+   */
 
   /**
    * TODO docs
@@ -67,30 +76,28 @@ export class ListInput extends Component {
 }
 
 /**
- * This callback handles ListInput change events.
- * @callback ListInput~onChange
- * @param {Array.<*>} value
- */
-
-/**
- * Returns an object input component with change events handled by the given callback.
- *
- * @param {Object} props - The component props.
- * @param {string} props.name - The name of the input object.
- * @param {Object} props.fields - The input object fields.
- * @param {ObjectInput~onChange} props.onChange - The handler for change events.
- * @returns {Component} An object input component.
- *
- * @example <caption>Logging to console</caption>
- * <ObjectInput
- *     name="This is the name of the input object."
- *     fields={{
- *         name: { type: GraphQLString }
- *     }}
- *     onChange={console.log}
- * />;
+ * Component for outputting GraphQLType data.
+ * @extends Component
  */
 export class ObjectInput extends Component {
+  /**
+   * Returns an object input component with change events handled by the given callback.
+   *
+   * @param {Object} props - The component props.
+   * @param {string} props.name - The name of the input object.
+   * @param {Object} props.fields - The input object fields.
+   * @param {ObjectInput~onChange} props.onChange - The handler for change events.
+   * @returns {Component} An object input component.
+   *
+   * @example <caption>Logging to console</caption>
+   * <ObjectInput
+   *     name="This is the name of the input object."
+   *     fields={{
+   *         name: { type: GraphQLString }
+   *     }}
+   *     onChange={console.log}
+   * />;
+   */
   constructor(props) {
     super(props);
     this.input = _.mapValues(props.fields, (_, key) =>
@@ -100,6 +107,11 @@ export class ObjectInput extends Component {
       fields: _.mapValues(props.fields, val => defaultInput(val.type))
     };
   }
+  /**
+   * This callback handles ObjectInput change events.
+   * @callback ObjectInput~onChange
+   * @param {Object} value
+   */
 
   /**
    * TODO docs
@@ -128,9 +140,3 @@ export class ObjectInput extends Component {
     );
   }
 }
-
-/**
- * This callback handles ObjectInput change events.
- * @callback ObjectInput~onChange
- * @param {Object} value
- */

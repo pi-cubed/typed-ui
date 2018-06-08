@@ -74,9 +74,38 @@ export const getOutput = ofType => {
 };
 
 /**
- * TODO docs
+ * Component for outputting GraphQLInputType data.
+ * @extends Component
  */
 export class Output extends Component {
+  /**
+   * Returns a component displaying the data with the given type.
+   *   Passes changes in the data to the given handler.
+   *
+   * @param {Object} props - The component props.
+   * @param {GraphQLType} props.type - The type of the data.
+   * @param {Object} [props.data] - The initial data.
+   * @param {Output~onChange} [props.onChange] - The handler for changes in the data.
+   * @returns {Component} A component displaying the data.
+   *
+   * @example <caption>Displaying a string</caption>
+   * <Output type={GraphQLString} data="abc" />
+   * @example <caption>Displaying an object</caption>
+   * <Output
+   *  type={
+   *    new GraphQLObjectType({ name: 'abc', fields: { w: { type: GraphQLString } } })
+   *  }
+   *  data={{ w: 'xyz' }}
+   * />
+   * @example <caption>Log object input to console</caption>
+   * <Output
+   *  type={
+   *    new GraphQLInputObjectType({ name: 'abc', fields: { w: { type: GraphQLString } } })
+   *  }
+   *  data={{ w: '' }}
+   *  onChange={console.log}
+   * />
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -84,6 +113,11 @@ export class Output extends Component {
     };
     this.output = getOutput(this.props.type);
   }
+  /**
+   * This callback handles Output change events.
+   * @callback Output~onChange
+   * @param {Object} value
+   */
 
   /**
    * TODO docs

@@ -22,8 +22,9 @@
 <dt><a href="#defaultInput">defaultInput</a></dt>
 <dd><p>TODO docs and do</p>
 </dd>
-<dt><a href="#Input">Input</a></dt>
-<dd><p>TODO docs</p>
+<dt><a href="#Input">Input</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns a component displaying the data with the given type.
+  Passes changes in the data to the given handler.</p>
 </dd>
 <dt><a href="#componentNames">componentNames</a></dt>
 <dd><p>TODO docs</p>
@@ -31,8 +32,9 @@
 <dt><a href="#getOutput">getOutput</a></dt>
 <dd><p>TODO docs</p>
 </dd>
-<dt><a href="#Output">Output</a></dt>
-<dd><p>TODO docs</p>
+<dt><a href="#Output">Output</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns a component displaying the data with the given type.
+  Passes changes in the data to the given handler.</p>
 </dd>
 <dt><a href="#StringInput">StringInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a text field with change events handled by the given callback.</p>
@@ -261,11 +263,68 @@ TODO docs and do
 **Kind**: global variable  
 <a name="Input"></a>
 
-## Input
+## Input ⇒ <code>Component</code>
 
-TODO docs
+Returns a component displaying the data with the given type.
+Passes changes in the data to the given handler.
 
 **Kind**: global variable  
+**Returns**: <code>Component</code> - A component displaying the data.
+
+| Param            | Type                                      | Description                          |
+| ---------------- | ----------------------------------------- | ------------------------------------ |
+| props            | <code>Object</code>                       | The component props.                 |
+| props.type       | <code>GraphQLType</code>                  | The type of the data.                |
+| [props.data]     | <code>Object</code>                       | The initial data.                    |
+| [props.onChange] | [<code>onChange</code>](#Input..onChange) | The handler for changes in the data. |
+
+**Example** _(Displaying a string)_
+
+```js
+<Input type={GraphQLString} data="abc" />
+```
+
+**Example** _(Displaying an object)_
+
+```js
+<Input
+  type={
+    new GraphQLObjectType({
+      name: 'abc',
+      fields: { w: { type: GraphQLString } }
+    })
+  }
+  data={{ w: 'xyz' }}
+/>
+```
+
+**Example** _(Log object input to console)_
+
+```js
+<Input
+  type={
+    new GraphQLInputObjectType({
+      name: 'abc',
+      fields: { w: { type: GraphQLString } }
+    })
+  }
+  data={{ w: '' }}
+  onChange={console.log}
+/>
+```
+
+<a name="Input..onChange"></a>
+
+### Input~onChange : <code>function</code>
+
+This callback handles Input change events.
+
+**Kind**: inner typedef of [<code>Input</code>](#Input)
+
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>Object</code> |
+
 <a name="componentNames"></a>
 
 ## componentNames
@@ -282,11 +341,68 @@ TODO docs
 **Kind**: global variable  
 <a name="Output"></a>
 
-## Output
+## Output ⇒ <code>Component</code>
 
-TODO docs
+Returns a component displaying the data with the given type.
+Passes changes in the data to the given handler.
 
 **Kind**: global variable  
+**Returns**: <code>Component</code> - A component displaying the data.
+
+| Param            | Type                                       | Description                          |
+| ---------------- | ------------------------------------------ | ------------------------------------ |
+| props            | <code>Object</code>                        | The component props.                 |
+| props.type       | <code>GraphQLType</code>                   | The type of the data.                |
+| [props.data]     | <code>Object</code>                        | The initial data.                    |
+| [props.onChange] | [<code>onChange</code>](#Output..onChange) | The handler for changes in the data. |
+
+**Example** _(Displaying a string)_
+
+```js
+<Output type={GraphQLString} data="abc" />
+```
+
+**Example** _(Displaying an object)_
+
+```js
+<Output
+  type={
+    new GraphQLObjectType({
+      name: 'abc',
+      fields: { w: { type: GraphQLString } }
+    })
+  }
+  data={{ w: 'xyz' }}
+/>
+```
+
+**Example** _(Log object input to console)_
+
+```js
+<Output
+  type={
+    new GraphQLInputObjectType({
+      name: 'abc',
+      fields: { w: { type: GraphQLString } }
+    })
+  }
+  data={{ w: '' }}
+  onChange={console.log}
+/>
+```
+
+<a name="Output..onChange"></a>
+
+### Output~onChange : <code>function</code>
+
+This callback handles Output change events.
+
+**Kind**: inner typedef of [<code>Output</code>](#Output)
+
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>Object</code> |
+
 <a name="StringInput"></a>
 
 ## StringInput ⇒ <code>Component</code>
@@ -696,6 +812,18 @@ TODO docs
 TODO docs
 
 **Kind**: global function  
+<a name="Input..onChange"></a>
+
+### Input~onChange : <code>function</code>
+
+This callback handles Input change events.
+
+**Kind**: inner typedef of [<code>Input</code>](#Input)
+
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>Object</code> |
+
 <a name="Put"></a>
 
 ## Put()

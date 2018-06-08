@@ -172,6 +172,7 @@ const PutAction = ({ action, query, mutate, schema, ...props }) => {
     <Put
       type={getType(action, schema)}
       data={JSON.parse(query || mutate)[name]}
+      {...props}
     />
   );
 };
@@ -191,7 +192,21 @@ const makeAction = ({ url, action }) =>
 /**
  * TODO docs NOTE: must be passed an Apollo client
  */
+/**
+ * Return component outputting the response of the GraphQL action.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.url - The GraphQL api endpoint.
+ * @param {string} props.action - The GraphQL action.
+ * @param {Action~onChange} props.onChange - The data change handler.
+ * @returns {Component} A list around the items.
+ */
 export const Action = props => {
   const _ = makeAction(props);
   return <_ />;
 };
+/**
+ * This callback handles Action change events.
+ * @callback Action~onChange
+ * @param {*} value
+ */

@@ -6,6 +6,7 @@ import { getOutput } from './Output';
  *
  * @param {Function} makeOutput - produces components for list items.
  * @param {Array.<*>} data - The list data.
+ * @param {listOutput~onChange} onChange - The handler for change events.
  * @returns {Component} A list around the items.
  *
  * @private
@@ -13,13 +14,19 @@ import { getOutput } from './Output';
 const listOutput = (makeOutput, data, onChange) => (
   <ul>{data.map((d, i) => <li key={i}>{makeOutput(d, onChange)}</li>)}</ul>
 );
+/**
+ * This callback handles listOutput change events.
+ * @callback listOutput~onChange
+ * @param {Array.<*>} value
+ */
 
 /**
  * Returns a list surrounding the supplied list data.
  *
  * @param {Object} props - The component props.
  * @param {GraphQLType} props.ofType - The type of the list items.
- * @param {GraphQLList<*>} props.data - The list data.
+ * @param {Array.<*>} props.data - The list data.
+ * @param {ListOutput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A list surrounding the list items.
  *
  * @example <caption>Display a list of strings</caption>
@@ -29,6 +36,11 @@ const listOutput = (makeOutput, data, onChange) => (
  */
 export const ListOutput = ({ ofType, data, onChange }) =>
   listOutput(getOutput(ofType), data, onChange);
+/**
+ * This callback handles ListOutput change events.
+ * @callback ListOutput~onChange
+ * @param {Array.<*>} value
+ */
 
 /**
  * Return an object component around the given data using the component producer.
@@ -37,6 +49,7 @@ export const ListOutput = ({ ofType, data, onChange }) =>
  * @param {Object} data - The object data.
  * @param {string} data.name - The object name.
  * @param {Object} data.fields - The object fields.
+ * @param {objectOutput~onChange} data.onChange - The handler for change events.
  * @returns {Component} A component containing the object.
  *
  * @private
@@ -55,6 +68,11 @@ const objectOutput = (makeOutput, { name, data, onChange }) => (
     </ul>
   </div>
 );
+/**
+ * This callback handles objectOutput change events.
+ * @callback objectOutput~onChange
+ * @param {Object} value
+ */
 
 /**
  * Returns a object surrounding the supplied object data.
@@ -62,7 +80,8 @@ const objectOutput = (makeOutput, { name, data, onChange }) => (
  * @param {Object} props - The component props.
  * @param {string} props.name - The name of the object.
  * @param {Object} props.fields - The type of fields of the object.
- * @param {GraphQLObject<*>} props.data - The object data.
+ * @param {Object} props.data - The object data.
+ * @param {ObjectOutput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A object surrounding the object items.
  *
  * @example <caption>Display a object of one string</caption>
@@ -76,3 +95,8 @@ const objectOutput = (makeOutput, { name, data, onChange }) => (
  */
 export const ObjectOutput = ({ fields, ...props }) =>
   objectOutput(key => getOutput(fields[key].type), props);
+/**
+ * This callback handles ObjectOutput change events.
+ * @callback ObjectOutput~onChange
+ * @param {Object} value
+ */

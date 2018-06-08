@@ -20,7 +20,6 @@ const Input = props => (
 export const StringInput = ({ onChange }) => (
   <Input type="text" defaultValue="" onChange={onChange} />
 );
-
 /**
  * This callback handles StringInput change events.
  * @callback StringInput~onChange
@@ -40,7 +39,6 @@ export const StringInput = ({ onChange }) => (
 export const IntegerInput = ({ onChange }) => (
   <Input type="number" pattern="\d+" onChange={onChange} />
 );
-
 /**
  * This callback handles IntegerInput change events.
  * @callback IntegerInput~onChange
@@ -60,7 +58,6 @@ export const IntegerInput = ({ onChange }) => (
 export const FloatInput = ({ onChange }) => (
   <Input type="number" step={0.01} onChange={onChange} />
 );
-
 /**
  * This callback handles FloatInput change events.
  * @callback FloatInput~onChange
@@ -80,7 +77,6 @@ export const FloatInput = ({ onChange }) => (
 export const BooleanInput = ({ onChange }) => (
   <input type="checkbox" onClick={e => onChange(e.target)} />
 );
-
 /**
  * This callback handles BooleanInput change events.
  * @callback BooleanInput~onChange
@@ -111,7 +107,6 @@ export const EnumInput = ({ options, data, onChange }) => (
     ))}
   </select>
 );
-
 /**
  * This callback handles EnumInput change events.
  * @callback EnumInput~onChange
