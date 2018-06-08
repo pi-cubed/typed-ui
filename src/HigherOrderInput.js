@@ -4,6 +4,8 @@ import { getInput, defaultInput } from './Input';
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const updateArray = (array, index, value) => {
   return [...array.slice(0, index), value, ...array.slice(index + 1)];
@@ -11,6 +13,7 @@ const updateArray = (array, index, value) => {
 
 /**
  * Component for outputting GraphQLList data.
+ *
  * @extends Component
  */
 export class ListInput extends Component {
@@ -35,12 +38,15 @@ export class ListInput extends Component {
   }
   /**
    * This callback handles ListInput change events.
+   *
    * @callback ListInput~onChange
    * @param {Array.<*>} value
    */
 
   /**
    * TODO docs
+   *
+   * @private
    */
   onChange(index) {
     return value =>
@@ -54,6 +60,8 @@ export class ListInput extends Component {
 
   /**
    * TODO docs
+   *
+   * @private
    */
   addItem() {
     this.setState({
@@ -77,6 +85,7 @@ export class ListInput extends Component {
 
 /**
  * Component for outputting GraphQLType data.
+ *
  * @extends Component
  */
 export class ObjectInput extends Component {
@@ -109,12 +118,15 @@ export class ObjectInput extends Component {
   }
   /**
    * This callback handles ObjectInput change events.
+   *
    * @callback ObjectInput~onChange
    * @param {Object} value
    */
 
   /**
    * TODO docs
+   *
+   * @private
    */
   onChange(key) {
     return value => {

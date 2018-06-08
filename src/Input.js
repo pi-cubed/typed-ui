@@ -18,14 +18,41 @@ import { ListInput, ObjectInput } from './HigherOrderInput';
 import { ObjectOutput } from './HigherOrderOutput';
 
 /**
- * TODO docs
+ * This type of function accepts data and a change handler and returns a new
+ *   component with these props.
+ *
+ * @function WithDataChange
+ * @param {*} data - The data for the component.
+ * @param {WithDataChange~onChange} onChange - The change handler for the component.
+ * @returns {Component} The component with data and an onChange handler.
+ *
+ * @private
+ */
+/**
+ * This callback handles data change events.
+ *
+ * @callback WithDataChange~onChange
+ * @param {*} value
+ *
+ * @private
+ */
+
+/**
+ * Returns function for adding data and onChange props to the component.
+ *
+ * @param {Component} Component - The component to add props to.
+ * @returns {WithDataChange} A function that will add data and a change handler to a component.
+ *
+ * @private
  */
 const input = Component => (data, onChange) => (
   <Component data={data} onChange={onChange} />
 );
 
 /**
- * TODO docs
+ * A map from GraphQL scalars to primitve inputs.
+ *
+ * @private
  */
 const componentNames = {
   Int: IntegerInput,
@@ -36,7 +63,14 @@ const componentNames = {
 };
 
 /**
- * TODO docs
+ * Returns a WithDataChange for the component associated with the given
+ *   GraphQL type.
+ *
+ * @param {GraphQLInputType} ofType - The type of the input.
+ * @returns {WithDataChange} A function that will produce the component
+ *   displaying the input.
+ *
+ * @private
  */
 export const getInput = ofType => {
   if (isListType(ofType)) {
@@ -63,16 +97,16 @@ export const getInput = ofType => {
       />
     );
   }
-  if (isInputObjectType(ofType)) {
-    return (data, onChange) => (
-      <ObjectInput
-        name={ofType.name}
-        fields={ofType.getFields()}
-        onChange={onChange}
-        data={data}
-      />
-    );
-  }
+  // if (isInputObjectType(ofType)) {
+  //   return (data, onChange) => (
+  //     <ObjectInput
+  //       name={ofType.name}
+  //       fields={ofType.getFields()}
+  //       onChange={onChange}
+  //       data={data}
+  //     />
+  //   );
+  // }
   if (isWrappingType(ofType)) {
     return getInput(ofType.ofType);
   }
@@ -81,11 +115,14 @@ export const getInput = ofType => {
 
 /**
  * TODO docs and do
+ *
+ * @private
  */
 export const defaultInput = ofType => null;
 
 /**
  * Component for outputting GraphQLInputType data.
+ *
  * @extends Component
  */
 export class Input extends Component {
@@ -126,12 +163,15 @@ export class Input extends Component {
   }
   /**
    * This callback handles Input change events.
+   *
    * @callback Input~onChange
    * @param {Object} value
    */
 
   /**
    * TODO docs
+   *
+   * @private
    */
   onChange = data => {
     this.setState({ data }, () => this.props.onChange(this.state.data));

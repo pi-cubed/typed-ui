@@ -20,6 +20,8 @@ import { ObjectInput } from './HigherOrderInput';
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const output = Component => (data, onChange) => (
   <Component data={data} onChange={onChange} />
@@ -27,6 +29,8 @@ const output = Component => (data, onChange) => (
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const componentNames = {
   Int: IntegerOutput,
@@ -74,7 +78,8 @@ export const getOutput = ofType => {
 };
 
 /**
- * Component for outputting GraphQLInputType data.
+ * Component for outputting GraphQLType data.
+ *
  * @extends Component
  */
 export class Output extends Component {
@@ -115,12 +120,15 @@ export class Output extends Component {
   }
   /**
    * This callback handles Output change events.
+   *
    * @callback Output~onChange
    * @param {Object} value
    */
 
   /**
    * TODO docs
+   *
+   * @private
    */
   onChange = data => {
     this.setState({ data }, () => this.props.onChange(this.state.data));

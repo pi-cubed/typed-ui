@@ -6,6 +6,8 @@ import { Put } from './Put';
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const withSchema = url =>
   graphql(
@@ -22,6 +24,8 @@ const withSchema = url =>
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const withQuery = (url, query) =>
   graphql(
@@ -43,6 +47,8 @@ const withQuery = (url, query) =>
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const withMutation = (url, mutation) =>
   graphql(
@@ -64,11 +70,18 @@ const withMutation = (url, mutation) =>
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const withMutationHandler = WC =>
   class Handler extends Component {
     state = { mutate: null };
 
+    /**
+     * TODO docs
+     *
+     * @private
+     */
     componentDidMount() {
       this.props
         .mutation()
@@ -93,6 +106,8 @@ const withMutationHandler = WC =>
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const withAction = (url, action) =>
   isQuery(action)
@@ -101,11 +116,15 @@ const withAction = (url, action) =>
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const isQuery = action => gql(action).definitions[0].operation === 'query';
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const getType = (action, schema) =>
   buildClientSchema(JSON.parse(schema))
@@ -114,12 +133,16 @@ const getType = (action, schema) =>
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const getName = action =>
   gql(action).definitions[0].selectionSet.selections[0].name.value;
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const withPluck = WC => ({ query, schema, ...props }) => (
   <WC
@@ -131,6 +154,8 @@ const withPluck = WC => ({ query, schema, ...props }) => (
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const withLoadingHandler = WC => props => {
   const { query, schema, loading = 'loading...' } = props;
@@ -147,6 +172,8 @@ const withLoadingHandler = WC => props => {
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const withErrorHandler = WC => props => {
   const { query, schema, onError = e => e } = props;
@@ -165,6 +192,8 @@ const withErrorHandler = WC => props => {
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const PutAction = ({ action, query, mutate, schema, ...props }) => {
   const name = getName(action);
@@ -179,6 +208,8 @@ const PutAction = ({ action, query, mutate, schema, ...props }) => {
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const makeAction = ({ url, action }) =>
   compose(
@@ -190,10 +221,8 @@ const makeAction = ({ url, action }) =>
   )(PutAction);
 
 /**
- * TODO docs NOTE: must be passed an Apollo client
- */
-/**
- * Return component outputting the response of the GraphQL action.
+ * Return component outputting the response of the GraphQL action. Expects to be
+ *   passed ApolloProvider props.
  *
  * @param {Object} props - The component props.
  * @param {string} props.url - The GraphQL api endpoint.
@@ -207,6 +236,7 @@ export const Action = props => {
 };
 /**
  * This callback handles Action change events.
+ *
  * @callback Action~onChange
  * @param {*} value
  */

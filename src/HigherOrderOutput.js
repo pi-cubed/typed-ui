@@ -16,8 +16,11 @@ const listOutput = (makeOutput, data, onChange) => (
 );
 /**
  * This callback handles listOutput change events.
+ *
  * @callback listOutput~onChange
  * @param {Array.<*>} value
+ *
+ * @private
  */
 
 /**
@@ -38,6 +41,7 @@ export const ListOutput = ({ ofType, data, onChange }) =>
   listOutput(getOutput(ofType), data, onChange);
 /**
  * This callback handles ListOutput change events.
+ *
  * @callback ListOutput~onChange
  * @param {Array.<*>} value
  */
@@ -70,8 +74,11 @@ const objectOutput = (makeOutput, { name, data, onChange }) => (
 );
 /**
  * This callback handles objectOutput change events.
+ *
  * @callback objectOutput~onChange
  * @param {Object} value
+ *
+ * @private
  */
 
 /**
@@ -97,6 +104,7 @@ export const ObjectOutput = ({ fields, ...props }) =>
   objectOutput(key => getOutput(fields[key].type), props);
 /**
  * This callback handles ObjectOutput change events.
+ *
  * @callback ObjectOutput~onChange
  * @param {Object} value
  */

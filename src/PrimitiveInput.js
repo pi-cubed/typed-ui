@@ -2,6 +2,8 @@ import React from 'react';
 
 /**
  * TODO docs
+ *
+ * @private
  */
 const Input = props => (
   <input {...props} onChange={e => props.onChange(e.target.value)} />
@@ -22,6 +24,7 @@ export const StringInput = ({ onChange }) => (
 );
 /**
  * This callback handles StringInput change events.
+ *
  * @callback StringInput~onChange
  * @param {string} value
  */
@@ -41,6 +44,7 @@ export const IntegerInput = ({ onChange }) => (
 );
 /**
  * This callback handles IntegerInput change events.
+ *
  * @callback IntegerInput~onChange
  * @param {integer} value
  */
@@ -60,6 +64,7 @@ export const FloatInput = ({ onChange }) => (
 );
 /**
  * This callback handles FloatInput change events.
+ *
  * @callback FloatInput~onChange
  * @param {float} value
  */
@@ -79,6 +84,7 @@ export const BooleanInput = ({ onChange }) => (
 );
 /**
  * This callback handles BooleanInput change events.
+ *
  * @callback BooleanInput~onChange
  * @param {boolean} value
  */
@@ -109,6 +115,7 @@ export const EnumInput = ({ options, data, onChange }) => (
 );
 /**
  * This callback handles EnumInput change events.
+ *
  * @callback EnumInput~onChange
  * @param {string} value
  */
