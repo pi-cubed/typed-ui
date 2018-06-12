@@ -16,7 +16,7 @@ const Input = props => (
  * @param {StringInput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A text field component.
  *
- * @example <caption>Logging to console</caption>
+ * @example <caption>Log string input to the console</caption>
  * <StringInput onChange={console.log} />
  */
 export const StringInput = ({ onChange }) => (
@@ -36,7 +36,7 @@ export const StringInput = ({ onChange }) => (
  * @param {IntegerInput~onChange} props.onChange - The handler for change events.
  * @returns {Component} An integer input component.
  *
- * @example <caption>Logging to console</caption>
+ * @example <caption>Log integer input to the console</caption>
  * <IntegerInput onChange={console.log} />
  */
 export const IntegerInput = ({ onChange }) => (
@@ -56,7 +56,7 @@ export const IntegerInput = ({ onChange }) => (
  * @param {FloatInput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A float input component.
  *
- * @example <caption>Logging to console</caption>
+ * @example <caption>Log float input to the console</caption>
  * <FloatInput onChange={console.log} />
  */
 export const FloatInput = ({ onChange }) => (
@@ -76,7 +76,7 @@ export const FloatInput = ({ onChange }) => (
  * @param {BooleanInput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A boolean input component.
  *
- * @example <caption>Logging to console</caption>
+ * @example <caption>Log boolean input to the console</caption>
  * <BooleanInput onChange={console.log} />
  */
 export const BooleanInput = ({ onChange }) => (
@@ -98,7 +98,7 @@ export const BooleanInput = ({ onChange }) => (
  * @param {EnumInput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A select component.
  *
- * @example <caption>Logging to console</caption>
+ * @example <caption>Log enum input to the console</caption>
  * <EnumInput options={['a', 'b', 'c']} data='b' onChange={console.log} />
  */
 export const EnumInput = ({ options, data, onChange }) => (

@@ -45,33 +45,25 @@ $ yarn add typed-ui
 ## Usage
 
 ```js
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
-import { GraphQLInputObjectType, GraphQLString } from 'graphql';
-import { StringOutput, ObjectInput } from '../../src';
+import { ApolloProvider } from 'react-apollo';
+import ApolloClient from 'apollo-boost';
+import { Action } from '../../src';
 
-class Demo extends Component {
-  render() {
-    return (
-      <div>
-        <h1>typed-ui Demo</h1>
-        <StringOutput data="This is a StringOutput. Below is a nested ObjectInput." />
-        <ObjectInput
-          name="This is the name of the outer object."
-          fields={{
-            top: {
-              type: new GraphQLInputObjectType({
-                name: 'This is the name of the inner object',
-                fields: { hew: { type: GraphQLString } }
-              })
-            }
-          }}
-          onChange={console.log}
-        />
-      </div>
-    );
-  }
-}
+const uri = 'http://proxy-graphql.herokuapp.com';
+
+const Demo = () => (
+  <div>
+    <h1>typed-ui Demo</h1>
+    <ApolloProvider client={new ApolloClient({ uri })}>
+      <Action
+        url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
+        action={'query Q { users { name } }'}
+      />
+    </ApolloProvider>
+  </div>
+);
 
 render(<Demo />, document.querySelector('#demo'));
 ```

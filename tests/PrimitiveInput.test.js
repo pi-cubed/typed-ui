@@ -70,13 +70,11 @@ describe('BooleanInput', () => {
   });
 });
 
-// TODO docs
 const setEnum = async data =>
   setTarget('select', 'change', {
     value: _.findKey(data)
   })(res => <EnumInput options={_.keys(data)} data="" onChange={res} />);
 
-// TODO docs
 const getSelected = w =>
   w
     .find('option')

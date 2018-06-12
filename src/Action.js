@@ -227,8 +227,14 @@ const makeAction = ({ url, action }) =>
  * @param {Object} props - The component props.
  * @param {string} props.url - The GraphQL api endpoint.
  * @param {string} props.action - The GraphQL action.
- * @param {Action~onChange} props.onChange - The data change handler.
+ * @param {Action~onChange} [props.onChange] - The data change handler.
  * @returns {Component} A list around the items.
+ *
+ * @example <caption>Display users' names from GraphQL API</caption>
+ * <Action
+ *   url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
+ *   action={'query Q { users { name } }'}
+ * />
  */
 export const Action = props => {
   const _ = makeAction(props);

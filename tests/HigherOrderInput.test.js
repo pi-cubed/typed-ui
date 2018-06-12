@@ -48,6 +48,8 @@ describe('ListInput', () => {
   });
 });
 
+const setInput = 0;
+
 describe('ObjectInput', () => {
   it('handles singular string field', async () => {
     const data = 'abc';

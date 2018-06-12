@@ -1,5 +1,91 @@
 import React, { Component } from 'react';
-import { getOutput } from './Output';
+import {
+  GraphQLString,
+  GraphQLInt,
+  GraphQLFloat,
+  GraphQLBoolean,
+  GraphQLEnumType,
+  GraphQLNonNull,
+  GraphQLID,
+  GraphQLList,
+  GraphQLObjectType,
+  GraphQLInputObjectType,
+  getNamedType,
+  isListType,
+  isEnumType,
+  isObjectType,
+  isInputObjectType,
+  isWrappingType
+} from 'graphql';
+import {
+  StringOutput,
+  IntegerOutput,
+  FloatOutput,
+  BooleanOutput,
+  EnumOutput
+} from './PrimitiveOutput';
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+const output = Component => (data, onChange) => (
+  <Component data={data} onChange={onChange} />
+);
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+const componentNames = {
+  Int: IntegerOutput,
+  Float: FloatOutput,
+  Boolean: BooleanOutput,
+  String: StringOutput,
+  ID: StringOutput
+};
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+export const getOutput = ofType => {
+  if (isListType(ofType)) {
+    return (data, onChange) => (
+      <ListOutput ofType={ofType.ofType} data={data} onChange={onChange} />
+    );
+  }
+  if (isEnumType(ofType)) {
+    return output(EnumOutput);
+  }
+  if (isObjectType(ofType)) {
+    return (data, onChange) => (
+      <ObjectOutput
+        name={ofType.name}
+        fields={ofType.getFields()}
+        data={data}
+        onChange={onChange}
+      />
+    );
+  }
+  if (isInputObjectType(ofType)) {
+    return (data, onChange) => (
+      <ObjectInput
+        name={ofType.name}
+        fields={ofType.getFields()}
+        onChange={onChange}
+        data={data}
+      />
+    );
+  }
+  if (isWrappingType(ofType)) {
+    return getOutput(ofType.ofType);
+  }
+  return output(componentNames[getNamedType(ofType).name]);
+};
 
 /**
  * Return a list around given data using component producer.
@@ -100,8 +186,8 @@ const objectOutput = (makeOutput, { name, data, onChange }) => (
  *     data={{ hew: 'This is a string field called hew.' }}
  * />;
  */
-export const ObjectOutput = ({ fields, ...props }) =>
-  objectOutput(key => getOutput(fields[key].type), props);
+export const ObjectOutput = props =>
+  objectOutput(key => getOutput(props.fields[key].type), props);
 /**
  * This callback handles ObjectOutput change events.
  *
