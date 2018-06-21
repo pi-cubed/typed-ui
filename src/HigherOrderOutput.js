@@ -24,6 +24,7 @@ import {
   BooleanOutput,
   EnumOutput
 } from './PrimitiveOutput';
+import { ObjectInput } from './HigherOrderInput';
 
 /**
  * TODO docs

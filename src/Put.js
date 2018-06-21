@@ -3,6 +3,11 @@ import { isInputObjectType, isWrappingType } from 'graphql';
 import { getOutput } from './HigherOrderOutput';
 import { getInput } from './HigherOrderInput';
 
+/**
+ * TODO docs
+ *
+ * @private
+ */
 const isInput = type =>
   isInputObjectType(type) ||
   (isWrappingType(type) && isInputObjectType(type.ofType));

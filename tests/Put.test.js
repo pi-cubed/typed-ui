@@ -34,7 +34,8 @@ import {
 } from 'src/PrimitiveOutput';
 import { ListOutput, ObjectOutput } from 'src/HigherOrderOutput';
 
-const putEquals = (data, type, Expected, options, onChange = () => {}) => () =>
+const putEquals = (data, type, Expected, options, name) => () => {
+  const onChange = () => {};
   equals(
     <Put type={type} data={data} onChange={onChange} />,
     <Expected
@@ -43,139 +44,125 @@ const putEquals = (data, type, Expected, options, onChange = () => {}) => () =>
       onChange={onChange}
       options={options}
       fields={options}
+      ofType={options}
+      name={name}
     />
   );
+};
 
-const equals = (a, b) => expect(mount(a)).toEqual(mount(b));
+const equals = (a, b) => expect(mount(a).html()).toEqual(mount(b).html());
 
 describe('Put', () => {
-  it('is StringInput for string', putEquals('abc', GraphQLString, StringInput));
+  describe('Input', () => {
+    it('is ObjectInput for object with single integer field', () => {
+      const name = 'name';
+      const fields = { data: { type: GraphQLInt } };
+      putEquals(
+        5,
+        new GraphQLInputObjectType({
+          name,
+          fields
+        }),
+        ObjectInput,
+        fields,
+        name
+      )();
+    });
+  });
 
-  it(
-    'is StringInput for non-null string',
-    putEquals('abc', GraphQLNonNull(GraphQLString), StringInput)
-  );
-
-  it('is IntegerInput for integer', putEquals(5, GraphQLInt, IntegerInput));
-
-  it('is FloatInput for float', putEquals(5.4, GraphQLFloat, FloatInput));
-
-  it(
-    'is BooleanInput for boolean',
-    putEquals(true, GraphQLBoolean, BooleanInput)
-  );
-
-  it(
-    'is EnumInput for enum',
-    putEquals(
-      'a',
-      new GraphQLEnumType({
-        name: 'abc',
-        values: { a: { value: 0 } }
-      }),
-      EnumInput,
-      ['a']
-    )
-  );
-
-  it('is StringInput for ID', putEquals('abc', GraphQLID, StringInput));
-
-  it('is ListInput for list of integers', () => {
-    const data = [0, 1, 2];
-    equals(
-      <Put data={data} type={new GraphQLList(GraphQLInt)} />,
-      <ListInput ofType={GraphQLInt} data={data} />
+  describe('Output', () => {
+    it(
+      'is StringOutput for string',
+      putEquals('abc', GraphQLString, StringOutput)
     );
-  });
 
-  it('is ListInput for list of list of strings', () => {
-    const data = [['a', 'b'], ['c']];
-    equals(
-      <Put
-        data={data}
-        type={new GraphQLList(new GraphQLList(GraphQLString))}
-      />,
-      <ListInput ofType={new GraphQLList(GraphQLString)} data={data} />
+    it(
+      'is StringOutput for non-null string',
+      putEquals('abc', GraphQLNonNull(GraphQLString), StringOutput)
     );
-  });
 
-  it('is ObjectInput for object with single integer field', () => {
-    const name = 'name';
-    const fields = { data: { type: GraphQLInt } };
-    putEquals(
-      5,
-      new GraphQLInputObjectType({
-        name,
-        fields
-      }),
-      ObjectInput,
-      fields
-    )();
-  });
+    it('is IntegerOutput for integer', putEquals(5, GraphQLInt, IntegerOutput));
 
-  it(
-    'is StringOutput for string',
-    putEquals('abc', GraphQLString, StringOutput)
-  );
+    it('is FloatOutput for float', putEquals(5.4, GraphQLFloat, FloatOutput));
 
-  it(
-    'is StringOutput for non-null string',
-    putEquals('abc', GraphQLNonNull(GraphQLString), StringOutput)
-  );
-
-  it('is IntegerOutput for integer', putEquals(5, GraphQLInt, IntegerOutput));
-
-  it('is FloatOutput for float', putEquals(5.4, GraphQLFloat, FloatOutput));
-
-  it(
-    'is BooleanOutput for boolean',
-    putEquals(true, GraphQLBoolean, BooleanOutput)
-  );
-
-  it(
-    'is EnumOutput for Enum',
-    putEquals(
-      ['a'],
-      new GraphQLEnumType({
-        name: '',
-        values: { a: { value: 0 } }
-      }),
-      EnumOutput
-    )
-  );
-
-  it('is StringOutput for ID', putEquals('abc', GraphQLID, StringOutput));
-
-  it('is ListOutput for List of integers', () => {
-    const data = [1, 2, 3];
-    equals(
-      <Put data={data} type={new GraphQLList(GraphQLInt)} />,
-      <ListOutput ofType={GraphQLInt} data={data} />
+    it(
+      'is BooleanOutput for boolean',
+      putEquals(true, GraphQLBoolean, BooleanOutput)
     );
-  });
 
-  it('is ListOutput for List of List of strings', () => {
-    const data = [['a'], ['b', 'c']];
-    equals(
-      <Put
-        data={data}
-        type={new GraphQLList(new GraphQLList(GraphQLString))}
-      />,
-      <ListOutput ofType={GraphQLString} data={data} />
+    it(
+      'is EnumOutput for Enum',
+      putEquals(
+        ['a'],
+        new GraphQLEnumType({
+          name: '',
+          values: { a: { value: 0 } }
+        }),
+        EnumOutput
+      )
     );
-  });
 
-  it('is ObjectOutput for object with single integer field', () => {
-    const name = 'name';
-    const fields = { data: { type: GraphQLInt } };
-    putEquals(
-      5,
-      new GraphQLObjectType({
-        name,
-        fields
-      }),
-      ObjectOutput,
-      fields
-    )();
+    it('is StringOutput for ID', putEquals('abc', GraphQLID, StringOutput));
+
+    it(
+      'is ListOutput for List of integers',
+      putEquals([1, 2, 3], new GraphQLList(GraphQLInt), ListOutput, GraphQLInt)
+    );
+
+    it(
+      'is ListOutput for List of List of strings',
+      putEquals(
+        [['a'], ['b', 'c']],
+        new GraphQLList(new GraphQLList(GraphQLString)),
+        ListOutput,
+        new GraphQLList(GraphQLString)
+      )
+    );
+
+    it('is ObjectOutput for object with single integer field', () => {
+      const name = 'name';
+      const fields = { data: { type: GraphQLInt } };
+      const data = { data: 5 };
+      equals(
+        <Put
+          type={
+            new GraphQLObjectType({
+              name,
+              fields
+            })
+          }
+          data={data}
+        />,
+        <ObjectOutput name={name} fields={fields} data={data} />
+      );
+    });
+
+    // TODO set input on inner object
+    xit('is ObjectOutput for nested objects', () => {
+      const innerName = 'inner';
+      const innerFields = { x: { type: GraphQLInt } };
+      const name = 'name';
+      const fields = {
+        data: {
+          type: new GraphQLInputObjectType({
+            name: innerName,
+            fields: innerFields
+          })
+        }
+      };
+      const data = { data: { x: 5 } };
+      equals(
+        <Put
+          type={
+            new GraphQLObjectType({
+              name,
+              fields
+            })
+          }
+          data={data}
+        />,
+        <ObjectOutput name={name} fields={fields} data={data} />
+      );
+    });
   });
 });
