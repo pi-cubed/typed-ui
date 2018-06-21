@@ -1,2 +1,7 @@
 export * from './Put';
-export * from './Action';
+
+export * from './HigherOrderOutput';
+export * from './HigherOrderInput';
+
+export * from './PrimitiveOutput';
+export * from './PrimitiveInput';

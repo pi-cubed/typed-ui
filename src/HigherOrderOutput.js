@@ -148,10 +148,10 @@ const objectOutput = (makeOutput, { name, data, onChange }) => (
   <div>
     <div>{name}</div>
     <ul>
-      {Object.entries(data).map(d => (
-        <li key={d[0]}>
-          {makeOutput(d[0])(d[1], val =>
-            onChange(_.assign({}, data, { [d[0]]: val }))
+      {Object.entries(data).map(([key, value]) => (
+        <li key={key}>
+          {makeOutput(key)(value, val =>
+            onChange(_.assign({}, data, { [key]: val }))
           )}
         </li>
       ))}
@@ -177,7 +177,7 @@ const objectOutput = (makeOutput, { name, data, onChange }) => (
  * @param {ObjectOutput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A object surrounding the object items.
  *
- * @example <caption>Display a object of one string</caption>
+ * @example <caption>Display an object of one string</caption>
  * <ObjectOutput
  *     name="This is the name of the object."
  *     fields={{

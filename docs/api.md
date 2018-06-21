@@ -1,10 +1,6 @@
 ## Members
 
 <dl>
-<dt><a href="#Action">Action</a> ⇒ <code>Component</code></dt>
-<dd><p>Return component outputting the response of the GraphQL action. Expects to be
-  passed ApolloProvider props.</p>
-</dd>
 <dt><a href="#ListInput">ListInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list input component with change events handled by the given callback.</p>
 </dd>
@@ -51,44 +47,6 @@
 <dd><p>Component for displaying GraphQL data</p>
 </dd>
 </dl>
-
-<a name="Action"></a>
-
-## Action ⇒ <code>Component</code>
-
-Return component outputting the response of the GraphQL action. Expects to be
-passed ApolloProvider props.
-
-**Kind**: global variable  
-**Returns**: <code>Component</code> - A list around the items.
-
-| Param            | Type                                       | Description               |
-| ---------------- | ------------------------------------------ | ------------------------- |
-| props            | <code>Object</code>                        | The component props.      |
-| props.url        | <code>string</code>                        | The GraphQL api endpoint. |
-| props.action     | <code>string</code>                        | The GraphQL action.       |
-| [props.onChange] | [<code>onChange</code>](#Action..onChange) | The data change handler.  |
-
-**Example** _(Display users&#x27; names from GraphQL API)_
-
-```js
-<Action
-  url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
-  action={'query Q { users { name } }'}
-/>
-```
-
-<a name="Action..onChange"></a>
-
-### Action~onChange : <code>function</code>
-
-This callback handles Action change events.
-
-**Kind**: inner typedef of [<code>Action</code>](#Action)
-
-| Param | Type            |
-| ----- | --------------- |
-| value | <code>\*</code> |
 
 <a name="ListInput"></a>
 
@@ -145,7 +103,7 @@ Returns an object input component with change events handled by the given callba
 <ObjectInput
   name="This is the name of the input object."
   fields={{
-    name: { type: GraphQLString }
+    x: { type: GraphQLString }
   }}
   onChange={console.log}
 />
@@ -223,7 +181,7 @@ Returns a object surrounding the supplied object data.
 | props.data     | <code>Object</code>                              | The object data.                  |
 | props.onChange | [<code>onChange</code>](#ObjectOutput..onChange) | The handler for change events.    |
 
-**Example** _(Display a object of one string)_
+**Example** _(Display an object of one string)_
 
 ```js
 <ObjectOutput

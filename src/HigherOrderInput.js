@@ -227,7 +227,7 @@ class ListInputComponent extends Component {
  * <ObjectInput
  *     name="This is the name of the input object."
  *     fields={{
- *         name: { type: GraphQLString }
+ *         x: { type: GraphQLString }
  *     }}
  *     onChange={console.log}
  * />;

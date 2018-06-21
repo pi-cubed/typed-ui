@@ -1,6 +1,6 @@
 {
   "name": "typed-ui",
-  "version": "0.3.0",
+  "version": "0.3.5",
   "description": "Generic UI for the GraphQL Schema Language",
   "browser": "lib/index.js",
   "module": "es/index.js",
@@ -27,11 +27,8 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "apollo-client": "^2.3.2",
     "graphql": "^0.13.2",
-    "graphql-tag": "^2.9.2",
-    "lodash": "^4.17.10",
-    "react-apollo": "^2.1.4"
+    "lodash": "^4.17.10"
   },
   "peerDependencies": {
     "react": "16.x"
@@ -39,9 +36,6 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.47",
     "@babel/preset-env": "^7.0.0-beta.49",
-    "apollo-boost": "^0.1.7",
-    "apollo-cache-inmemory": "^1.2.2",
-    "apollo-link-http": "^1.5.4",
     "babel-core": "^6.26.3",
     "babel-plugin-inline-dotenv": "^1.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -64,8 +58,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "semantic-release": "^15.4.2",
-    "travis-deploy-once": "^5.0.0",
-    "unfetch": "^3.0.0"
+    "travis-deploy-once": "^5.0.0"
   },
   "author": "Pi Cubed",
   "homepage": "https://github.com/pi-cubed/typed-ui",
