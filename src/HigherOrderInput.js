@@ -96,16 +96,6 @@ export const getInput = ofType => {
       />
     );
   }
-  if (isObjectType(ofType)) {
-    return (data, onChange) => (
-      <ObjectOutput
-        name={ofType.name}
-        fields={ofType.getFields()}
-        data={data}
-        onChange={onChange}
-      />
-    );
-  }
   if (isInputObjectType(ofType)) {
     return (data, onChange) => (
       <ObjectInput

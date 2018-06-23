@@ -10,8 +10,8 @@
     "clean": "nwb clean-module && nwb clean-demo",
     "demo": "nwb serve-react-demo",
     "test": "nwb test-react",
-    "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server",
+    "test:coverage": "yarn test --coverage",
+    "test:watch": "yarn test:coverage --server",
     "docs:prepare": "gitbook install",
     "docs:api":
       "jsdoc2md --configure tooling/docs/jsdoc.json --files src/**/*.js > docs/api.md",

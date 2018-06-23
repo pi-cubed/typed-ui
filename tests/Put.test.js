@@ -1,6 +1,6 @@
 import expect from 'expect';
 import React from 'react';
-import { _ } from './utils';
+import { setTarget } from './utils';
 import { mount } from 'enzyme';
 import {
   GraphQLString,
@@ -52,6 +52,24 @@ const putEquals = (data, type, Expected, options, name) => () => {
 
 const equals = (a, b) => expect(mount(a).html()).toEqual(mount(b).html());
 
+const handlesInput = (obj, type, data, value) => async () => {
+  const actual = await setTarget('input[type="number"]', 'change', {
+    value
+  })(res => (
+    <Put
+      type={
+        new obj({
+          name: 'name',
+          fields: { x: { type } }
+        })
+      }
+      data={{ x: null }}
+      onChange={res}
+    />
+  ));
+  expect(actual).toEqual({ x: data });
+};
+
 describe('Put', () => {
   describe('Input', () => {
     it('is ObjectInput for object with single integer field', () => {
@@ -68,6 +86,8 @@ describe('Put', () => {
         name
       )();
     });
+
+    it('handles input', handlesInput(GraphQLInputObjectType, GraphQLInt, 5, 5));
   });
 
   describe('Output', () => {
@@ -123,46 +143,29 @@ describe('Put', () => {
       const name = 'name';
       const fields = { data: { type: GraphQLInt } };
       const data = { data: 5 };
-      equals(
-        <Put
-          type={
-            new GraphQLObjectType({
-              name,
-              fields
-            })
-          }
-          data={data}
-        />,
-        <ObjectOutput name={name} fields={fields} data={data} />
-      );
+      putEquals(
+        data,
+        new GraphQLObjectType({
+          name,
+          fields
+        }),
+        ObjectOutput,
+        fields,
+        name
+      )();
     });
 
-    // TODO set input on inner object
-    xit('is ObjectOutput for nested objects', () => {
-      const innerName = 'inner';
-      const innerFields = { x: { type: GraphQLInt } };
-      const name = 'name';
-      const fields = {
-        data: {
-          type: new GraphQLInputObjectType({
-            name: innerName,
-            fields: innerFields
-          })
-        }
-      };
-      const data = { data: { x: 5 } };
-      equals(
-        <Put
-          type={
-            new GraphQLObjectType({
-              name,
-              fields
-            })
-          }
-          data={data}
-        />,
-        <ObjectOutput name={name} fields={fields} data={data} />
-      );
-    });
+    it(
+      'handles input',
+      handlesInput(
+        GraphQLObjectType,
+        new GraphQLInputObjectType({
+          name: 'inner',
+          fields: { y: { type: GraphQLInt } }
+        }),
+        { y: 5 },
+        5
+      )
+    );
   });
 });

@@ -70,25 +70,12 @@ describe('BooleanInput', () => {
   });
 });
 
-const setEnum = async data =>
-  setTarget('select', 'change', {
-    value: _.findKey(data)
-  })(res => <EnumInput options={_.keys(data)} data="" onChange={res} />);
-
-const getSelected = w =>
-  w
-    .find('option')
-    .map(e => e.instance().selected)
-    .filter(Boolean);
-
 describe('EnumInput', () => {
   it('handles selection', async () => {
-    const data = {
-      a: false,
-      b: false,
-      c: true
-    };
-    const value = await setEnum(data);
-    expect(value).toEqual(_.findKey(data));
+    const value = 'c';
+    const actual = await setTarget('select', 'change', {
+      value
+    })(res => <EnumInput options={['a', 'b', value]} data="" onChange={res} />);
+    expect(actual).toEqual(value);
   });
 });

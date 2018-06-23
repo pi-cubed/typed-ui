@@ -6918,9 +6918,12 @@ webpackJsonp(
     },
     '4/mC': function(e, t, n) {
       'use strict';
-      n.d(t, 'a', function() {
+      n.d(t, 'b', function() {
         return d;
-      });
+      }),
+        n.d(t, 'a', function() {
+          return m;
+        });
       var r = n('GiK3'),
         i = n.n(r),
         o = n('M4fF'),
@@ -11642,7 +11645,7 @@ webpackJsonp(
                 });
               }),
               (r.state = { data: n.data }),
-              (r.input = Object(u.a)(r.props.type)),
+              (r.input = Object(u.b)(r.props.type)),
               r
             );
           }
@@ -19500,32 +19503,33 @@ webpackJsonp(
     VM2n: function(e, t, n) {
       'use strict';
       n.d(t, 'a', function() {
-        return l;
+        return s;
       });
       var r = n('GiK3'),
         i = n.n(r),
         o = n('s8Fo'),
         a = n('PGUN'),
-        u = function(e) {
+        u = n('4/mC'),
+        c = function(e) {
           return function(t, n) {
             return i.a.createElement(e, { data: t, onChange: n });
           };
         },
-        c = { Int: a.d, Float: a.c, Boolean: a.a, String: a.e, ID: a.e },
-        l = function e(t) {
+        l = { Int: a.d, Float: a.c, Boolean: a.a, String: a.e, ID: a.e },
+        s = function e(t) {
           return Object(o.f)(t)
             ? function(e, n) {
-                return i.a.createElement(s, {
+                return i.a.createElement(f, {
                   ofType: t.ofType,
                   data: e,
                   onChange: n
                 });
               }
             : Object(o.d)(t)
-              ? u(a.b)
+              ? c(a.b)
               : Object(o.g)(t)
                 ? function(e, n) {
-                    return i.a.createElement(f, {
+                    return i.a.createElement(p, {
                       name: t.name,
                       fields: t.getFields(),
                       data: e,
@@ -19534,7 +19538,7 @@ webpackJsonp(
                   }
                 : Object(o.e)(t)
                   ? function(e, n) {
-                      return i.a.createElement(ObjectInput, {
+                      return i.a.createElement(u.a, {
                         name: t.name,
                         fields: t.getFields(),
                         onChange: n,
@@ -19543,9 +19547,9 @@ webpackJsonp(
                     }
                   : Object(o.h)(t)
                     ? e(t.ofType)
-                    : u(c[Object(o.c)(t).name]);
+                    : c(l[Object(o.c)(t).name]);
         },
-        s = function(e) {
+        f = function(e) {
           var t = e.ofType,
             n = e.data,
             r = e.onChange;
@@ -19557,12 +19561,12 @@ webpackJsonp(
                 return i.a.createElement('li', { key: r }, e(t, n));
               })
             );
-          })(l(t), n, r);
+          })(s(t), n, r);
         },
-        f = function(e) {
+        p = function(e) {
           return (
             (t = function(t) {
-              return l(e.fields[t].type);
+              return s(e.fields[t].type);
             }),
             (r = (n = e).name),
             (o = n.data),
@@ -23849,4 +23853,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.e973b50d.js.map
+//# sourceMappingURL=demo.8bc0b8e4.js.map
