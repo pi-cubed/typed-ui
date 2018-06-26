@@ -17,7 +17,7 @@
       "jsdoc2md --configure tooling/docs/jsdoc.json --files src/**/*.js > docs/api.md",
     "docs:build": "run-s docs:prepare docs:api && gitbook build",
     "docs:serve": "yarn docs:build && gitbook serve",
-    "docs:clean": "rimraf _book",
+    "docs:clean": "rm -rf _book",
     "docs:publish": "yarn docs:build && yarn gh-pages -d _book",
     "dev": "yarn && run-p docs:serve test:watch demo",
     "precommit": "pretty-quick --staged && yarn prepublishOnly",
