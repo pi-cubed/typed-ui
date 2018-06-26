@@ -5,7 +5,6 @@ import { fuzz, getInput } from './utils';
 import { mount } from 'enzyme';
 import { GraphQLString, GraphQLList, GraphQLInt } from 'graphql';
 
-// TODO docs
 const containsInt = (w, n) =>
   w.containsMatchingElement(<input readOnly type="number" value={n} />);
 

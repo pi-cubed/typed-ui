@@ -11,7 +11,6 @@ import { fuzz, getInput } from './utils';
 import Enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-// setup Enzyme
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('StringOutput', () => {
