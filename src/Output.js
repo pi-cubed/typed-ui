@@ -18,12 +18,16 @@ import {
 import { ListOutput, ObjectOutput } from './HigherOrderOutput';
 import { ObjectInput } from './HigherOrderInput';
 
-// TODO docs
+/**
+ * TODO docs
+ */
 const output = Component => (data, onChange) => (
   <Component data={data} onChange={onChange} />
 );
 
-// TODO docs
+/**
+ * TODO docs
+ */
 const componentNames = {
   Int: IntegerOutput,
   Float: FloatOutput,
@@ -31,8 +35,9 @@ const componentNames = {
   String: StringOutput,
   ID: StringOutput
 };
-
-// TODO docs
+/**
+ * TODO docs
+ */
 export const getOutput = ofType => {
   if (isListType(ofType)) {
     return (data, onChange) => (
@@ -68,7 +73,9 @@ export const getOutput = ofType => {
   return output(componentNames[getNamedType(ofType).name]);
 };
 
-// TODO docs
+/**
+ * TODO docs
+ */
 export class Output extends Component {
   constructor(props) {
     super(props);
@@ -78,6 +85,9 @@ export class Output extends Component {
     this.output = getOutput(this.props.type);
   }
 
+  /**
+   * TODO docs
+   */
   onChange = data => {
     this.setState({ data }, () => this.props.onChange(this.state.data));
   };

@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { getInput, defaultInput } from './Input';
 
-// TODO docs
+/**
+ * TODO docs
+ */
 const updateArray = (array, index, value) => {
   return [...array.slice(0, index), value, ...array.slice(index + 1)];
 };
@@ -28,6 +30,9 @@ export class ListInput extends Component {
     };
   }
 
+  /**
+   * TODO docs
+   */
   onChange(index) {
     return value =>
       this.setState(
@@ -38,6 +43,9 @@ export class ListInput extends Component {
       );
   }
 
+  /**
+   * TODO docs
+   */
   addItem() {
     this.setState({
       list: this.state.list.concat(this.default)
@@ -93,6 +101,9 @@ export class ObjectInput extends Component {
     };
   }
 
+  /**
+   * TODO docs
+   */
   onChange(key) {
     return value => {
       this.setState(

@@ -1,6 +1,8 @@
 import React from 'react';
 
-// TODO docs
+/**
+ * TODO docs
+ */
 const Input = props => (
   <input {...props} onChange={e => props.onChange(e.target.value)} />
 );
