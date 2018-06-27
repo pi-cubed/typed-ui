@@ -3,12 +3,10 @@
 [![Build Status][build-badge]][build]
 [![npm Package][npm-version-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
-[![BitHound][bithound-badge]][bithound]
 [![Known Vulnerabilities][synk-badge]][synk]
 [![License][license-badge]][license]
 [![Contributors][contributors-badge]][contributors]
 [![npm Downloads][npm-downloads-badge]][npm]
-[![Semantic Release][semantic-release-badge]][semantic-release]
 [![Commitizen Friendly][commitizen-badge]][commitizen]
 [![Github Stars][github-stars-badge]][github]
 
