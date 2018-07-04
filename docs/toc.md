@@ -1,6 +1,6 @@
 # Table of contents
 
-### typed-ui (0.3.6)
+### typed-ui (0.3.7)
 
 ---
 
