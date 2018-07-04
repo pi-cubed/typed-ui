@@ -1,12 +1,11 @@
-# Table of content
+# Table of contents
 
-### typed-ui (0.3.0)
+### typed-ui (0.3.7)
 
 ---
 
 * [API Reference](api.md)
   * [Put](api.md#Put)
-  * [Action](api.md#Action)
   * [ObjectOutput](api.md#ObjectOutput)
   * [ObjectInput](api.md#ObjectInput)
   * [ListOutput](api.md#ListOutput)

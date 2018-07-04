@@ -3,12 +3,10 @@
 [![Build Status][build-badge]][build]
 [![npm Package][npm-version-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
-[![BitHound][bithound-badge]][bithound]
 [![Known Vulnerabilities][synk-badge]][synk]
 [![License][license-badge]][license]
 [![Contributors][contributors-badge]][contributors]
 [![npm Downloads][npm-downloads-badge]][npm]
-[![Semantic Release][semantic-release-badge]][semantic-release]
 [![Commitizen Friendly][commitizen-badge]][commitizen]
 [![Github Stars][github-stars-badge]][github]
 
@@ -51,22 +49,36 @@ https://typed-ui.js.org
 ```js
 import React from 'react';
 import { render } from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost';
-import { Action } from '../../src';
-
-const uri = 'http://proxy-graphql.herokuapp.com';
+import { GraphQLInputObjectType, GraphQLString } from 'graphql';
+import { Put } from '../../src';
 
 const Demo = () => (
-  <div>
-    <h1>typed-ui Demo</h1>
-    <ApolloProvider client={new ApolloClient({ uri })}>
-      <Action
-        url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
-        action={'query Q { users { name } }'}
-      />
-    </ApolloProvider>
-  </div>
+  <Put
+    type={
+      new GraphQLInputObjectType({
+        name: 'typed-ui Demo',
+        fields: {
+          object: {
+            type: new GraphQLInputObjectType({
+              name: 'This is the name of the outer object.',
+              fields: {
+                outer: {
+                  type: new GraphQLInputObjectType({
+                    name: 'This is the name of the inner object',
+                    fields: {
+                      inner: { type: GraphQLString }
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      })
+    }
+    data={{ object: { outer: { inner: '' } } }}
+    onChange={console.log}
+  />
 );
 
 render(<Demo />, document.querySelector('#demo'));
@@ -77,10 +89,6 @@ render(<Demo />, document.querySelector('#demo'));
 ## Members
 
 <dl>
-<dt><a href="#Action">Action</a> ⇒ <code>Component</code></dt>
-<dd><p>Return component outputting the response of the GraphQL action. Expects to be
-  passed ApolloProvider props.</p>
-</dd>
 <dt><a href="#ListInput">ListInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list input component with change events handled by the given callback.</p>
 </dd>
@@ -127,44 +135,6 @@ render(<Demo />, document.querySelector('#demo'));
 <dd><p>Component for displaying GraphQL data</p>
 </dd>
 </dl>
-
-<a name="Action"></a>
-
-## Action ⇒ <code>Component</code>
-
-Return component outputting the response of the GraphQL action. Expects to be
-passed ApolloProvider props.
-
-**Kind**: global variable  
-**Returns**: <code>Component</code> - A list around the items.
-
-| Param            | Type                                       | Description               |
-| ---------------- | ------------------------------------------ | ------------------------- |
-| props            | <code>Object</code>                        | The component props.      |
-| props.url        | <code>string</code>                        | The GraphQL api endpoint. |
-| props.action     | <code>string</code>                        | The GraphQL action.       |
-| [props.onChange] | [<code>onChange</code>](#Action..onChange) | The data change handler.  |
-
-**Example** _(Display users&#x27; names from GraphQL API)_
-
-```js
-<Action
-  url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
-  action={'query Q { users { name } }'}
-/>
-```
-
-<a name="Action..onChange"></a>
-
-### Action~onChange : <code>function</code>
-
-This callback handles Action change events.
-
-**Kind**: inner typedef of [<code>Action</code>](#Action)
-
-| Param | Type            |
-| ----- | --------------- |
-| value | <code>\*</code> |
 
 <a name="ListInput"></a>
 
@@ -221,7 +191,7 @@ Returns an object input component with change events handled by the given callba
 <ObjectInput
   name="This is the name of the input object."
   fields={{
-    name: { type: GraphQLString }
+    x: { type: GraphQLString }
   }}
   onChange={console.log}
 />
@@ -299,7 +269,7 @@ Returns a object surrounding the supplied object data.
 | props.data     | <code>Object</code>                              | The object data.                  |
 | props.onChange | [<code>onChange</code>](#ObjectOutput..onChange) | The handler for change events.    |
 
-**Example** _(Display a object of one string)_
+**Example** _(Display an object of one string)_
 
 ```js
 <ObjectOutput

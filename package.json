@@ -1,10 +1,14 @@
 {
   "name": "typed-ui",
-  "version": "0.3.5",
+  "version": "0.3.7",
   "description": "Generic UI for the GraphQL Schema Language",
   "browser": "lib/index.js",
   "module": "es/index.js",
-  "files": ["es", "lib", "umd"],
+  "files": [
+    "es",
+    "lib",
+    "umd"
+  ],
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
@@ -13,8 +17,7 @@
     "test:coverage": "yarn test --coverage",
     "test:watch": "yarn test:coverage --server",
     "docs:prepare": "gitbook install",
-    "docs:api":
-      "jsdoc2md --configure tooling/docs/jsdoc.json --files src/**/*.js > docs/api.md",
+    "docs:api": "jsdoc2md --configure tooling/docs/jsdoc.json --files src/**/*.js > docs/api.md",
     "docs:build": "run-s docs:prepare docs:api && gitbook build",
     "docs:serve": "yarn docs:build && gitbook serve",
     "docs:clean": "rm -rf _book",
@@ -64,7 +67,12 @@
   "homepage": "https://github.com/pi-cubed/typed-ui",
   "license": "MIT",
   "repository": "https://github.com/pi-cubed/typed-ui",
-  "keywords": ["react-component", "graphql", "react", "ui"],
+  "keywords": [
+    "react-component",
+    "graphql",
+    "react",
+    "ui"
+  ],
   "bugs": "https://github.com/pi-cubed/typed-ui/issues",
   "contributors": [
     {
