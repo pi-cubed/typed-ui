@@ -34,19 +34,11 @@ import {
 } from 'src/PrimitiveOutput';
 import { ListOutput, ObjectOutput } from 'src/HigherOrderOutput';
 
-const putEquals = (data, type, Expected, options, name) => () => {
+const putEquals = (data, type, Expected, props) => () => {
   const onChange = () => {};
   equals(
     <Put type={type} data={data} onChange={onChange} />,
-    <Expected
-      type={type}
-      data={data}
-      onChange={onChange}
-      options={options}
-      fields={options}
-      ofType={options}
-      name={name}
-    />
+    <Expected type={type} data={data} onChange={onChange} {...props} />
   );
 };
 
@@ -82,8 +74,10 @@ describe('Put', () => {
           fields
         }),
         ObjectInput,
-        fields,
-        name
+        {
+          fields,
+          name
+        }
       )();
     });
 
@@ -126,7 +120,9 @@ describe('Put', () => {
 
     it(
       'is ListOutput for List of integers',
-      putEquals([1, 2, 3], new GraphQLList(GraphQLInt), ListOutput, GraphQLInt)
+      putEquals([1, 2, 3], new GraphQLList(GraphQLInt), ListOutput, {
+        ofType: GraphQLInt
+      })
     );
 
     it(
@@ -135,7 +131,7 @@ describe('Put', () => {
         [['a'], ['b', 'c']],
         new GraphQLList(new GraphQLList(GraphQLString)),
         ListOutput,
-        new GraphQLList(GraphQLString)
+        { ofType: new GraphQLList(GraphQLString) }
       )
     );
 
@@ -150,8 +146,10 @@ describe('Put', () => {
           fields
         }),
         ObjectOutput,
-        fields,
-        name
+        {
+          fields,
+          name
+        }
       )();
     });
 
