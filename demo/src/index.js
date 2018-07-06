@@ -1,22 +1,35 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost';
 import { GraphQLInputObjectType, GraphQLString } from 'graphql';
-import { Action } from '../../src';
-
-const uri = 'http://proxy-graphql.herokuapp.com';
+import { Put } from '../../src';
 
 const Demo = () => (
-  <div>
-    <h1>typed-ui Demo</h1>
-    <ApolloProvider client={new ApolloClient({ uri })}>
-      <Action
-        url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
-        action={'query Q { users { name } }'}
-      />
-    </ApolloProvider>
-  </div>
+  <Put
+    type={
+      new GraphQLInputObjectType({
+        name: 'typed-ui Demo',
+        fields: {
+          object: {
+            type: new GraphQLInputObjectType({
+              name: 'This is the name of the outer object.',
+              fields: {
+                outer: {
+                  type: new GraphQLInputObjectType({
+                    name: 'This is the name of the inner object',
+                    fields: {
+                      inner: { type: GraphQLString }
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      })
+    }
+    data={{ object: { outer: { inner: '' } } }}
+    onChange={console.log}
+  />
 );
 
 render(<Demo />, document.querySelector('#demo'));

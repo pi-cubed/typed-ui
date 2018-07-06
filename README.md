@@ -3,12 +3,10 @@
 [![Build Status][build-badge]][build]
 [![npm Package][npm-version-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
-[![BitHound][bithound-badge]][bithound]
 [![Known Vulnerabilities][synk-badge]][synk]
 [![License][license-badge]][license]
 [![Contributors][contributors-badge]][contributors]
 [![npm Downloads][npm-downloads-badge]][npm]
-[![Semantic Release][semantic-release-badge]][semantic-release]
 [![Commitizen Friendly][commitizen-badge]][commitizen]
 [![Github Stars][github-stars-badge]][github]
 
@@ -49,33 +47,39 @@ https://typed-ui.js.org
 ## Usage
 
 ```js
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { GraphQLInputObjectType, GraphQLString } from 'graphql';
-import { StringOutput, ObjectInput } from '../../src';
+import { Put } from '../../src';
 
-class Demo extends Component {
-  render() {
-    return (
-      <div>
-        <h1>typed-ui Demo</h1>
-        <StringOutput data="This is a StringOutput. Below is a nested ObjectInput." />
-        <ObjectInput
-          name="This is the name of the outer object."
-          fields={{
-            top: {
-              type: new GraphQLInputObjectType({
-                name: 'This is the name of the inner object',
-                fields: { hew: { type: GraphQLString } }
-              })
-            }
-          }}
-          onChange={console.log}
-        />
-      </div>
-    );
-  }
-}
+const Demo = () => (
+  <Put
+    type={
+      new GraphQLInputObjectType({
+        name: 'typed-ui Demo',
+        fields: {
+          object: {
+            type: new GraphQLInputObjectType({
+              name: 'This is the name of the outer object.',
+              fields: {
+                outer: {
+                  type: new GraphQLInputObjectType({
+                    name: 'This is the name of the inner object',
+                    fields: {
+                      inner: { type: GraphQLString }
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      })
+    }
+    data={{ object: { outer: { inner: '' } } }}
+    onChange={console.log}
+  />
+);
 
 render(<Demo />, document.querySelector('#demo'));
 ```
@@ -116,7 +120,7 @@ render(<Demo />, document.querySelector('#demo'));
 <dd><p>Returns a div surrounding the supplied data.</p>
 </dd>
 <dt><a href="#EnumOutput">EnumOutput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns a readonly multiple select component displaying the supplied data.</p>
+<dd><p>Returns a readonly component displaying the supplied data.</p>
 </dd>
 <dt><a href="#BooleanOutput">BooleanOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a readonly checkbox displaying the value of the supplied boolean.</p>
@@ -126,6 +130,9 @@ render(<Demo />, document.querySelector('#demo'));
 </dd>
 <dt><a href="#FloatOutput">FloatOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a readonly number input component displaying the float.</p>
+</dd>
+<dt><a href="#Put">Put</a> ⇒ <code>Component</code></dt>
+<dd><p>Component for displaying GraphQL data</p>
 </dd>
 </dl>
 
@@ -144,7 +151,7 @@ Returns a list input component with change events handled by the given callback.
 | props.ofType   | <code>GraphQLType</code>                      | The type of items in the list. |
 | props.onChange | [<code>onChange</code>](#ListInput..onChange) | The handler for change events. |
 
-**Example** _(Logging to console)_
+**Example** _(Log list input to the console)_
 
 ```js
 <ListInput ofType={GraphQLString} onChange={console.log} />
@@ -178,13 +185,13 @@ Returns an object input component with change events handled by the given callba
 | props.fields   | <code>Object</code>                             | The input object fields.       |
 | props.onChange | [<code>onChange</code>](#ObjectInput..onChange) | The handler for change events. |
 
-**Example** _(Logging to console)_
+**Example** _(Log object input to the console)_
 
 ```js
 <ObjectInput
   name="This is the name of the input object."
   fields={{
-    name: { type: GraphQLString }
+    x: { type: GraphQLString }
   }}
   onChange={console.log}
 />
@@ -211,11 +218,12 @@ Returns a list surrounding the supplied list data.
 **Kind**: global variable  
 **Returns**: <code>Component</code> - A list surrounding the list items.
 
-| Param        | Type                                | Description                 |
-| ------------ | ----------------------------------- | --------------------------- |
-| props        | <code>Object</code>                 | The component props.        |
-| props.ofType | <code>GraphQLType</code>            | The type of the list items. |
-| props.data   | <code>GraphQLList.&lt;\*&gt;</code> | The list data.              |
+| Param          | Type                                           | Description                    |
+| -------------- | ---------------------------------------------- | ------------------------------ |
+| props          | <code>Object</code>                            | The component props.           |
+| props.ofType   | <code>GraphQLType</code>                       | The type of the list items.    |
+| props.data     | <code>Array.&lt;\*&gt;</code>                  | The list data.                 |
+| props.onChange | [<code>onChange</code>](#ListOutput..onChange) | The handler for change events. |
 
 **Example** _(Display a list of strings)_
 
@@ -232,6 +240,18 @@ Returns a list surrounding the supplied list data.
 />
 ```
 
+<a name="ListOutput..onChange"></a>
+
+### ListOutput~onChange : <code>function</code>
+
+This callback handles ListOutput change events.
+
+**Kind**: inner typedef of [<code>ListOutput</code>](#ListOutput)
+
+| Param | Type                          |
+| ----- | ----------------------------- |
+| value | <code>Array.&lt;\*&gt;</code> |
+
 <a name="ObjectOutput"></a>
 
 ## ObjectOutput ⇒ <code>Component</code>
@@ -241,14 +261,15 @@ Returns a object surrounding the supplied object data.
 **Kind**: global variable  
 **Returns**: <code>Component</code> - A object surrounding the object items.
 
-| Param        | Type                                  | Description                       |
-| ------------ | ------------------------------------- | --------------------------------- |
-| props        | <code>Object</code>                   | The component props.              |
-| props.name   | <code>string</code>                   | The name of the object.           |
-| props.fields | <code>Object</code>                   | The type of fields of the object. |
-| props.data   | <code>GraphQLObject.&lt;\*&gt;</code> | The object data.                  |
+| Param          | Type                                             | Description                       |
+| -------------- | ------------------------------------------------ | --------------------------------- |
+| props          | <code>Object</code>                              | The component props.              |
+| props.name     | <code>string</code>                              | The name of the object.           |
+| props.fields   | <code>Object</code>                              | The type of fields of the object. |
+| props.data     | <code>Object</code>                              | The object data.                  |
+| props.onChange | [<code>onChange</code>](#ObjectOutput..onChange) | The handler for change events.    |
 
-**Example** _(Display a object of one string)_
+**Example** _(Display an object of one string)_
 
 ```js
 <ObjectOutput
@@ -259,6 +280,18 @@ Returns a object surrounding the supplied object data.
   data={{ hew: 'This is a string field called hew.' }}
 />
 ```
+
+<a name="ObjectOutput..onChange"></a>
+
+### ObjectOutput~onChange : <code>function</code>
+
+This callback handles ObjectOutput change events.
+
+**Kind**: inner typedef of [<code>ObjectOutput</code>](#ObjectOutput)
+
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>Object</code> |
 
 <a name="StringInput"></a>
 
@@ -274,7 +307,7 @@ Returns a text field with change events handled by the given callback.
 | props          | <code>Object</code>                             | The component props.           |
 | props.onChange | [<code>onChange</code>](#StringInput..onChange) | The handler for change events. |
 
-**Example** _(Logging to console)_
+**Example** _(Log string input to the console)_
 
 ```js
 <StringInput onChange={console.log} />
@@ -306,7 +339,7 @@ Returns an integer input component with change events handled by the given callb
 | props          | <code>Object</code>                              | The component props.           |
 | props.onChange | [<code>onChange</code>](#IntegerInput..onChange) | The handler for change events. |
 
-**Example** _(Logging to console)_
+**Example** _(Log integer input to the console)_
 
 ```js
 <IntegerInput onChange={console.log} />
@@ -338,7 +371,7 @@ Returns a float input component with change events handled by the given callback
 | props          | <code>Object</code>                            | The component props.           |
 | props.onChange | [<code>onChange</code>](#FloatInput..onChange) | The handler for change events. |
 
-**Example** _(Logging to console)_
+**Example** _(Log float input to the console)_
 
 ```js
 <FloatInput onChange={console.log} />
@@ -370,7 +403,7 @@ Returns a boolean input component with change events handled by the given callba
 | props          | <code>Object</code>                              | The component props.           |
 | props.onChange | [<code>onChange</code>](#BooleanInput..onChange) | The handler for change events. |
 
-**Example** _(Logging to console)_
+**Example** _(Log boolean input to the console)_
 
 ```js
 <BooleanInput onChange={console.log} />
@@ -401,12 +434,13 @@ Returns a select component with change events handled by the given callback.
 | -------------- | --------------------------------------------- | ------------------------------ |
 | props          | <code>Object</code>                           | The component props.           |
 | props.options  | <code>Array.&lt;string&gt;</code>             | = The enum options.            |
+| props.data     | <code>string</code>                           | = The enum data.               |
 | props.onChange | [<code>onChange</code>](#EnumInput..onChange) | The handler for change events. |
 
-**Example** _(Logging to console)_
+**Example** _(Log enum input to the console)_
 
 ```js
-<EnumInput options={['a', 'b', 'c']} onChange={console.log} />
+<EnumInput options={['a', 'b', 'c']} data="b" onChange={console.log} />
 ```
 
 <a name="EnumInput..onChange"></a>
@@ -417,9 +451,9 @@ This callback handles EnumInput change events.
 
 **Kind**: inner typedef of [<code>EnumInput</code>](#EnumInput)
 
-| Param | Type                                        |
-| ----- | ------------------------------------------- |
-| value | <code>Object.&lt;string, boolean&gt;</code> |
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>string</code> |
 
 <a name="StringOutput"></a>
 
@@ -445,25 +479,20 @@ Returns a div surrounding the supplied data.
 
 ## EnumOutput ⇒ <code>Component</code>
 
-Returns a readonly multiple select component displaying the supplied data.
+Returns a readonly component displaying the supplied data.
 
 **Kind**: global variable  
-**Returns**: <code>Component</code> - A select component displaying the data.
+**Returns**: <code>Component</code> - A component displaying the enum.
 
-| Param | Type                                        | Description          |
-| ----- | ------------------------------------------- | -------------------- |
-| props | <code>Object</code>                         | The component props. |
-| data  | <code>Object.&lt;string, boolean&gt;</code> | The enum data.       |
+| Param | Type                | Description          |
+| ----- | ------------------- | -------------------- |
+| props | <code>Object</code> | The component props. |
+| data  | <code>string</code> | The enum data.       |
 
-**Example** _(Display an enum selection)_
+**Example** _(Display an enum)_
 
 ```js
-const data = {
-  a: false,
-  b: true,
-  c: true
-};
-<EnumOutput data={data} />;
+<EnumOutput data="ABC" />
 ```
 
 <a name="BooleanOutput"></a>
@@ -524,6 +553,57 @@ Returns a readonly number input component displaying the float.
 
 ```js
 <FloatOutput data={true} />
+```
+
+<a name="Put"></a>
+
+## Put ⇒ <code>Component</code>
+
+Component for displaying GraphQL data
+
+**Kind**: global variable  
+**Returns**: <code>Component</code> - A component displaying the data.
+
+| Param            | Type                                       | Description                          |
+| ---------------- | ------------------------------------------ | ------------------------------------ |
+| props            | <code>Object</code>                        | The component props.                 |
+| props.type       | <code>GraphQLType</code>                   | The type of the data.                |
+| [props.data]     | <code>Object</code>                        | The initial data.                    |
+| [props.onChange] | [<code>onChange</code>](#Output..onChange) | The handler for changes in the data. |
+
+**Example** _(Display a string)_
+
+```js
+<Put type={GraphQLString} data="abc" />
+```
+
+**Example** _(Display an object)_
+
+```js
+<Put
+  type={
+    new GraphQLObjectType({
+      name: 'abc',
+      fields: { w: { type: GraphQLString } }
+    })
+  }
+  data={{ w: 'xyz' }}
+/>
+```
+
+**Example** _(Log object input to the console)_
+
+```js
+<Put
+  type={
+    new GraphQLInputObjectType({
+      name: 'abc',
+      fields: { w: { type: GraphQLString } }
+    })
+  }
+  data={{ w: '' }}
+  onChange={console.log}
+/>
 ```
 
 ## Maintainers

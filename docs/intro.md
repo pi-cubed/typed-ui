@@ -45,33 +45,39 @@ $ yarn add typed-ui
 ## Usage
 
 ```js
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { GraphQLInputObjectType, GraphQLString } from 'graphql';
-import { StringOutput, ObjectInput } from '../../src';
+import { Put } from '../../src';
 
-class Demo extends Component {
-  render() {
-    return (
-      <div>
-        <h1>typed-ui Demo</h1>
-        <StringOutput data="This is a StringOutput. Below is a nested ObjectInput." />
-        <ObjectInput
-          name="This is the name of the outer object."
-          fields={{
-            top: {
-              type: new GraphQLInputObjectType({
-                name: 'This is the name of the inner object',
-                fields: { hew: { type: GraphQLString } }
-              })
-            }
-          }}
-          onChange={console.log}
-        />
-      </div>
-    );
-  }
-}
+const Demo = () => (
+  <Put
+    type={
+      new GraphQLInputObjectType({
+        name: 'typed-ui Demo',
+        fields: {
+          object: {
+            type: new GraphQLInputObjectType({
+              name: 'This is the name of the outer object.',
+              fields: {
+                outer: {
+                  type: new GraphQLInputObjectType({
+                    name: 'This is the name of the inner object',
+                    fields: {
+                      inner: { type: GraphQLString }
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      })
+    }
+    data={{ object: { outer: { inner: '' } } }}
+    onChange={console.log}
+  />
+);
 
 render(<Demo />, document.querySelector('#demo'));
 ```

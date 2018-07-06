@@ -6,6 +6,8 @@ import {
   GraphQLString,
   GraphQLList,
   GraphQLInt,
+  GraphQLEnumType,
+  GraphQLNonNull,
   GraphQLInputObjectType
 } from 'graphql';
 import { setTarget } from './utils';
@@ -17,6 +19,35 @@ describe('ListInput', () => {
       value: data
     })(res => <ListInput ofType={GraphQLString} onChange={res} />);
     expect(value).toEqual(data);
+  });
+
+  it('handles list of non null string inputs', async () => {
+    const data = 'abc';
+    const value = await setTarget('input[type="text"]', 'change', {
+      value: data
+    })(res => (
+      <ListInput ofType={GraphQLNonNull(GraphQLString)} onChange={res} />
+    ));
+    expect(value).toEqual(data);
+  });
+
+  it('handles list of enum inputs', async () => {
+    const value = 'c';
+    const actual = await setTarget('select', 'change', {
+      value
+    })(res => (
+      <ListInput
+        ofType={
+          new GraphQLEnumType({
+            name: 'x',
+            values: { a: { value: 0 }, b: { value: 1 }, [value]: { value: 2 } }
+          })
+        }
+        data=""
+        onChange={res}
+      />
+    ));
+    expect(actual).toEqual(value);
   });
 
   it('handles list of list of integer inputs', async () => {
@@ -46,7 +77,11 @@ describe('ListInput', () => {
 
     expect(wrapper.find('input[type="text"]').length).toEqual(3);
   });
+
+  // TODO test add
 });
+
+const setInput = 0;
 
 describe('ObjectInput', () => {
   it('handles singular string field', async () => {
