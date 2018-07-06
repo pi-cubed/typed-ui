@@ -41,8 +41,15 @@ const isInput = type =>
  * />
  */
 export const Put = props => {
-  const Component = isInput(props.type) ? Input : Output;
-  return <Component onChange={props.onChange || (() => {})} {...props} />;
+  const input = isInput(props.type);
+  const Component = input ? Input : Output;
+  return (
+    <Component
+      onChange={props.onChange || (() => {})}
+      isInput={input}
+      {...props}
+    />
+  );
 };
 /**
  * This callback handles Put change events.

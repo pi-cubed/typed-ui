@@ -25,41 +25,7 @@ import {
   EnumOutput
 } from './PrimitiveOutput';
 import { ObjectInput } from './HigherOrderInput';
-import { withProps, withRender } from './utils';
-
-/**
- * Component for displaying GraphQL output types of higher order.
- *
- * @param {GraphQLOutputType} ofType - The type of the input.
- * @param {Object.<GraphQLOutputType, Component>} ofType - Map from GraphQL
- *   input types to components.
- * @returns {React.Element} An element displaying the input.
- */
-export const HigherOrderOutput = ({
-  ofType,
-  typeComponentMap = {},
-  ...props
-}) => {
-  const renderMap = {
-    ...(typeComponentMap.input || {}),
-    ...defaultTypeComponentMap
-  };
-  const render =
-    renderMap[ofType.constructor.name] || renderMap[getNamedType(ofType).name];
-  return render({
-    ...props,
-    ...ofType,
-    fields: ofType.getFields && ofType.getFields()
-  });
-};
-/**
- * This callback handles listOutput change events.
- *
- * @callback listOutput~onChange
- * @param {Array.<*>} value
- *
- * @private
- */
+import { withProps, getComponent } from './utils';
 
 /**
  * Returns a list surrounding the supplied list data.
@@ -164,3 +130,13 @@ const defaultTypeComponentMap = {
   GraphQLList: ListOutput,
   GraphQLNonNull: NonNullOutput
 };
+
+/**
+ * Component for displaying GraphQL output types of higher order.
+ *
+ * @param {GraphQLOutputType} ofType - The type of the input.
+ * @param {Object.<GraphQLOutputType, Component>} ofType - Map from GraphQL
+ *   input types to components.
+ * @returns {React.Element} An element displaying the input.
+ */
+export const HigherOrderOutput = getComponent(defaultTypeComponentMap);
