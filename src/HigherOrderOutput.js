@@ -87,10 +87,7 @@ export const ObjectOutput = ({ data, fields, onChange, ...props }) => (
             {...props}
             ofType={fields[k].type}
             data={data[k]}
-            onChange={val => {
-              console.log(val, _.keys(data[k]));
-              onChange(_.assign({}, data, { [k]: val }));
-            }}
+            onChange={val => onChange(_.assign({}, data, { [k]: val }))}
           />
         </li>
       ))}
