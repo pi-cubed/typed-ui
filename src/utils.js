@@ -6,15 +6,6 @@ import { getNamedType } from 'graphql';
  *
  * @private
  */
-export const withProps = WC => props => newProps => (
-  <WC {...newProps} {...props} />
-);
-
-/**
- * TODO docs
- *
- * @private
- */
 export const updateArray = (array, index, value) => {
   return [...array.slice(0, index), value, ...array.slice(index + 1)];
 };
