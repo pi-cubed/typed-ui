@@ -25,7 +25,7 @@ import {
   EnumOutput
 } from './PrimitiveOutput';
 import { ObjectInput } from './HigherOrderInput';
-import { withProps, getComponent } from './utils';
+import { withProps, makeComponent, getTypeComponentMap } from './utils';
 
 /**
  * Returns a list surrounding the supplied list data.
@@ -106,7 +106,10 @@ export const ObjectOutput = ({ data, fields, onChange, ...props }) => (
  * A component for non null inputs. Bases component selection on name of type.
  */
 export const NonNullOutput = ({ ofType: { name }, ...props }) =>
-  defaultTypeComponentMap[name](props);
+  getTypeComponentMap(defaultTypeComponentMap, props)[name]({
+    ...props,
+    defaultComponent: defaultTypeComponentMap[name]
+  });
 
 /**
  * A map from GraphQL types to outputs.
@@ -119,11 +122,6 @@ const defaultTypeComponentMap = {
   Boolean: BooleanOutput,
   String: StringOutput,
   ID: StringOutput,
-  GraphQLInt: IntegerOutput,
-  GraphQLFloat: FloatOutput,
-  GraphQLBoolean: BooleanOutput,
-  GraphQLString: StringOutput,
-  GraphQLID: StringOutput,
   GraphQLEnumType: EnumOutput,
   GraphQLObjectType: ObjectOutput,
   GraphQLInputObjectType: ObjectInput,
@@ -139,4 +137,4 @@ const defaultTypeComponentMap = {
  *   input types to components.
  * @returns {React.Element} An element displaying the input.
  */
-export const HigherOrderOutput = getComponent(defaultTypeComponentMap);
+export const HigherOrderOutput = makeComponent(defaultTypeComponentMap);

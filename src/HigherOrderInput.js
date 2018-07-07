@@ -25,7 +25,12 @@ import {
   BooleanInput,
   EnumInput
 } from './PrimitiveInput';
-import { withProps, updateArray, getComponent } from './utils';
+import {
+  withProps,
+  updateArray,
+  makeComponent,
+  getTypeComponentMap
+} from './utils';
 
 /**
  * TODO docs and do
@@ -205,9 +210,11 @@ export class ObjectInputComponent extends Component {
 /**
  * TODO
  * A component for non null inputs. Bases component selection on name of type.
- */
-export const NonNullInput = ({ ofType: { name }, ...props }) =>
-  defaultTypeComponentMap[name](props);
+ */ export const NonNullInput = ({ ofType: { name }, ...props }) =>
+  getTypeComponentMap(defaultTypeComponentMap, props)[name]({
+    ...props,
+    defaultComponent: defaultTypeComponentMap[name]
+  });
 
 /**
  * A map from GraphQL scalars to primitve inputs.
@@ -220,11 +227,6 @@ const defaultTypeComponentMap = {
   Boolean: BooleanInput,
   String: StringInput,
   ID: StringInput,
-  GraphQLInt: IntegerInput,
-  GraphQLFloat: FloatInput,
-  GraphQLBoolean: BooleanInput,
-  GraphQLString: StringInput,
-  GraphQLID: StringInput,
   GraphQLEnumType: EnumInput,
   GraphQLInputObjectType: ObjectInput,
   GraphQLList: ListInput,
@@ -239,4 +241,4 @@ const defaultTypeComponentMap = {
  *   input types to components.
  * @returns {React.Element} An element displaying the input.
  */
-export const HigherOrderInput = getComponent(defaultTypeComponentMap);
+export const HigherOrderInput = makeComponent(defaultTypeComponentMap);

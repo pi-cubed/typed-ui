@@ -166,4 +166,222 @@ describe('Put', () => {
       )
     );
   });
+
+  describe('typeComponentMap', () => {
+    const abc = () => <div>abc</div>;
+
+    it('can customize strings', () =>
+      equals(
+        <Put
+          type={GraphQLString}
+          typeComponentMap={{
+            output: { String: abc }
+          }}
+        />,
+        abc()
+      ));
+
+    it('can customize integers', () =>
+      equals(
+        <Put
+          type={GraphQLInt}
+          typeComponentMap={{
+            output: { Int: abc }
+          }}
+        />,
+        abc()
+      ));
+
+    it('can customize floats', () =>
+      equals(
+        <Put
+          type={GraphQLFloat}
+          typeComponentMap={{
+            output: { Float: abc }
+          }}
+        />,
+        abc()
+      ));
+
+    it('can customize booleans', () =>
+      equals(
+        <Put
+          type={GraphQLBoolean}
+          typeComponentMap={{
+            output: { Boolean: abc }
+          }}
+        />,
+        abc()
+      ));
+
+    it('can customize IDs', () =>
+      equals(
+        <Put
+          type={GraphQLID}
+          typeComponentMap={{
+            output: { ID: abc }
+          }}
+        />,
+        abc()
+      ));
+
+    it('can customize types within higher order types', () =>
+      equals(
+        <Put
+          type={GraphQLNonNull(GraphQLInt)}
+          data={5}
+          typeComponentMap={{
+            output: {
+              Int: ({ data, defaultComponent, ...props }) =>
+                defaultComponent({ data: data + 1, ...props })
+            }
+          }}
+        />,
+        <Put type={GraphQLNonNull(GraphQLInt)} data={6} />
+      ));
+
+    it('can customize non null types', () =>
+      equals(
+        <Put
+          type={GraphQLNonNull(GraphQLInt)}
+          data={5}
+          typeComponentMap={{
+            output: {
+              GraphQLNonNull: ({ data, defaultComponent, ...props }) =>
+                defaultComponent({ data: data + 1, ...props })
+            }
+          }}
+        />,
+        <Put type={GraphQLNonNull(GraphQLInt)} data={6} />
+      ));
+
+    it('can customize lists', () =>
+      equals(
+        <Put
+          type={GraphQLList(GraphQLInt)}
+          data={[1, 2, 3]}
+          typeComponentMap={{
+            output: {
+              GraphQLList: ({ data, defaultComponent, ...props }) =>
+                defaultComponent({ data: _.concat(data, 4), ...props })
+            }
+          }}
+        />,
+        <Put type={GraphQLList(GraphQLInt)} data={[1, 2, 3, 4]} />
+      ));
+
+    it('can customize enums', () =>
+      equals(
+        <Put
+          type={
+            new GraphQLEnumType({
+              name: '',
+              values: { a: {}, b: {} }
+            })
+          }
+          data={['a']}
+          typeComponentMap={{
+            output: {
+              GraphQLEnumType: ({ data, defaultComponent, ...props }) =>
+                defaultComponent({ data: ['b'], ...props })
+            }
+          }}
+        />,
+        <Put
+          type={
+            new GraphQLEnumType({
+              name: '',
+              values: { a: {}, b: {} }
+            })
+          }
+          data={['b']}
+        />
+      ));
+
+    it('can customize output objects', () =>
+      equals(
+        <Put
+          type={
+            new GraphQLObjectType({
+              name: 'a',
+              fields: { a: { type: GraphQLInt } }
+            })
+          }
+          data={{ a: 0 }}
+          typeComponentMap={{
+            output: {
+              GraphQLObjectType: ({ data, defaultComponent, ...props }) =>
+                defaultComponent({ data: { a: 1 }, ...props })
+            }
+          }}
+        />,
+        <Put
+          type={
+            new GraphQLObjectType({
+              name: 'a',
+              fields: { a: { type: GraphQLInt } }
+            })
+          }
+          data={{ a: 1 }}
+        />
+      ));
+
+    it('can customize input objects', () =>
+      equals(
+        <Put
+          type={
+            new GraphQLInputObjectType({
+              name: 'a',
+              fields: { a: { type: GraphQLInt } }
+            })
+          }
+          data={{ a: 0 }}
+          typeComponentMap={{
+            output: {
+              GraphQLInputObjectType: ({ data, defaultComponent, ...props }) =>
+                defaultComponent({ data: { a: 1 }, ...props })
+            }
+          }}
+        />,
+        <Put
+          type={
+            new GraphQLInputObjectType({
+              name: 'a',
+              fields: { a: { type: GraphQLInt } }
+            })
+          }
+          data={{ a: 1 }}
+        />
+      ));
+
+    it('can customize multiple types', () =>
+      equals(
+        <Put
+          type={
+            new GraphQLObjectType({
+              name: 'a',
+              fields: { a: { type: GraphQLInt } }
+            })
+          }
+          data={{ a: 0 }}
+          typeComponentMap={{
+            output: {
+              Int: ({ data, defaultComponent, ...props }) =>
+                defaultComponent({ data: data + 1, ...props }),
+              GraphQLObjectType: ({ data, defaultComponent, ...props }) =>
+                defaultComponent({ data: { a: 1 }, ...props })
+            }
+          }}
+        />,
+        <Put
+          type={
+            new GraphQLObjectType({
+              name: 'a',
+              fields: { a: { type: GraphQLInt } }
+            })
+          }
+          data={{ a: 2 }}
+        />
+      ));
+  });
 });
