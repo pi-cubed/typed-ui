@@ -6919,29 +6919,39 @@ webpackJsonp(
     '4/mC': function(e, t, n) {
       'use strict';
       n.d(t, 'b', function() {
-        return d;
+        return y;
       }),
         n.d(t, 'a', function() {
-          return m;
+          return g;
         });
       var r = n('GiK3'),
         i = n.n(r),
         o = n('M4fF'),
         a = n.n(o),
-        u = n('s8Fo'),
-        c = n('fcJs');
-      function l(e, t) {
+        u = (n('s8Fo'), n('fcJs')),
+        c = n('L/hj'),
+        l =
+          Object.assign ||
+          function(e) {
+            for (var t = 1; t < arguments.length; t++) {
+              var n = arguments[t];
+              for (var r in n)
+                Object.prototype.hasOwnProperty.call(n, r) && (e[r] = n[r]);
+            }
+            return e;
+          };
+      function s(e, t) {
         if (!(e instanceof t))
           throw new TypeError('Cannot call a class as a function');
       }
-      function s(e, t) {
+      function f(e, t) {
         if (!e)
           throw new ReferenceError(
             "this hasn't been initialised - super() hasn't been called"
           );
         return !t || ('object' != typeof t && 'function' != typeof t) ? e : t;
       }
-      function f(e, t) {
+      function p(e, t) {
         if ('function' != typeof t && null !== t)
           throw new TypeError(
             'Super expression must either be null or a function, not ' +
@@ -6960,78 +6970,23 @@ webpackJsonp(
               ? Object.setPrototypeOf(e, t)
               : (e.__proto__ = t));
       }
-      var p = { Int: c.d, Float: c.c, Boolean: c.a, String: c.e, ID: c.e },
-        d = function e(t) {
-          return Object(u.f)(t)
-            ? function(e, n) {
-                return i.a.createElement(y, {
-                  ofType: t.ofType,
-                  data: e,
-                  onChange: n
-                });
-              }
-            : Object(u.d)(t)
-              ? function(e, n) {
-                  return i.a.createElement(c.b, {
-                    options: a.a.keys(t.getValues()),
-                    data: e,
-                    onChange: n
-                  });
-                }
-              : Object(u.g)(t)
-                ? function(e, n) {
-                    return i.a.createElement(ObjectOutput, {
-                      name: t.name,
-                      fields: t.getFields(),
-                      data: e,
-                      onChange: n
-                    });
-                  }
-                : Object(u.e)(t)
-                  ? function(e, n) {
-                      return i.a.createElement(m, {
-                        name: t.name,
-                        fields: t.getFields(),
-                        onChange: n,
-                        data: e
-                      });
-                    }
-                  : Object(u.h)(t)
-                    ? e(t.ofType)
-                    : ((n = p[Object(u.c)(t).name]),
-                      function(e, t) {
-                        return i.a.createElement(n, { data: e, onChange: t });
-                      });
-          var n;
-        },
-        h = function(e) {
+      var d = function(e) {
           return null;
         },
-        y = function(e) {
-          return i.a.createElement(v, e);
-        },
-        v = (function(e) {
+        h = (function(e) {
           function t(n) {
-            l(this, t);
-            var r = s(this, e.call(this, n));
-            return (
-              (r.default = h(n.ofType)),
-              (r.input = d(n.ofType)),
-              (r.state = { list: [r.default] }),
-              r
-            );
+            s(this, t);
+            var r = f(this, e.call(this, n)),
+              i = n.ofType;
+            return (r.default = d(i)), (r.state = { list: [r.default] }), r;
           }
           return (
-            f(t, e),
+            p(t, e),
             (t.prototype.onChange = function(e) {
               var t = this;
               return function(n) {
                 return t.setState(
-                  {
-                    list: (function(e, t, n) {
-                      return [].concat(e.slice(0, t), [n], e.slice(t + 1));
-                    })(t.state.list, e, n)
-                  },
+                  { list: Object(c.c)(t.state.list, e, n) },
                   function() {
                     return t.props.onChange(t.state.list);
                   }
@@ -7053,7 +7008,13 @@ webpackJsonp(
                     return i.a.createElement(
                       'li',
                       { key: n },
-                      e.input(e.state.list, e.onChange(n))
+                      i.a.createElement(
+                        g,
+                        l({}, e.props, {
+                          data: e.state.list,
+                          onChange: e.onChange(n)
+                        })
+                      )
                     );
                   })
                 ),
@@ -7069,27 +7030,24 @@ webpackJsonp(
             t
           );
         })(r.Component),
-        m = function(e) {
-          return i.a.createElement(g, e);
+        y = function(e) {
+          return i.a.createElement(v, e);
         },
-        g = (function(e) {
+        v = (function(e) {
           function t(n) {
-            l(this, t);
-            var r = s(this, e.call(this, n));
+            s(this, t);
+            var r = f(this, e.call(this, n));
             return (
-              (r.input = a.a.mapValues(n.fields, function(e, t) {
-                return d(n.fields[t].type);
-              })),
               (r.state = {
                 fields: a.a.mapValues(n.fields, function(e) {
-                  return h(e.type);
+                  return d(e.type);
                 })
               }),
               r
             );
           }
           return (
-            f(t, e),
+            p(t, e),
             (t.prototype.onChange = function(e) {
               var t = this;
               return function(n) {
@@ -7117,11 +7075,18 @@ webpackJsonp(
                 i.a.createElement(
                   'ul',
                   null,
-                  Object.keys(this.state.fields).map(function(t) {
+                  a.a.keys(this.props.fields).map(function(t) {
                     return i.a.createElement(
                       'li',
                       { key: t },
-                      e.input[t](e.state.fields, e.onChange(t))
+                      i.a.createElement(
+                        g,
+                        l({}, e.props, {
+                          ofType: e.props.fields[t].type,
+                          data: e.state.fields,
+                          onChange: e.onChange(t)
+                        })
+                      )
                     );
                   })
                 )
@@ -7129,7 +7094,32 @@ webpackJsonp(
             }),
             t
           );
-        })(r.Component);
+        })(r.Component),
+        m = {
+          Int: u.d,
+          Float: u.c,
+          Boolean: u.a,
+          String: u.e,
+          ID: u.e,
+          GraphQLEnumType: u.b,
+          GraphQLInputObjectType: y,
+          GraphQLList: function(e) {
+            return i.a.createElement(h, e);
+          },
+          GraphQLNonNull: function(e) {
+            var t = e.ofType.name,
+              n = (function(e, t) {
+                var n = {};
+                for (var r in e)
+                  t.indexOf(r) >= 0 ||
+                    (Object.prototype.hasOwnProperty.call(e, r) &&
+                      (n[r] = e[r]));
+                return n;
+              })(e, ['ofType']);
+            return Object(c.a)(m, n)[t](l({}, n, { defaultComponent: m[t] }));
+          }
+        },
+        g = Object(c.b)(m);
     },
     '5IOP': function(e, t, n) {
       'use strict';
@@ -11603,12 +11593,11 @@ webpackJsonp(
       var p = function(e) {
           var t,
             n = ((t = e.type),
-            Object(o.e)(t) || (Object(o.h)(t) && Object(o.e)(t.ofType))
-              ? h
-              : d);
+            Object(o.d)(t) || (Object(o.e)(t) && Object(o.d)(t.ofType))),
+            r = n ? h : d;
           return i.a.createElement(
-            n,
-            c({ onChange: e.onChange || function() {} }, e)
+            r,
+            c({ onChange: e.onChange || function() {}, isInput: n }, e)
           );
         },
         d = (function(e) {
@@ -11622,14 +11611,20 @@ webpackJsonp(
                 });
               }),
               (r.state = { data: n.data }),
-              (r.output = Object(a.a)(r.props.type)),
               r
             );
           }
           return (
             f(t, e),
             (t.prototype.render = function() {
-              return this.output(this.state.data, this.onChange);
+              return i.a.createElement(
+                a.a,
+                c({}, this.props, {
+                  ofType: this.props.type,
+                  data: this.state.data,
+                  onChange: this.onChange
+                })
+              );
             }),
             t
           );
@@ -11645,14 +11640,20 @@ webpackJsonp(
                 });
               }),
               (r.state = { data: n.data }),
-              (r.input = Object(u.b)(r.props.type)),
               r
             );
           }
           return (
             f(t, e),
             (t.prototype.render = function() {
-              return this.input(this.state.data, this.onChange);
+              return i.a.createElement(
+                u.a,
+                c({}, this.props, {
+                  ofType: this.props.type,
+                  data: this.state.data,
+                  onChange: this.onChange
+                })
+              );
             }),
             t
           );
@@ -13623,6 +13624,62 @@ webpackJsonp(
           return r.localeCompare(i);
         });
       }
+    },
+    'L/hj': function(e, t, n) {
+      'use strict';
+      n.d(t, 'c', function() {
+        return a;
+      }),
+        n.d(t, 'a', function() {
+          return c;
+        }),
+        n.d(t, 'b', function() {
+          return l;
+        });
+      var r = n('GiK3'),
+        i = (n.n(r), n('s8Fo')),
+        o =
+          Object.assign ||
+          function(e) {
+            for (var t = 1; t < arguments.length; t++) {
+              var n = arguments[t];
+              for (var r in n)
+                Object.prototype.hasOwnProperty.call(n, r) && (e[r] = n[r]);
+            }
+            return e;
+          };
+      var a = function(e, t, n) {
+          return [].concat(e.slice(0, t), [n], e.slice(t + 1));
+        },
+        u = function(e, t) {
+          return e[t.constructor.name] || e[Object(i.c)(t).name];
+        },
+        c = function(e, t) {
+          var n = t.typeComponentMap,
+            r = void 0 === n ? {} : n,
+            i = t.isInput;
+          return o({}, e, r[i ? 'input' : 'output'] || {});
+        },
+        l = function(e) {
+          return function(t) {
+            var n = t.ofType,
+              r = (function(e, t) {
+                var n = {};
+                for (var r in e)
+                  t.indexOf(r) >= 0 ||
+                    (Object.prototype.hasOwnProperty.call(e, r) &&
+                      (n[r] = e[r]));
+                return n;
+              })(t, ['ofType']);
+            return u(c(e, r), n)(
+              o({}, r, n, {
+                options: n.getValues && _.keys(n.getValues()),
+                fields: n.getFields && n.getFields(),
+                defaultComponent: u(e, n)
+              })
+            );
+          };
+        };
     },
     LNDt: function(e, t, n) {
       'use strict';
@@ -19503,98 +19560,92 @@ webpackJsonp(
     VM2n: function(e, t, n) {
       'use strict';
       n.d(t, 'a', function() {
-        return s;
+        return f;
       });
       var r = n('GiK3'),
         i = n.n(r),
-        o = n('s8Fo'),
-        a = n('PGUN'),
-        u = n('4/mC'),
-        c = function(e) {
-          return function(t, n) {
-            return i.a.createElement(e, { data: t, onChange: n });
+        o = (n('s8Fo'), n('PGUN')),
+        a = n('4/mC'),
+        u = n('L/hj'),
+        c =
+          Object.assign ||
+          function(e) {
+            for (var t = 1; t < arguments.length; t++) {
+              var n = arguments[t];
+              for (var r in n)
+                Object.prototype.hasOwnProperty.call(n, r) && (e[r] = n[r]);
+            }
+            return e;
           };
-        },
-        l = { Int: a.d, Float: a.c, Boolean: a.a, String: a.e, ID: a.e },
-        s = function e(t) {
-          return Object(o.f)(t)
-            ? function(e, n) {
-                return i.a.createElement(f, {
-                  ofType: t.ofType,
-                  data: e,
-                  onChange: n
-                });
-              }
-            : Object(o.d)(t)
-              ? c(a.b)
-              : Object(o.g)(t)
-                ? function(e, n) {
-                    return i.a.createElement(p, {
-                      name: t.name,
-                      fields: t.getFields(),
-                      data: e,
-                      onChange: n
-                    });
-                  }
-                : Object(o.e)(t)
-                  ? function(e, n) {
-                      return i.a.createElement(u.a, {
-                        name: t.name,
-                        fields: t.getFields(),
-                        onChange: n,
-                        data: e
-                      });
-                    }
-                  : Object(o.h)(t)
-                    ? e(t.ofType)
-                    : c(l[Object(o.c)(t).name]);
-        },
-        f = function(e) {
-          var t = e.ofType,
-            n = e.data,
-            r = e.onChange;
-          return (function(e, t, n) {
+      function l(e, t) {
+        var n = {};
+        for (var r in e)
+          t.indexOf(r) >= 0 ||
+            (Object.prototype.hasOwnProperty.call(e, r) && (n[r] = e[r]));
+        return n;
+      }
+      var s = {
+          Int: o.d,
+          Float: o.c,
+          Boolean: o.a,
+          String: o.e,
+          ID: o.e,
+          GraphQLEnumType: o.b,
+          GraphQLObjectType: function(e) {
+            var t = e.data,
+              n = e.fields,
+              r = e.onChange,
+              o = l(e, ['data', 'fields', 'onChange']);
             return i.a.createElement(
-              'ul',
-              null,
-              t.map(function(t, r) {
-                return i.a.createElement('li', { key: r }, e(t, n));
-              })
-            );
-          })(s(t), n, r);
-        },
-        p = function(e) {
-          return (
-            (t = function(t) {
-              return s(e.fields[t].type);
-            }),
-            (r = (n = e).name),
-            (o = n.data),
-            (a = n.onChange),
-            i.a.createElement(
               'div',
               null,
-              i.a.createElement('div', null, r),
+              i.a.createElement('div', null, o.name),
               i.a.createElement(
                 'ul',
                 null,
-                Object.entries(o).map(function(e) {
-                  var n = e[0],
-                    r = e[1];
+                _.keys(t).map(function(e) {
                   return i.a.createElement(
                     'li',
-                    { key: n },
-                    t(n)(r, function(e) {
-                      var t;
-                      return a(_.assign({}, o, (((t = {})[n] = e), t)));
-                    })
+                    { key: e },
+                    i.a.createElement(
+                      f,
+                      c({}, o, {
+                        ofType: n[e].type,
+                        data: t[e],
+                        onChange: function(n) {
+                          var i;
+                          return r(_.assign({}, t, (((i = {})[e] = n), i)));
+                        }
+                      })
+                    )
                   );
                 })
               )
-            )
-          );
-          var t, n, r, o, a;
-        };
+            );
+          },
+          GraphQLInputObjectType: a.b,
+          GraphQLList: function(e) {
+            var t = e.data,
+              n = l(e, ['data']);
+            return i.a.createElement(
+              'ul',
+              null,
+              t.map(function(e, r) {
+                return i.a.createElement(
+                  'li',
+                  { key: r },
+                  i.a.createElement(f, c({}, n, { data: t[r] }))
+                );
+              })
+            );
+          },
+          GraphQLNonNull: function(e) {
+            var t = e.ofType.name,
+              n = l(e, ['ofType']);
+            return Object(u.a)(s, n)[t](c({}, n, { defaultComponent: s[t] }));
+          }
+        },
+        f = Object(u.b)(s);
     },
     W2nU: function(e, t) {
       var n,
@@ -21716,24 +21767,12 @@ webpackJsonp(
           n.d(t, 'b', function() {
             return i.GraphQLString;
           }),
-        n.o(i, 'isObjectType') &&
-          n.d(t, 'g', function() {
-            return i.isObjectType;
-          }),
-        n.o(i, 'isEnumType') &&
-          n.d(t, 'd', function() {
-            return i.isEnumType;
-          }),
         n.o(i, 'isInputObjectType') &&
-          n.d(t, 'e', function() {
+          n.d(t, 'd', function() {
             return i.isInputObjectType;
           }),
-        n.o(i, 'isListType') &&
-          n.d(t, 'f', function() {
-            return i.isListType;
-          }),
         n.o(i, 'isWrappingType') &&
-          n.d(t, 'h', function() {
+          n.d(t, 'e', function() {
             return i.isWrappingType;
           }),
         n.o(i, 'getNamedType') &&
@@ -23853,4 +23892,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.8bc0b8e4.js.map
+//# sourceMappingURL=demo.b4e5ac5f.js.map

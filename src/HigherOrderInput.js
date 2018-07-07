@@ -25,34 +25,12 @@ import {
   BooleanInput,
   EnumInput
 } from './PrimitiveInput';
-import { withProps, updateArray } from './utils';
-
-/**
- * Component for displaying GraphQL input types of higher order.
- *
- * @param {GraphQLInputType} ofType - The type of the input.
- * @param {Object.<GraphQLInputType, Component>} ofType - Map from GraphQL
- *   input types to components.
- * @returns {React.Element} An element displaying the input.
- */
-export const HigherOrderInput = ({
-  ofType,
-  typeComponentMap = {},
-  ...props
-}) => {
-  const renderMap = {
-    ...(typeComponentMap.input || {}),
-    ...defaultTypeComponentMap
-  };
-  const render =
-    renderMap[ofType.constructor.name] || renderMap[getNamedType(ofType).name];
-  return render({
-    ...props,
-    ...ofType,
-    options: ofType.getValues && _.keys(ofType.getValues()),
-    fields: ofType.getFields && ofType.getFields()
-  });
-};
+import {
+  withProps,
+  updateArray,
+  makeComponent,
+  getTypeComponentMap
+} from './utils';
 
 /**
  * TODO docs and do
@@ -232,9 +210,11 @@ export class ObjectInputComponent extends Component {
 /**
  * TODO
  * A component for non null inputs. Bases component selection on name of type.
- */
-export const NonNullInput = ({ ofType: { name }, ...props }) =>
-  defaultTypeComponentMap[name](props);
+ */ export const NonNullInput = ({ ofType: { name }, ...props }) =>
+  getTypeComponentMap(defaultTypeComponentMap, props)[name]({
+    ...props,
+    defaultComponent: defaultTypeComponentMap[name]
+  });
 
 /**
  * A map from GraphQL scalars to primitve inputs.
@@ -247,13 +227,18 @@ const defaultTypeComponentMap = {
   Boolean: BooleanInput,
   String: StringInput,
   ID: StringInput,
-  GraphQLInt: IntegerInput,
-  GraphQLFloat: FloatInput,
-  GraphQLBoolean: BooleanInput,
-  GraphQLString: StringInput,
-  GraphQLID: StringInput,
   GraphQLEnumType: EnumInput,
   GraphQLInputObjectType: ObjectInput,
   GraphQLList: ListInput,
   GraphQLNonNull: NonNullInput
 };
+
+/**
+ * Component for displaying GraphQL input types of higher order.
+ *
+ * @param {GraphQLInputType} ofType - The type of the input.
+ * @param {Object.<GraphQLInputType, Component>} ofType - Map from GraphQL
+ *   input types to components.
+ * @returns {React.Element} An element displaying the input.
+ */
+export const HigherOrderInput = makeComponent(defaultTypeComponentMap);

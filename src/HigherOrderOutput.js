@@ -25,41 +25,7 @@ import {
   EnumOutput
 } from './PrimitiveOutput';
 import { ObjectInput } from './HigherOrderInput';
-import { withProps, withRender } from './utils';
-
-/**
- * Component for displaying GraphQL output types of higher order.
- *
- * @param {GraphQLOutputType} ofType - The type of the input.
- * @param {Object.<GraphQLOutputType, Component>} ofType - Map from GraphQL
- *   input types to components.
- * @returns {React.Element} An element displaying the input.
- */
-export const HigherOrderOutput = ({
-  ofType,
-  typeComponentMap = {},
-  ...props
-}) => {
-  const renderMap = {
-    ...(typeComponentMap.input || {}),
-    ...defaultTypeComponentMap
-  };
-  const render =
-    renderMap[ofType.constructor.name] || renderMap[getNamedType(ofType).name];
-  return render({
-    ...props,
-    ...ofType,
-    fields: ofType.getFields && ofType.getFields()
-  });
-};
-/**
- * This callback handles listOutput change events.
- *
- * @callback listOutput~onChange
- * @param {Array.<*>} value
- *
- * @private
- */
+import { withProps, makeComponent, getTypeComponentMap } from './utils';
 
 /**
  * Returns a list surrounding the supplied list data.
@@ -140,7 +106,10 @@ export const ObjectOutput = ({ data, fields, onChange, ...props }) => (
  * A component for non null inputs. Bases component selection on name of type.
  */
 export const NonNullOutput = ({ ofType: { name }, ...props }) =>
-  defaultTypeComponentMap[name](props);
+  getTypeComponentMap(defaultTypeComponentMap, props)[name]({
+    ...props,
+    defaultComponent: defaultTypeComponentMap[name]
+  });
 
 /**
  * A map from GraphQL types to outputs.
@@ -153,14 +122,19 @@ const defaultTypeComponentMap = {
   Boolean: BooleanOutput,
   String: StringOutput,
   ID: StringOutput,
-  GraphQLInt: IntegerOutput,
-  GraphQLFloat: FloatOutput,
-  GraphQLBoolean: BooleanOutput,
-  GraphQLString: StringOutput,
-  GraphQLID: StringOutput,
   GraphQLEnumType: EnumOutput,
   GraphQLObjectType: ObjectOutput,
   GraphQLInputObjectType: ObjectInput,
   GraphQLList: ListOutput,
   GraphQLNonNull: NonNullOutput
 };
+
+/**
+ * Component for displaying GraphQL output types of higher order.
+ *
+ * @param {GraphQLOutputType} ofType - The type of the input.
+ * @param {Object.<GraphQLOutputType, Component>} ofType - Map from GraphQL
+ *   input types to components.
+ * @returns {React.Element} An element displaying the input.
+ */
+export const HigherOrderOutput = makeComponent(defaultTypeComponentMap);
