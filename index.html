@@ -85,7 +85,7 @@
 
     
         
-        <li class="header">typed-ui (0.3.6)</li>
+        <li class="header">typed-ui (0.4.0)</li>
         
         
     
@@ -131,6 +131,32 @@
     
         <li class="chapter " data-level="1.2.2" data-path="api.html">
             
+                <a href="api.html#HigherOrderOutput">
+            
+                    
+                    HigherOrderOutput
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="api.html">
+            
+                <a href="api.html#HigherOrderInput">
+            
+                    
+                    HigherOrderInput
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="api.html">
+            
                 <a href="api.html#ObjectOutput">
             
                     
@@ -142,7 +168,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3" data-path="api.html">
+        <li class="chapter " data-level="1.2.5" data-path="api.html">
             
                 <a href="api.html#ObjectInput">
             
@@ -155,7 +181,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.4" data-path="api.html">
+        <li class="chapter " data-level="1.2.6" data-path="api.html">
             
                 <a href="api.html#ListOutput">
             
@@ -168,7 +194,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.5" data-path="api.html">
+        <li class="chapter " data-level="1.2.7" data-path="api.html">
             
                 <a href="api.html#ListInput">
             
@@ -181,7 +207,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.6" data-path="api.html">
+        <li class="chapter " data-level="1.2.8" data-path="api.html">
             
                 <a href="api.html#StringOutput">
             
@@ -194,7 +220,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.7" data-path="api.html">
+        <li class="chapter " data-level="1.2.9" data-path="api.html">
             
                 <a href="api.html#StringInput">
             
@@ -207,7 +233,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.8" data-path="api.html">
+        <li class="chapter " data-level="1.2.10" data-path="api.html">
             
                 <a href="api.html#IntegerOutput">
             
@@ -220,7 +246,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.9" data-path="api.html">
+        <li class="chapter " data-level="1.2.11" data-path="api.html">
             
                 <a href="api.html#IntegerInput">
             
@@ -233,7 +259,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.10" data-path="api.html">
+        <li class="chapter " data-level="1.2.12" data-path="api.html">
             
                 <a href="api.html#FloatOutput">
             
@@ -246,7 +272,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.11" data-path="api.html">
+        <li class="chapter " data-level="1.2.13" data-path="api.html">
             
                 <a href="api.html#FloatInput">
             
@@ -259,7 +285,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.12" data-path="api.html">
+        <li class="chapter " data-level="1.2.14" data-path="api.html">
             
                 <a href="api.html#BooleanOutput">
             
@@ -272,7 +298,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.13" data-path="api.html">
+        <li class="chapter " data-level="1.2.15" data-path="api.html">
             
                 <a href="api.html#BooleanInput">
             
@@ -285,7 +311,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.14" data-path="api.html">
+        <li class="chapter " data-level="1.2.16" data-path="api.html">
             
                 <a href="api.html#EnumOutput">
             
@@ -298,7 +324,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.15" data-path="api.html">
+        <li class="chapter " data-level="1.2.17" data-path="api.html">
             
                 <a href="api.html#EnumInput">
             
@@ -401,46 +427,84 @@
 </code></pre><h2 id="usage">Usage</h2>
 <pre><code class="lang-js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react&apos;</span>;
 <span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react-dom&apos;</span>;
-<span class="hljs-keyword">import</span> { GraphQLInputObjectType, GraphQLString } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;graphql&apos;</span>;
-<span class="hljs-keyword">import</span> { Put } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;../../src&apos;</span>;
+<span class="hljs-keyword">import</span> {
+  GraphQLObjectType,
+  GraphQLInputObjectType,
+  GraphQLString
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;graphql&apos;</span>;
+<span class="hljs-keyword">import</span> { Put, HigherOrderOutput } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;../../src&apos;</span>;
+<span class="hljs-keyword">import</span> { Tab } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;semantic-ui-react&apos;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">&apos;semantic-ui-css/semantic.min.css&apos;</span>;
 
 <span class="hljs-keyword">const</span> Demo = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Put</span>
-    <span class="hljs-attr">type</span>=<span class="hljs-string">{</span>
-      <span class="hljs-attr">new</span> <span class="hljs-attr">GraphQLInputObjectType</span>({
-        <span class="hljs-attr">name:</span> &apos;<span class="hljs-attr">typed-ui</span> <span class="hljs-attr">Demo</span>&apos;,
-        <span class="hljs-attr">fields:</span> {
-          <span class="hljs-attr">object:</span> {
-            <span class="hljs-attr">type:</span> <span class="hljs-attr">new</span> <span class="hljs-attr">GraphQLInputObjectType</span>({
-              <span class="hljs-attr">name:</span> &apos;<span class="hljs-attr">This</span> <span class="hljs-attr">is</span> <span class="hljs-attr">the</span> <span class="hljs-attr">name</span> <span class="hljs-attr">of</span> <span class="hljs-attr">the</span> <span class="hljs-attr">outer</span> <span class="hljs-attr">object.</span>&apos;,
-              <span class="hljs-attr">fields:</span> {
-                <span class="hljs-attr">outer:</span> {
-                  <span class="hljs-attr">type:</span> <span class="hljs-attr">new</span> <span class="hljs-attr">GraphQLInputObjectType</span>({
-                    <span class="hljs-attr">name:</span> &apos;<span class="hljs-attr">This</span> <span class="hljs-attr">is</span> <span class="hljs-attr">the</span> <span class="hljs-attr">name</span> <span class="hljs-attr">of</span> <span class="hljs-attr">the</span> <span class="hljs-attr">inner</span> <span class="hljs-attr">object</span>&apos;,
-                    <span class="hljs-attr">fields:</span> {
-                      <span class="hljs-attr">inner:</span> { <span class="hljs-attr">type:</span> <span class="hljs-attr">GraphQLString</span> }
-                    }
-                  })
-                }
+  &lt;Put
+    type={
+      new GraphQLObjectType({
+        name: &apos;typed-ui Demo&apos;,
+        fields: {
+          a: {
+            type: new GraphQLInputObjectType({
+              name: &apos;This is the name of the first object.&apos;,
+              fields: {
+                b: { type: GraphQLString }
+              }
+            })
+          },
+          c: {
+            type: new GraphQLInputObjectType({
+              name: &apos;This is the name of the second object&apos;,
+              fields: {
+                d: { type: GraphQLString }
               }
             })
           }
         }
       })
     }
-    <span class="hljs-attr">data</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">object:</span> { <span class="hljs-attr">outer:</span> { <span class="hljs-attr">inner:</span> &apos;&apos; } } }}
-    <span class="hljs-attr">onChange</span>=<span class="hljs-string">{console.log}</span>
-  /&gt;</span>
+    data={{ a: { b: &apos;&apos; }, c: { d: &apos;&apos; } }}
+    typeComponentMap={{
+      output: {
+        GraphQLObjectType: ({ data, fields, onChange, ...props }) =&gt; (
+          &lt;div&gt;
+            &lt;div&gt;{props.name}&lt;/div&gt;
+            &lt;Tab
+              panes={_.keys(data).map(k =&gt; ({
+                menuItem: k,
+                render: () =&gt; (
+                  &lt;Tab.Pane&gt;
+                    &lt;HigherOrderOutput
+                      {...props}
+                      ofType={fields[k].type}
+                      data={data[k]}
+                      onChange={val =&gt; {
+                        onChange(
+                          _.assign({}, data, {
+                            [k]: _.pick(val, _.keys(data[k]))
+                          })
+                        );
+                      }}
+                    /&gt;
+                  &lt;/Tab.Pane&gt;
+                )
+              }))}
+            /&gt;
+          &lt;/div&gt;
+        )
+      }
+    }}
+    onChange={console.log}
+  /&gt;
 );
 
-render(<span class="hljs-tag">&lt;<span class="hljs-name">Demo</span> /&gt;</span>, document.querySelector(&apos;#demo&apos;));
-</span></code></pre>
+render(&lt;Demo /&gt;, document.querySelector(&apos;#demo&apos;));
+</code></pre>
 <h2 id="api">API</h2>
 <p><a href="api.html">Docs</a></p>
 <h2 id="maintainers">Maintainers</h2>
 <ul>
 <li><a href="https://github.com/drich14" target="_blank">Dylan Richardson</a></li>
 <li><a href="https://github.com/CrazyCreje" target="_blank">Craig Valenti</a></li>
+<li><a href="https://github.com/KyleLawson16" target="_blank">Kyle Lawson</a></li>
 </ul>
 <h2 id="license">License</h2>
 <p>MIT &#xA9; <a href="https://pi-cubed.github.io" target="_blank">Pi Cubed</a></p>
@@ -483,7 +547,7 @@ render(<span class="hljs-tag">&lt;<span class="hljs-name">Demo</span> /&gt;</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"API Reference","level":"1.2","depth":1,"path":"api.md","ref":"api.md","articles":[{"title":"Put","level":"1.2.1","depth":2,"anchor":"#Put","path":"api.md","ref":"api.md#Put","articles":[]},{"title":"ObjectOutput","level":"1.2.2","depth":2,"anchor":"#ObjectOutput","path":"api.md","ref":"api.md#ObjectOutput","articles":[]},{"title":"ObjectInput","level":"1.2.3","depth":2,"anchor":"#ObjectInput","path":"api.md","ref":"api.md#ObjectInput","articles":[]},{"title":"ListOutput","level":"1.2.4","depth":2,"anchor":"#ListOutput","path":"api.md","ref":"api.md#ListOutput","articles":[]},{"title":"ListInput","level":"1.2.5","depth":2,"anchor":"#ListInput","path":"api.md","ref":"api.md#ListInput","articles":[]},{"title":"StringOutput","level":"1.2.6","depth":2,"anchor":"#StringOutput","path":"api.md","ref":"api.md#StringOutput","articles":[]},{"title":"StringInput","level":"1.2.7","depth":2,"anchor":"#StringInput","path":"api.md","ref":"api.md#StringInput","articles":[]},{"title":"IntegerOutput","level":"1.2.8","depth":2,"anchor":"#IntegerOutput","path":"api.md","ref":"api.md#IntegerOutput","articles":[]},{"title":"IntegerInput","level":"1.2.9","depth":2,"anchor":"#IntegerInput","path":"api.md","ref":"api.md#IntegerInput","articles":[]},{"title":"FloatOutput","level":"1.2.10","depth":2,"anchor":"#FloatOutput","path":"api.md","ref":"api.md#FloatOutput","articles":[]},{"title":"FloatInput","level":"1.2.11","depth":2,"anchor":"#FloatInput","path":"api.md","ref":"api.md#FloatInput","articles":[]},{"title":"BooleanOutput","level":"1.2.12","depth":2,"anchor":"#BooleanOutput","path":"api.md","ref":"api.md#BooleanOutput","articles":[]},{"title":"BooleanInput","level":"1.2.13","depth":2,"anchor":"#BooleanInput","path":"api.md","ref":"api.md#BooleanInput","articles":[]},{"title":"EnumOutput","level":"1.2.14","depth":2,"anchor":"#EnumOutput","path":"api.md","ref":"api.md#EnumOutput","articles":[]},{"title":"EnumInput","level":"1.2.15","depth":2,"anchor":"#EnumInput","path":"api.md","ref":"api.md#EnumInput","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{},"gitbook":"3.2.2"},"file":{"path":"intro.md","mtime":"2018-06-27T14:31:02.310Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-06-27T14:31:33.653Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"API Reference","level":"1.2","depth":1,"path":"api.md","ref":"api.md","articles":[{"title":"Put","level":"1.2.1","depth":2,"anchor":"#Put","path":"api.md","ref":"api.md#Put","articles":[]},{"title":"HigherOrderOutput","level":"1.2.2","depth":2,"anchor":"#HigherOrderOutput","path":"api.md","ref":"api.md#HigherOrderOutput","articles":[]},{"title":"HigherOrderInput","level":"1.2.3","depth":2,"anchor":"#HigherOrderInput","path":"api.md","ref":"api.md#HigherOrderInput","articles":[]},{"title":"ObjectOutput","level":"1.2.4","depth":2,"anchor":"#ObjectOutput","path":"api.md","ref":"api.md#ObjectOutput","articles":[]},{"title":"ObjectInput","level":"1.2.5","depth":2,"anchor":"#ObjectInput","path":"api.md","ref":"api.md#ObjectInput","articles":[]},{"title":"ListOutput","level":"1.2.6","depth":2,"anchor":"#ListOutput","path":"api.md","ref":"api.md#ListOutput","articles":[]},{"title":"ListInput","level":"1.2.7","depth":2,"anchor":"#ListInput","path":"api.md","ref":"api.md#ListInput","articles":[]},{"title":"StringOutput","level":"1.2.8","depth":2,"anchor":"#StringOutput","path":"api.md","ref":"api.md#StringOutput","articles":[]},{"title":"StringInput","level":"1.2.9","depth":2,"anchor":"#StringInput","path":"api.md","ref":"api.md#StringInput","articles":[]},{"title":"IntegerOutput","level":"1.2.10","depth":2,"anchor":"#IntegerOutput","path":"api.md","ref":"api.md#IntegerOutput","articles":[]},{"title":"IntegerInput","level":"1.2.11","depth":2,"anchor":"#IntegerInput","path":"api.md","ref":"api.md#IntegerInput","articles":[]},{"title":"FloatOutput","level":"1.2.12","depth":2,"anchor":"#FloatOutput","path":"api.md","ref":"api.md#FloatOutput","articles":[]},{"title":"FloatInput","level":"1.2.13","depth":2,"anchor":"#FloatInput","path":"api.md","ref":"api.md#FloatInput","articles":[]},{"title":"BooleanOutput","level":"1.2.14","depth":2,"anchor":"#BooleanOutput","path":"api.md","ref":"api.md#BooleanOutput","articles":[]},{"title":"BooleanInput","level":"1.2.15","depth":2,"anchor":"#BooleanInput","path":"api.md","ref":"api.md#BooleanInput","articles":[]},{"title":"EnumOutput","level":"1.2.16","depth":2,"anchor":"#EnumOutput","path":"api.md","ref":"api.md#EnumOutput","articles":[]},{"title":"EnumInput","level":"1.2.17","depth":2,"anchor":"#EnumInput","path":"api.md","ref":"api.md#EnumInput","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{},"gitbook":"3.2.2"},"file":{"path":"intro.md","mtime":"2018-07-08T14:46:37.903Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-08T14:47:58.505Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

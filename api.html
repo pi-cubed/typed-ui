@@ -87,7 +87,7 @@
 
     
         
-        <li class="header">typed-ui (0.3.6)</li>
+        <li class="header">typed-ui (0.4.0)</li>
         
         
     
@@ -133,6 +133,32 @@
     
         <li class="chapter " data-level="1.2.2" data-path="api.html">
             
+                <a href="api.html#HigherOrderOutput">
+            
+                    
+                    HigherOrderOutput
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="api.html">
+            
+                <a href="api.html#HigherOrderInput">
+            
+                    
+                    HigherOrderInput
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="api.html">
+            
                 <a href="api.html#ObjectOutput">
             
                     
@@ -144,7 +170,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3" data-path="api.html">
+        <li class="chapter " data-level="1.2.5" data-path="api.html">
             
                 <a href="api.html#ObjectInput">
             
@@ -157,7 +183,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.4" data-path="api.html">
+        <li class="chapter " data-level="1.2.6" data-path="api.html">
             
                 <a href="api.html#ListOutput">
             
@@ -170,7 +196,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.5" data-path="api.html">
+        <li class="chapter " data-level="1.2.7" data-path="api.html">
             
                 <a href="api.html#ListInput">
             
@@ -183,7 +209,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.6" data-path="api.html">
+        <li class="chapter " data-level="1.2.8" data-path="api.html">
             
                 <a href="api.html#StringOutput">
             
@@ -196,7 +222,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.7" data-path="api.html">
+        <li class="chapter " data-level="1.2.9" data-path="api.html">
             
                 <a href="api.html#StringInput">
             
@@ -209,7 +235,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.8" data-path="api.html">
+        <li class="chapter " data-level="1.2.10" data-path="api.html">
             
                 <a href="api.html#IntegerOutput">
             
@@ -222,7 +248,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.9" data-path="api.html">
+        <li class="chapter " data-level="1.2.11" data-path="api.html">
             
                 <a href="api.html#IntegerInput">
             
@@ -235,7 +261,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.10" data-path="api.html">
+        <li class="chapter " data-level="1.2.12" data-path="api.html">
             
                 <a href="api.html#FloatOutput">
             
@@ -248,7 +274,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.11" data-path="api.html">
+        <li class="chapter " data-level="1.2.13" data-path="api.html">
             
                 <a href="api.html#FloatInput">
             
@@ -261,7 +287,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.12" data-path="api.html">
+        <li class="chapter " data-level="1.2.14" data-path="api.html">
             
                 <a href="api.html#BooleanOutput">
             
@@ -274,7 +300,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.13" data-path="api.html">
+        <li class="chapter " data-level="1.2.15" data-path="api.html">
             
                 <a href="api.html#BooleanInput">
             
@@ -287,7 +313,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.14" data-path="api.html">
+        <li class="chapter " data-level="1.2.16" data-path="api.html">
             
                 <a href="api.html#EnumOutput">
             
@@ -300,7 +326,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.15" data-path="api.html">
+        <li class="chapter " data-level="1.2.17" data-path="api.html">
             
                 <a href="api.html#EnumInput">
             
@@ -391,11 +417,18 @@
 <dt><a href="#ObjectInput">ObjectInput</a> &#x21D2; <code>Component</code></dt>
 <dd><p>Returns an object input component with change events handled by the given callback.</p>
 </dd>
-<dt><a href="#ListOutput">ListOutput</a> &#x21D2; <code>Component</code></dt>
-<dd><p>Returns a list surrounding the supplied list data.</p>
+<dt><a href="#HigherOrderInput">HigherOrderInput</a> &#x21D2; <code>React.Element</code></dt>
+<dd><p>Component for displaying GraphQL input types of higher order.</p>
 </dd>
-<dt><a href="#ObjectOutput">ObjectOutput</a> &#x21D2; <code>Component</code></dt>
+<dt><a href="#ListOutput">ListOutput</a> &#x21D2; <code>Component</code></dt>
 <dd><p>Returns a object surrounding the supplied object data.</p>
+</dd>
+<dt><a href="#ObjectOutput">ObjectOutput</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
+</dd>
+<dt><a href="#HigherOrderOutput">HigherOrderOutput</a> &#x21D2; <code>React.Element</code></dt>
+<dd><p>Component for displaying GraphQL output types of higher order.</p>
 </dd>
 <dt><a href="#StringInput">StringInput</a> &#x21D2; <code>Component</code></dt>
 <dd><p>Returns a text field with change events handled by the given callback.</p>
@@ -432,6 +465,17 @@
 </dd>
 </dl>
 
+<h2 id="functions">Functions</h2>
+<dl>
+<dt><a href="#NonNullInput">NonNullInput()</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
+</dd>
+<dt><a href="#ListOutput">ListOutput(props)</a> &#x21D2; <code>Component</code></dt>
+<dd><p>Returns a list surrounding the supplied list data.</p>
+</dd>
+</dl>
+
 <p><a name="ListInput"></a></p>
 <h2 id="listinput-&#x21D2;-component">ListInput &#x21D2; <code>Component</code></h2>
 <p>Returns a list input component with change events handled by the given callback.</p>
@@ -452,7 +496,7 @@
 </tr>
 <tr>
 <td>props.ofType</td>
-<td><code>GraphQLType</code></td>
+<td><code>GraphQLInputType</code></td>
 <td>The type of items in the list.</td>
 </tr>
 <tr>
@@ -545,10 +589,10 @@
 </tr>
 </tbody>
 </table>
-<p><a name="ListOutput"></a></p>
-<h2 id="listoutput-&#x21D2;-component">ListOutput &#x21D2; <code>Component</code></h2>
-<p>Returns a list surrounding the supplied list data.</p>
-<p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>Component</code> - A list surrounding the list items.  </p>
+<p><a name="HigherOrderInput"></a></p>
+<h2 id="higherorderinput-&#x21D2;-reactelement">HigherOrderInput &#x21D2; <code>React.Element</code></h2>
+<p>Component for displaying GraphQL input types of higher order.</p>
+<p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>React.Element</code> - An element displaying the input.  </p>
 <table>
 <thead>
 <tr>
@@ -559,53 +603,19 @@
 </thead>
 <tbody>
 <tr>
-<td>props</td>
-<td><code>Object</code></td>
-<td>The component props.</td>
+<td>ofType</td>
+<td><code>GraphQLInputType</code></td>
+<td>The type of the input.</td>
 </tr>
 <tr>
-<td>props.ofType</td>
-<td><code>GraphQLType</code></td>
-<td>The type of the list items.</td>
-</tr>
-<tr>
-<td>props.data</td>
-<td><code>Array.&lt;*&gt;</code></td>
-<td>The list data.</td>
-</tr>
-<tr>
-<td>props.onChange</td>
-<td><a href="#ListOutput..onChange"><code>onChange</code></a></td>
-<td>The handler for change events.</td>
+<td>ofType</td>
+<td><code>Object.&lt;GraphQLInputType, Component&gt;</code></td>
+<td>Map from GraphQL   input types to components.</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Example</strong> <em>(Display a list of strings)</em>  </p>
-<pre><code class="lang-js">&lt;ListOutput ofType={GraphQLString} data={[<span class="hljs-string">&apos;abc&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>, <span class="hljs-string">&apos;xyz&apos;</span>]} /&gt;
-</code></pre>
-<p><strong>Example</strong> <em>(Display a list of list of integers)</em>  </p>
-<pre><code class="lang-js">&lt;ListOutput ofType={<span class="hljs-keyword">new</span> GraphQLList(GraphQLInt)} data={[[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>], [<span class="hljs-number">50</span>, <span class="hljs-number">100</span>]]} /&gt;
-</code></pre>
-<p><a name="ListOutput..onChange"></a></p>
-<h3 id="listoutputonchange--function">ListOutput~onChange : <code>function</code></h3>
-<p>This callback handles ListOutput change events.</p>
-<p><strong>Kind</strong>: inner typedef of <a href="#ListOutput"><code>ListOutput</code></a>  </p>
-<table>
-<thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>value</td>
-<td><code>Array.&lt;*&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<p><a name="ObjectOutput"></a></p>
-<h2 id="objectoutput-&#x21D2;-component">ObjectOutput &#x21D2; <code>Component</code></h2>
+<p><a name="ListOutput"></a></p>
+<h2 id="listoutput-&#x21D2;-component">ListOutput &#x21D2; <code>Component</code></h2>
 <p>Returns a object surrounding the supplied object data.</p>
 <p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>Component</code> - A object surrounding the object items.  </p>
 <table>
@@ -653,7 +663,29 @@
     data={{ <span class="hljs-attr">hew</span>: <span class="hljs-string">&apos;This is a string field called hew.&apos;</span> }}
 /&gt;;
 </code></pre>
-<p><a name="ObjectOutput..onChange"></a></p>
+<p><a name="ListOutput..onChange"></a></p>
+<h3 id="listoutputonchange--function">ListOutput~onChange : <code>function</code></h3>
+<p>This callback handles ListOutput change events.</p>
+<p><strong>Kind</strong>: inner typedef of <a href="#ListOutput"><code>ListOutput</code></a>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>value</td>
+<td><code>Array.&lt;*&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p><a name="ObjectOutput"></a></p>
+<h2 id="objectoutput">ObjectOutput</h2>
+<p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
+<p><strong>Kind</strong>: global variable<br><a name="ObjectOutput..onChange"></a></p>
 <h3 id="objectoutputonchange--function">ObjectOutput~onChange : <code>function</code></h3>
 <p>This callback handles ObjectOutput change events.</p>
 <p><strong>Kind</strong>: inner typedef of <a href="#ObjectOutput"><code>ObjectOutput</code></a>  </p>
@@ -668,6 +700,31 @@
 <tr>
 <td>value</td>
 <td><code>Object</code></td>
+</tr>
+</tbody>
+</table>
+<p><a name="HigherOrderOutput"></a></p>
+<h2 id="higherorderoutput-&#x21D2;-reactelement">HigherOrderOutput &#x21D2; <code>React.Element</code></h2>
+<p>Component for displaying GraphQL output types of higher order.</p>
+<p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>React.Element</code> - An element displaying the input.  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ofType</td>
+<td><code>GraphQLOutputType</code></td>
+<td>The type of the input.</td>
+</tr>
+<tr>
+<td>ofType</td>
+<td><code>Object.&lt;GraphQLOutputType, Component&gt;</code></td>
+<td>Map from GraphQL   input types to components.</td>
 </tr>
 </tbody>
 </table>
@@ -1081,8 +1138,13 @@
 </tr>
 <tr>
 <td>[props.onChange]</td>
-<td><a href="#Output..onChange"><code>onChange</code></a></td>
+<td><a href="#Put..onChange"><code>onChange</code></a></td>
 <td>The handler for changes in the data.</td>
+</tr>
+<tr>
+<td>[props.render]</td>
+<td><a href="#Put..render"><code>render</code></a></td>
+<td>The custom GraphQL data renderer.</td>
 </tr>
 </tbody>
 </table>
@@ -1106,6 +1168,116 @@
  onChange={<span class="hljs-built_in">console</span>.log}
 /&gt;
 </code></pre>
+<ul>
+<li><a href="#Put">Put</a> &#x21D2; <code>Component</code><ul>
+<li><a href="#Put..onChange">~onChange</a> : <code>function</code></li>
+<li><a href="#Put..render">~render</a> : <code>function</code></li>
+</ul>
+</li>
+</ul>
+<p><a name="Put..onChange"></a></p>
+<h3 id="putonchange--function">Put~onChange : <code>function</code></h3>
+<p>This callback handles Put change events.</p>
+<p><strong>Kind</strong>: inner typedef of <a href="#Put"><code>Put</code></a>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>value</td>
+<td><code>Object</code></td>
+</tr>
+</tbody>
+</table>
+<p><a name="Put..render"></a></p>
+<h3 id="putrender--function">Put~render : <code>function</code></h3>
+<p>This function renders GraphQL data.</p>
+<p><strong>Kind</strong>: inner typedef of <a href="#Put"><code>Put</code></a>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td><code>GraphQLType</code></td>
+</tr>
+<tr>
+<td>data</td>
+<td><code>*</code></td>
+</tr>
+</tbody>
+</table>
+<p><a name="NonNullInput"></a></p>
+<h2 id="nonnullinput">NonNullInput()</h2>
+<p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
+<p><strong>Kind</strong>: global function<br><a name="ListOutput"></a></p>
+<h2 id="listoutputprops-&#x21D2;-component">ListOutput(props) &#x21D2; <code>Component</code></h2>
+<p>Returns a list surrounding the supplied list data.</p>
+<p><strong>Kind</strong>: global function<br><strong>Returns</strong>: <code>Component</code> - A list surrounding the list items.  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>props</td>
+<td><code>Object</code></td>
+<td>The component props.</td>
+</tr>
+<tr>
+<td>props.ofType</td>
+<td><code>GraphQLOutputType</code></td>
+<td>The type of the list items.</td>
+</tr>
+<tr>
+<td>props.data</td>
+<td><code>Array.&lt;*&gt;</code></td>
+<td>The list data.</td>
+</tr>
+<tr>
+<td>props.onChange</td>
+<td><a href="#ListOutput..onChange"><code>onChange</code></a></td>
+<td>The handler for change events.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong> <em>(Display a list of strings)</em>  </p>
+<pre><code class="lang-js">&lt;ListOutput ofType={GraphQLString} data={[<span class="hljs-string">&apos;abc&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>, <span class="hljs-string">&apos;xyz&apos;</span>]} /&gt;
+</code></pre>
+<p><strong>Example</strong> <em>(Display a list of list of integers)</em>  </p>
+<pre><code class="lang-js">&lt;ListOutput ofType={<span class="hljs-keyword">new</span> GraphQLList(GraphQLInt)} data={[[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>], [<span class="hljs-number">50</span>, <span class="hljs-number">100</span>]]} /&gt;
+</code></pre>
+<p><a name="ListOutput..onChange"></a></p>
+<h3 id="listoutputonchange--function">ListOutput~onChange : <code>function</code></h3>
+<p>This callback handles ListOutput change events.</p>
+<p><strong>Kind</strong>: inner typedef of <a href="#ListOutput"><code>ListOutput</code></a>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>value</td>
+<td><code>Array.&lt;*&gt;</code></td>
+</tr>
+</tbody>
+</table>
 
                                 
                                 </section>
@@ -1149,7 +1321,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"API Reference","level":"1.2","depth":1,"next":{"title":"Put","level":"1.2.1","depth":2,"anchor":"#Put","path":"api.md","ref":"api.md#Put","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"intro.md","ref":"intro.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{},"gitbook":"3.2.2"},"file":{"path":"api.md","mtime":"2018-06-27T14:31:32.738Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-06-27T14:31:33.653Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"API Reference","level":"1.2","depth":1,"next":{"title":"Put","level":"1.2.1","depth":2,"anchor":"#Put","path":"api.md","ref":"api.md#Put","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"intro.md","ref":"intro.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{},"gitbook":"3.2.2"},"file":{"path":"api.md","mtime":"2018-07-08T14:47:57.586Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-08T14:47:58.505Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
