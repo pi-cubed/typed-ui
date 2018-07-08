@@ -25,96 +25,13 @@ import {
   EnumOutput
 } from './PrimitiveOutput';
 import { ObjectInput } from './HigherOrderInput';
-
-/**
- * TODO docs
- *
- * @private
- */
-const output = Component => (data, onChange) => (
-  <Component data={data} onChange={onChange} />
-);
-
-/**
- * TODO docs
- *
- * @private
- */
-const componentNames = {
-  Int: IntegerOutput,
-  Float: FloatOutput,
-  Boolean: BooleanOutput,
-  String: StringOutput,
-  ID: StringOutput
-};
-
-/**
- * TODO docs
- *
- * @private
- */
-export const getOutput = ofType => {
-  if (isListType(ofType)) {
-    return (data, onChange) => (
-      <ListOutput ofType={ofType.ofType} data={data} onChange={onChange} />
-    );
-  }
-  if (isEnumType(ofType)) {
-    return output(EnumOutput);
-  }
-  if (isObjectType(ofType)) {
-    return (data, onChange) => (
-      <ObjectOutput
-        name={ofType.name}
-        fields={ofType.getFields()}
-        data={data}
-        onChange={onChange}
-      />
-    );
-  }
-  if (isInputObjectType(ofType)) {
-    return (data, onChange) => (
-      <ObjectInput
-        name={ofType.name}
-        fields={ofType.getFields()}
-        onChange={onChange}
-        data={data}
-      />
-    );
-  }
-  if (isWrappingType(ofType)) {
-    return getOutput(ofType.ofType);
-  }
-  return output(componentNames[getNamedType(ofType).name]);
-};
-
-/**
- * Return a list around given data using component producer.
- *
- * @param {Function} makeOutput - produces components for list items.
- * @param {Array.<*>} data - The list data.
- * @param {listOutput~onChange} onChange - The handler for change events.
- * @returns {Component} A list around the items.
- *
- * @private
- */
-const listOutput = (makeOutput, data, onChange) => (
-  <ul>{data.map((d, i) => <li key={i}>{makeOutput(d, onChange)}</li>)}</ul>
-);
-/**
- * This callback handles listOutput change events.
- *
- * @callback listOutput~onChange
- * @param {Array.<*>} value
- *
- * @private
- */
+import { withProps, makeComponent, getTypeComponentMap } from './utils';
 
 /**
  * Returns a list surrounding the supplied list data.
  *
  * @param {Object} props - The component props.
- * @param {GraphQLType} props.ofType - The type of the list items.
+ * @param {GraphQLOutputType} props.ofType - The type of the list items.
  * @param {Array.<*>} props.data - The list data.
  * @param {ListOutput~onChange} props.onChange - The handler for change events.
  * @returns {Component} A list surrounding the list items.
@@ -124,48 +41,21 @@ const listOutput = (makeOutput, data, onChange) => (
  * @example <caption>Display a list of list of integers</caption>
  * <ListOutput ofType={new GraphQLList(GraphQLInt)} data={[[0, 1, 2], [10, 11, 12], [50, 100]]} />
  */
-export const ListOutput = ({ ofType, data, onChange }) =>
-  listOutput(getOutput(ofType), data, onChange);
+export const ListOutput = ({ data, ...props }) => (
+  <ul>
+    {data.map((d, k) => (
+      <li key={k}>
+        <HigherOrderOutput {...props} data={data[k]} />
+      </li>
+    ))}
+  </ul>
+);
+// props => listOutput(getOutput(props.ofType))(props);
 /**
  * This callback handles ListOutput change events.
  *
  * @callback ListOutput~onChange
  * @param {Array.<*>} value
- */
-
-/**
- * Return an object component around the given data using the component producer.
- *
- * @param {Function} makeOutput - produces components for object items.
- * @param {Object} data - The object data.
- * @param {string} data.name - The object name.
- * @param {Object} data.fields - The object fields.
- * @param {objectOutput~onChange} data.onChange - The handler for change events.
- * @returns {Component} A component containing the object.
- *
- * @private
- */
-const objectOutput = (makeOutput, { name, data, onChange }) => (
-  <div>
-    <div>{name}</div>
-    <ul>
-      {Object.entries(data).map(([key, value]) => (
-        <li key={key}>
-          {makeOutput(key)(value, val =>
-            onChange(_.assign({}, data, { [key]: val }))
-          )}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-/**
- * This callback handles objectOutput change events.
- *
- * @callback objectOutput~onChange
- * @param {Object} value
- *
- * @private
  */
 
 /**
@@ -187,11 +77,64 @@ const objectOutput = (makeOutput, { name, data, onChange }) => (
  *     data={{ hew: 'This is a string field called hew.' }}
  * />;
  */
-export const ObjectOutput = props =>
-  objectOutput(key => getOutput(props.fields[key].type), props);
+export const ObjectOutput = ({ data, fields, onChange, ...props }) => (
+  <div>
+    <div>{props.name}</div>
+    <ul>
+      {_.keys(data).map(k => (
+        <li key={k}>
+          <HigherOrderOutput
+            {...props}
+            ofType={fields[k].type}
+            data={data[k]}
+            onChange={val => onChange(_.assign({}, data, { [k]: val }))}
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 /**
  * This callback handles ObjectOutput change events.
  *
  * @callback ObjectOutput~onChange
  * @param {Object} value
  */
+
+/**
+ * TODO
+ * A component for non null inputs. Bases component selection on name of type.
+ */
+export const NonNullOutput = ({ ofType: { name }, ...props }) =>
+  getTypeComponentMap(defaultTypeComponentMap, props)[name]({
+    ...props,
+    defaultComponent: defaultTypeComponentMap[name]
+  });
+
+/**
+ * A map from GraphQL types to outputs.
+ *
+ * @private
+ */
+const defaultTypeComponentMap = {
+  Int: IntegerOutput,
+  Float: FloatOutput,
+  Boolean: BooleanOutput,
+  String: StringOutput,
+  ID: StringOutput,
+  GraphQLEnumType: EnumOutput,
+  GraphQLObjectType: ObjectOutput,
+  GraphQLInputObjectType: ObjectInput,
+  GraphQLList: ListOutput,
+  GraphQLNonNull: NonNullOutput
+};
+
+/**
+ * Component for displaying GraphQL output types of higher order.
+ *
+ * @param {GraphQLOutputType} ofType - The type of the input.
+ * @param {Object.<GraphQLOutputType, Component>} ofType - Map from GraphQL
+ *   input types to components.
+ * @returns {React.Element} An element displaying the input.
+ */
+export const HigherOrderOutput = makeComponent(defaultTypeComponentMap);

@@ -7,11 +7,18 @@
 <dt><a href="#ObjectInput">ObjectInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns an object input component with change events handled by the given callback.</p>
 </dd>
-<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns a list surrounding the supplied list data.</p>
+<dt><a href="#HigherOrderInput">HigherOrderInput</a> ⇒ <code>React.Element</code></dt>
+<dd><p>Component for displaying GraphQL input types of higher order.</p>
 </dd>
-<dt><a href="#ObjectOutput">ObjectOutput</a> ⇒ <code>Component</code></dt>
+<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a object surrounding the supplied object data.</p>
+</dd>
+<dt><a href="#ObjectOutput">ObjectOutput</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
+</dd>
+<dt><a href="#HigherOrderOutput">HigherOrderOutput</a> ⇒ <code>React.Element</code></dt>
+<dd><p>Component for displaying GraphQL output types of higher order.</p>
 </dd>
 <dt><a href="#StringInput">StringInput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a text field with change events handled by the given callback.</p>
@@ -48,6 +55,18 @@
 </dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#NonNullInput">NonNullInput()</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
+</dd>
+<dt><a href="#ListOutput">ListOutput(props)</a> ⇒ <code>Component</code></dt>
+<dd><p>Returns a list surrounding the supplied list data.</p>
+</dd>
+</dl>
+
 <a name="ListInput"></a>
 
 ## ListInput ⇒ <code>Component</code>
@@ -60,7 +79,7 @@ Returns a list input component with change events handled by the given callback.
 | Param          | Type                                          | Description                    |
 | -------------- | --------------------------------------------- | ------------------------------ |
 | props          | <code>Object</code>                           | The component props.           |
-| props.ofType   | <code>GraphQLType</code>                      | The type of items in the list. |
+| props.ofType   | <code>GraphQLInputType</code>                 | The type of items in the list. |
 | props.onChange | [<code>onChange</code>](#ListInput..onChange) | The handler for change events. |
 
 **Example** _(Log list input to the console)_
@@ -121,52 +140,23 @@ This callback handles ObjectInput change events.
 | ----- | ------------------- |
 | value | <code>Object</code> |
 
+<a name="HigherOrderInput"></a>
+
+## HigherOrderInput ⇒ <code>React.Element</code>
+
+Component for displaying GraphQL input types of higher order.
+
+**Kind**: global variable  
+**Returns**: <code>React.Element</code> - An element displaying the input.
+
+| Param  | Type                                                    | Description                                 |
+| ------ | ------------------------------------------------------- | ------------------------------------------- |
+| ofType | <code>GraphQLInputType</code>                           | The type of the input.                      |
+| ofType | <code>Object.&lt;GraphQLInputType, Component&gt;</code> | Map from GraphQL input types to components. |
+
 <a name="ListOutput"></a>
 
 ## ListOutput ⇒ <code>Component</code>
-
-Returns a list surrounding the supplied list data.
-
-**Kind**: global variable  
-**Returns**: <code>Component</code> - A list surrounding the list items.
-
-| Param          | Type                                           | Description                    |
-| -------------- | ---------------------------------------------- | ------------------------------ |
-| props          | <code>Object</code>                            | The component props.           |
-| props.ofType   | <code>GraphQLType</code>                       | The type of the list items.    |
-| props.data     | <code>Array.&lt;\*&gt;</code>                  | The list data.                 |
-| props.onChange | [<code>onChange</code>](#ListOutput..onChange) | The handler for change events. |
-
-**Example** _(Display a list of strings)_
-
-```js
-<ListOutput ofType={GraphQLString} data={['abc', 'd', 'xyz']} />
-```
-
-**Example** _(Display a list of list of integers)_
-
-```js
-<ListOutput
-  ofType={new GraphQLList(GraphQLInt)}
-  data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
-/>
-```
-
-<a name="ListOutput..onChange"></a>
-
-### ListOutput~onChange : <code>function</code>
-
-This callback handles ListOutput change events.
-
-**Kind**: inner typedef of [<code>ListOutput</code>](#ListOutput)
-
-| Param | Type                          |
-| ----- | ----------------------------- |
-| value | <code>Array.&lt;\*&gt;</code> |
-
-<a name="ObjectOutput"></a>
-
-## ObjectOutput ⇒ <code>Component</code>
 
 Returns a object surrounding the supplied object data.
 
@@ -193,6 +183,26 @@ Returns a object surrounding the supplied object data.
 />
 ```
 
+<a name="ListOutput..onChange"></a>
+
+### ListOutput~onChange : <code>function</code>
+
+This callback handles ListOutput change events.
+
+**Kind**: inner typedef of [<code>ListOutput</code>](#ListOutput)
+
+| Param | Type                          |
+| ----- | ----------------------------- |
+| value | <code>Array.&lt;\*&gt;</code> |
+
+<a name="ObjectOutput"></a>
+
+## ObjectOutput
+
+TODO
+A component for non null inputs. Bases component selection on name of type.
+
+**Kind**: global variable  
 <a name="ObjectOutput..onChange"></a>
 
 ### ObjectOutput~onChange : <code>function</code>
@@ -204,6 +214,20 @@ This callback handles ObjectOutput change events.
 | Param | Type                |
 | ----- | ------------------- |
 | value | <code>Object</code> |
+
+<a name="HigherOrderOutput"></a>
+
+## HigherOrderOutput ⇒ <code>React.Element</code>
+
+Component for displaying GraphQL output types of higher order.
+
+**Kind**: global variable  
+**Returns**: <code>React.Element</code> - An element displaying the input.
+
+| Param  | Type                                                     | Description                                 |
+| ------ | -------------------------------------------------------- | ------------------------------------------- |
+| ofType | <code>GraphQLOutputType</code>                           | The type of the input.                      |
+| ofType | <code>Object.&lt;GraphQLOutputType, Component&gt;</code> | Map from GraphQL input types to components. |
 
 <a name="StringInput"></a>
 
@@ -476,12 +500,13 @@ Component for displaying GraphQL data
 **Kind**: global variable  
 **Returns**: <code>Component</code> - A component displaying the data.
 
-| Param            | Type                                       | Description                          |
-| ---------------- | ------------------------------------------ | ------------------------------------ |
-| props            | <code>Object</code>                        | The component props.                 |
-| props.type       | <code>GraphQLType</code>                   | The type of the data.                |
-| [props.data]     | <code>Object</code>                        | The initial data.                    |
-| [props.onChange] | [<code>onChange</code>](#Output..onChange) | The handler for changes in the data. |
+| Param            | Type                                    | Description                          |
+| ---------------- | --------------------------------------- | ------------------------------------ |
+| props            | <code>Object</code>                     | The component props.                 |
+| props.type       | <code>GraphQLType</code>                | The type of the data.                |
+| [props.data]     | <code>Object</code>                     | The initial data.                    |
+| [props.onChange] | [<code>onChange</code>](#Put..onChange) | The handler for changes in the data. |
+| [props.render]   | [<code>render</code>](#Put..render)     | The custom GraphQL data renderer.    |
 
 **Example** _(Display a string)_
 
@@ -517,3 +542,83 @@ Component for displaying GraphQL data
   onChange={console.log}
 />
 ```
+
+* [Put](#Put) ⇒ <code>Component</code>
+  * [~onChange](#Put..onChange) : <code>function</code>
+  * [~render](#Put..render) : <code>function</code>
+
+<a name="Put..onChange"></a>
+
+### Put~onChange : <code>function</code>
+
+This callback handles Put change events.
+
+**Kind**: inner typedef of [<code>Put</code>](#Put)
+
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>Object</code> |
+
+<a name="Put..render"></a>
+
+### Put~render : <code>function</code>
+
+This function renders GraphQL data.
+
+**Kind**: inner typedef of [<code>Put</code>](#Put)
+
+| Param | Type                     |
+| ----- | ------------------------ |
+| type  | <code>GraphQLType</code> |
+| data  | <code>\*</code>          |
+
+<a name="NonNullInput"></a>
+
+## NonNullInput()
+
+TODO
+A component for non null inputs. Bases component selection on name of type.
+
+**Kind**: global function  
+<a name="ListOutput"></a>
+
+## ListOutput(props) ⇒ <code>Component</code>
+
+Returns a list surrounding the supplied list data.
+
+**Kind**: global function  
+**Returns**: <code>Component</code> - A list surrounding the list items.
+
+| Param          | Type                                           | Description                    |
+| -------------- | ---------------------------------------------- | ------------------------------ |
+| props          | <code>Object</code>                            | The component props.           |
+| props.ofType   | <code>GraphQLOutputType</code>                 | The type of the list items.    |
+| props.data     | <code>Array.&lt;\*&gt;</code>                  | The list data.                 |
+| props.onChange | [<code>onChange</code>](#ListOutput..onChange) | The handler for change events. |
+
+**Example** _(Display a list of strings)_
+
+```js
+<ListOutput ofType={GraphQLString} data={['abc', 'd', 'xyz']} />
+```
+
+**Example** _(Display a list of list of integers)_
+
+```js
+<ListOutput
+  ofType={new GraphQLList(GraphQLInt)}
+  data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
+/>
+```
+
+<a name="ListOutput..onChange"></a>
+
+### ListOutput~onChange : <code>function</code>
+
+This callback handles ListOutput change events.
+
+**Kind**: inner typedef of [<code>ListOutput</code>](#ListOutput)
+
+| Param | Type                          |
+| ----- | ----------------------------- |
+| value | <code>Array.&lt;\*&gt;</code> |

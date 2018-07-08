@@ -1,33 +1,70 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { GraphQLInputObjectType, GraphQLString } from 'graphql';
-import { Put } from '../../src';
+import {
+  GraphQLObjectType,
+  GraphQLInputObjectType,
+  GraphQLString
+} from 'graphql';
+import { Put, HigherOrderOutput } from '../../src';
+import { Tab } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 const Demo = () => (
   <Put
     type={
-      new GraphQLInputObjectType({
+      new GraphQLObjectType({
         name: 'typed-ui Demo',
         fields: {
-          object: {
+          a: {
             type: new GraphQLInputObjectType({
-              name: 'This is the name of the outer object.',
+              name: 'This is the name of the first object.',
               fields: {
-                outer: {
-                  type: new GraphQLInputObjectType({
-                    name: 'This is the name of the inner object',
-                    fields: {
-                      inner: { type: GraphQLString }
-                    }
-                  })
-                }
+                b: { type: GraphQLString }
+              }
+            })
+          },
+          c: {
+            type: new GraphQLInputObjectType({
+              name: 'This is the name of the second object',
+              fields: {
+                d: { type: GraphQLString }
               }
             })
           }
         }
       })
     }
-    data={{ object: { outer: { inner: '' } } }}
+    data={{ a: { b: '' }, c: { d: '' } }}
+    typeComponentMap={{
+      output: {
+        GraphQLObjectType: ({ data, fields, onChange, ...props }) => (
+          <div>
+            <div>{props.name}</div>
+            <Tab
+              panes={_.keys(data).map(k => ({
+                menuItem: k,
+                render: () => (
+                  <Tab.Pane>
+                    <HigherOrderOutput
+                      {...props}
+                      ofType={fields[k].type}
+                      data={data[k]}
+                      onChange={val => {
+                        onChange(
+                          _.assign({}, data, {
+                            [k]: _.pick(val, _.keys(data[k]))
+                          })
+                        );
+                      }}
+                    />
+                  </Tab.Pane>
+                )
+              }))}
+            />
+          </div>
+        )
+      }
+    }}
     onChange={console.log}
   />
 );

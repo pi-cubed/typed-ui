@@ -1,7 +1,31 @@
-export * from './Put';
+export { Put } from './Put';
 
-export * from './HigherOrderOutput';
-export * from './HigherOrderInput';
+export {
+  HigherOrderOutput,
+  NonNullOutput,
+  ListOutput,
+  ObjectOutput
+} from './HigherOrderOutput';
 
-export * from './PrimitiveOutput';
-export * from './PrimitiveInput';
+export {
+  HigherOrderInput,
+  NonNullInput,
+  ListInput,
+  ObjectInput
+} from './HigherOrderInput';
+
+export {
+  StringOutput,
+  IntegerOutput,
+  FloatOutput,
+  BooleanOutput,
+  EnumOutput
+} from './PrimitiveOutput';
+
+export {
+  StringInput,
+  IntegerInput,
+  FloatInput,
+  BooleanInput,
+  EnumInput
+} from './PrimitiveInput';
