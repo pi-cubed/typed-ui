@@ -25,12 +25,7 @@ import {
   BooleanInput,
   EnumInput
 } from './PrimitiveInput';
-import {
-  withProps,
-  updateArray,
-  makeComponent,
-  getTypeComponentMap
-} from './utils';
+import { updateArray, makeComponent, getTypeComponentMap } from './utils';
 
 /**
  * TODO docs and do
