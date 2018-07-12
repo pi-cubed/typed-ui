@@ -78,42 +78,81 @@ export const ListOutput = ({ data, ...props }) => (
  *     data={{ hew: 'This is a string field called hew.' }}
  * />;
  */
-export const ObjectOutput = ({ data, fields, onChange, ...props }) => (
-  <div>
-    <div>{props.name}</div>
-    <ul style={{ listStyleType: 'none' }}>
-      {_.keys(data).map(k => (
-        <li key={k}>
-          <input type="checkbox" onClick={e => onChange(e.target)} />
-          {k}
-          {_.keys(fields[k].args).length ? (
-            <ul style={{ listStyleType: 'none' }}>
-              {fields[k].args.map((arg, i) => (
-                <li key={i}>
-                  {arg.name}
-                  <HigherOrderInput
-                    {...props}
-                    ofType={arg.type}
-                    onChange={val => console.log(val)}
-                  />
-                </li>
-              ))}
-            </ul>
-          ) : null}
-          {!isLeafType(fields[k].type) || _.keys(fields[k].args).length ? (
-            <hr />
-          ) : null}
-          <HigherOrderOutput
-            {...props}
-            ofType={fields[k].type}
-            data={data[k]}
-            onChange={val => onChange(_.assign({}, data, { [k]: val }))}
-          />
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+export const ObjectOutput = props => <ObjectOutputComponent {...props} />;
+
+class ObjectOutputComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = _.mapValues(props.fields, () => true);
+  }
+
+  toggleField(field) {
+    this.setState({ [field]: !this.state[field] });
+  }
+
+  renderReturn({ type }, k) {
+    const { data, fields, onChange } = this.props;
+    return (
+      <HigherOrderOutput
+        {...this.props}
+        ofType={type}
+        data={data[k]}
+        onChange={val => onChange(_.assign({}, data, { [k]: val }))}
+      />
+    );
+  }
+
+  renderArgs({ args }) {
+    return _.keys(args).length ? (
+      <ul style={{ listStyleType: 'none' }}>
+        {args.map(({ name, type }, i) => (
+          <li key={i}>
+            {name}
+            <HigherOrderInput {...this.props} ofType={type} />
+          </li>
+        ))}
+      </ul>
+    ) : null;
+  }
+
+  renderDivider({ type, args }) {
+    return !isLeafType(type) || _.keys(args).length ? <hr /> : null;
+  }
+
+  renderField(field, k) {
+    return (
+      <div>
+        <input
+          type="checkbox"
+          checked={this.state[k]}
+          onChange={() => this.toggleField(k)}
+        />
+        {k}
+        {this.state[k] ? (
+          <div>
+            {this.renderArgs(field)}
+            {this.renderDivider(field)}
+            {this.renderReturn(field, k)}
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  render() {
+    const { data, name, fields } = this.props;
+    return (
+      <div>
+        <div>{name}</div>
+        <ul style={{ listStyleType: 'none' }}>
+          {_.keys(data).map(k => (
+            <li key={k}>{this.renderField(fields[k], k)}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
 /**
  * This callback handles ObjectOutput change events.
  *

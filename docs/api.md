@@ -13,10 +13,6 @@
 <dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a object surrounding the supplied object data.</p>
 </dd>
-<dt><a href="#ObjectOutput">ObjectOutput</a></dt>
-<dd><p>TODO
-A component for non null inputs. Bases component selection on name of type.</p>
-</dd>
 <dt><a href="#HigherOrderOutput">HigherOrderOutput</a> ⇒ <code>React.Element</code></dt>
 <dd><p>Component for displaying GraphQL output types of higher order.</p>
 </dd>
@@ -64,6 +60,10 @@ A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
 <dt><a href="#ListOutput">ListOutput(props)</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
+</dd>
+<dt><a href="#NonNullOutput">NonNullOutput()</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
 </dl>
 
@@ -194,26 +194,6 @@ This callback handles ListOutput change events.
 | Param | Type                          |
 | ----- | ----------------------------- |
 | value | <code>Array.&lt;\*&gt;</code> |
-
-<a name="ObjectOutput"></a>
-
-## ObjectOutput
-
-TODO
-A component for non null inputs. Bases component selection on name of type.
-
-**Kind**: global variable  
-<a name="ObjectOutput..onChange"></a>
-
-### ObjectOutput~onChange : <code>function</code>
-
-This callback handles ObjectOutput change events.
-
-**Kind**: inner typedef of [<code>ObjectOutput</code>](#ObjectOutput)
-
-| Param | Type                |
-| ----- | ------------------- |
-| value | <code>Object</code> |
 
 <a name="HigherOrderOutput"></a>
 
@@ -622,3 +602,12 @@ This callback handles ListOutput change events.
 | Param | Type                          |
 | ----- | ----------------------------- |
 | value | <code>Array.&lt;\*&gt;</code> |
+
+<a name="NonNullOutput"></a>
+
+## NonNullOutput()
+
+TODO
+A component for non null inputs. Bases component selection on name of type.
+
+**Kind**: global function
