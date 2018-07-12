@@ -8300,10 +8300,7 @@ webpackJsonp(
     },
     '3T95': function(e, t, n) {
       'use strict';
-      var r = n('8Lcb');
-      n.d(t, 'a', function() {
-        return r.a;
-      });
+      n('8Lcb');
     },
     '3WU0': function(e, t, n) {
       'use strict';
@@ -9204,11 +9201,12 @@ webpackJsonp(
                 i.a.createElement('div', null, this.props.name),
                 i.a.createElement(
                   'ul',
-                  null,
+                  { style: { listStyleType: 'none' } },
                   a.a.keys(this.props.fields).map(function(t) {
                     return i.a.createElement(
                       'li',
                       { key: t },
+                      t,
                       i.a.createElement(
                         g,
                         s({}, e.props, {
@@ -13939,8 +13937,7 @@ webpackJsonp(
           'panes',
           'renderActiveOnly'
         ]),
-        (D.propTypes = {}),
-        (t.a = D);
+        (D.propTypes = {});
     },
     '8NDG': function(e, t) {
       var n = Math.max;
@@ -18160,7 +18157,7 @@ webpackJsonp(
       var f = function(e) {
           var t,
             n = ((t = e.type),
-            Object(o.e)(t) || (Object(o.f)(t) && Object(o.e)(t.ofType))),
+            Object(o.e)(t) || (Object(o.g)(t) && Object(o.e)(t.ofType))),
             r = n ? h : d;
           return i.a.createElement(
             r,
@@ -34658,14 +34655,15 @@ webpackJsonp(
     VM2n: function(e, t, n) {
       'use strict';
       n.d(t, 'a', function() {
-        return p;
+        return f;
       });
       var r = n('GiK3'),
         i = n.n(r),
-        o = (n('s8Fo'), n('PGUN')),
-        a = n('4/mC'),
-        u = n('L/hj'),
-        c =
+        o = n('s8Fo'),
+        a = n('PGUN'),
+        u = n('4/mC'),
+        c = n('L/hj'),
+        s =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -34675,39 +34673,69 @@ webpackJsonp(
             }
             return e;
           };
-      function s(e, t) {
+      function l(e, t) {
         var n = {};
         for (var r in e)
           t.indexOf(r) >= 0 ||
             (Object.prototype.hasOwnProperty.call(e, r) && (n[r] = e[r]));
         return n;
       }
-      var l = {
-          Int: o.d,
-          Float: o.c,
-          Boolean: o.a,
-          String: o.e,
-          ID: o.e,
-          GraphQLEnumType: o.b,
+      var p = {
+          Int: a.d,
+          Float: a.c,
+          Boolean: a.a,
+          String: a.e,
+          ID: a.e,
+          GraphQLEnumType: a.b,
           GraphQLObjectType: function(e) {
             var t = e.data,
               n = e.fields,
               r = e.onChange,
-              o = s(e, ['data', 'fields', 'onChange']);
+              a = l(e, ['data', 'fields', 'onChange']);
             return i.a.createElement(
               'div',
               null,
-              i.a.createElement('div', null, o.name),
+              i.a.createElement('div', null, a.name),
               i.a.createElement(
                 'ul',
-                null,
+                { style: { listStyleType: 'none' } },
                 _.keys(t).map(function(e) {
                   return i.a.createElement(
                     'li',
                     { key: e },
+                    i.a.createElement('input', {
+                      type: 'checkbox',
+                      onClick: function(e) {
+                        return r(e.target);
+                      }
+                    }),
+                    e,
                     i.a.createElement(
-                      p,
-                      c({}, o, {
+                      'ul',
+                      { style: { listStyleType: 'none' } },
+                      n[e].args.map(function(e, t) {
+                        return i.a.createElement(
+                          'li',
+                          { key: t },
+                          e.name,
+                          i.a.createElement(
+                            u.a,
+                            s({}, a, {
+                              ofType: e.type,
+                              onChange: function(e) {
+                                return console.log(e);
+                              }
+                            })
+                          )
+                        );
+                      })
+                    ),
+                    !Object(o.f)(n[e].type) || _.keys(n[e].args).length
+                      ? i.a.createElement('hr', null)
+                      : null,
+                    i.a.createElement(
+                      f,
+                      s({}, a, {
                         ofType: n[e].type,
                         data: t[e],
                         onChange: function(n) {
@@ -34721,10 +34749,10 @@ webpackJsonp(
               )
             );
           },
-          GraphQLInputObjectType: a.b,
+          GraphQLInputObjectType: u.b,
           GraphQLList: function(e) {
             var t = e.data,
-              n = s(e, ['data']);
+              n = l(e, ['data']);
             return i.a.createElement(
               'ul',
               null,
@@ -34732,18 +34760,18 @@ webpackJsonp(
                 return i.a.createElement(
                   'li',
                   { key: r },
-                  i.a.createElement(p, c({}, n, { data: t[r] }))
+                  i.a.createElement(f, s({}, n, { data: t[r] }))
                 );
               })
             );
           },
           GraphQLNonNull: function(e) {
             var t = e.ofType.name,
-              n = s(e, ['ofType']);
-            return Object(u.a)(l, n)[t](c({}, n, { defaultComponent: l[t] }));
+              n = l(e, ['ofType']);
+            return Object(c.a)(p, n)[t](s({}, n, { defaultComponent: p[t] }));
           }
         },
-        p = Object(u.b)(l);
+        f = Object(c.b)(p);
     },
     VORN: function(e, t, n) {
       var r = n('yCNF'),
@@ -35373,12 +35401,9 @@ webpackJsonp(
         n('fzbs'),
         n('vBPu'),
         n('zg1a'),
-        n('ZRRb');
-      var r = n('3T95');
-      n.d(t, 'a', function() {
-        return r.a;
-      });
-      n('NYMk'),
+        n('ZRRb'),
+        n('3T95'),
+        n('NYMk'),
         n('jjxb'),
         n('CmrF'),
         n('KGzG'),
@@ -37475,95 +37500,43 @@ webpackJsonp(
         o = n('O27J'),
         a = (n.n(o), n('s8Fo')),
         u = n('lVK7'),
-        c = n('Wz0Z'),
-        s = n('kVq8'),
-        l = (n.n(s),
-        Object.assign ||
-          function(e) {
-            for (var t = 1; t < arguments.length; t++) {
-              var n = arguments[t];
-              for (var r in n)
-                Object.prototype.hasOwnProperty.call(n, r) && (e[r] = n[r]);
-            }
-            return e;
-          });
+        c = (n('Wz0Z'), n('kVq8'));
+      n.n(c);
       Object(o.render)(
         i.a.createElement(function() {
-          return i.a.createElement(u.b, {
-            type: new a.b({
-              name: 'typed-ui Demo',
+          return i.a.createElement(u.a, {
+            type: new a.c({
+              name: 'Query',
               fields: {
-                a: {
-                  type: new a.a({
-                    name: 'This is the name of the first object.',
-                    fields: { b: { type: a.c } }
-                  })
-                },
-                c: {
-                  type: new a.a({
-                    name: 'This is the name of the second object',
-                    fields: { d: { type: a.c } }
+                f: {
+                  args: {
+                    x: { type: a.b },
+                    y: {
+                      type: new a.a({
+                        name: 'Y',
+                        fields: {
+                          a: { type: a.b },
+                          b: {
+                            type: new a.a({
+                              name: 'B',
+                              fields: { c: { type: a.b } }
+                            })
+                          }
+                        }
+                      })
+                    }
+                  },
+                  type: new a.c({
+                    name: 'T',
+                    fields: {
+                      m: { type: a.b },
+                      n: { args: { x: { type: a.b } }, type: a.b }
+                    }
                   })
                 }
               }
             }),
-            data: { a: { b: '' }, c: { d: '' } },
-            typeComponentMap: {
-              output: {
-                GraphQLObjectType: function(e) {
-                  var t = e.data,
-                    n = e.fields,
-                    r = e.onChange,
-                    o = (function(e, t) {
-                      var n = {};
-                      for (var r in e)
-                        t.indexOf(r) >= 0 ||
-                          (Object.prototype.hasOwnProperty.call(e, r) &&
-                            (n[r] = e[r]));
-                      return n;
-                    })(e, ['data', 'fields', 'onChange']);
-                  return i.a.createElement(
-                    'div',
-                    null,
-                    i.a.createElement('div', null, o.name),
-                    i.a.createElement(c.a, {
-                      panes: _.keys(t).map(function(e) {
-                        return {
-                          menuItem: e,
-                          render: function() {
-                            return i.a.createElement(
-                              c.a.Pane,
-                              null,
-                              i.a.createElement(
-                                u.a,
-                                l({}, o, {
-                                  ofType: n[e].type,
-                                  data: t[e],
-                                  onChange: function(n) {
-                                    var i;
-                                    r(
-                                      _.assign(
-                                        {},
-                                        t,
-                                        (((i = {})[e] = _.pick(
-                                          n,
-                                          _.keys(t[e])
-                                        )),
-                                        i)
-                                      )
-                                    );
-                                  }
-                                })
-                              )
-                            );
-                          }
-                        };
-                      })
-                    })
-                  );
-                }
-              }
-            },
+            data: { f: { m: 0, n: 0 } },
             onChange: console.log
           });
         }, null),
@@ -41459,14 +41432,10 @@ webpackJsonp(
     lVK7: function(e, t, n) {
       'use strict';
       var r = n('DUn5');
-      n.d(t, 'b', function() {
+      n.d(t, 'a', function() {
         return r.a;
       });
-      var i = n('VM2n');
-      n.d(t, 'a', function() {
-        return i.a;
-      });
-      n('4/mC'), n('PGUN'), n('fcJs');
+      n('VM2n'), n('4/mC'), n('PGUN'), n('fcJs');
     },
     lb6C: function(e, t) {
       e.exports = function(e, t) {
@@ -44787,23 +44756,27 @@ webpackJsonp(
         i = (n.n(r), n('vOy4'));
       n.n(i);
       n.o(i, 'GraphQLObjectType') &&
-        n.d(t, 'b', function() {
+        n.d(t, 'c', function() {
           return i.GraphQLObjectType;
         }),
         n.o(i, 'GraphQLInputObjectType') &&
           n.d(t, 'a', function() {
             return i.GraphQLInputObjectType;
           }),
-        n.o(i, 'GraphQLString') &&
-          n.d(t, 'c', function() {
-            return i.GraphQLString;
+        n.o(i, 'GraphQLInt') &&
+          n.d(t, 'b', function() {
+            return i.GraphQLInt;
           }),
         n.o(i, 'isInputObjectType') &&
           n.d(t, 'e', function() {
             return i.isInputObjectType;
           }),
-        n.o(i, 'isWrappingType') &&
+        n.o(i, 'isLeafType') &&
           n.d(t, 'f', function() {
+            return i.isLeafType;
+          }),
+        n.o(i, 'isWrappingType') &&
+          n.d(t, 'g', function() {
             return i.isWrappingType;
           }),
         n.o(i, 'getNamedType') &&
@@ -48644,4 +48617,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.d66a06b3.js.map
+//# sourceMappingURL=demo.0da08d17.js.map

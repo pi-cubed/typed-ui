@@ -79,4 +79,10 @@ describe('ObjectOutput', () => {
     const wrapper = wrap({ name, fields, data: { data } });
     expect(wrapper.find('ul').exists()).toEqual(true);
   });
+
+  xit('displays checkboxes for fields', () => {
+    const data = 10;
+    const name = 'hew';
+    const fields = { data: { type: new GraphQLList(GraphQLInt) } };
+  });
 });

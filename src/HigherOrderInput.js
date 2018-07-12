@@ -185,9 +185,10 @@ export class ObjectInputComponent extends Component {
     return (
       <div>
         <div>{this.props.name}</div>
-        <ul>
+        <ul style={{ listStyleType: 'none' }}>
           {_.keys(this.props.fields).map(key => (
             <li key={key}>
+              {key}
               <HigherOrderInput
                 {...this.props}
                 ofType={this.props.fields[key].type}

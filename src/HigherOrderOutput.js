@@ -15,7 +15,8 @@ import {
   isEnumType,
   isObjectType,
   isInputObjectType,
-  isWrappingType
+  isWrappingType,
+  isLeafType
 } from 'graphql';
 import {
   StringOutput,
@@ -24,7 +25,7 @@ import {
   BooleanOutput,
   EnumOutput
 } from './PrimitiveOutput';
-import { ObjectInput } from './HigherOrderInput';
+import { ObjectInput, HigherOrderInput } from './HigherOrderInput';
 import { withProps, makeComponent, getTypeComponentMap } from './utils';
 
 /**
@@ -80,9 +81,28 @@ export const ListOutput = ({ data, ...props }) => (
 export const ObjectOutput = ({ data, fields, onChange, ...props }) => (
   <div>
     <div>{props.name}</div>
-    <ul>
+    <ul style={{ listStyleType: 'none' }}>
       {_.keys(data).map(k => (
         <li key={k}>
+          <input type="checkbox" onClick={e => onChange(e.target)} />
+          {k}
+          {_.keys(fields[k].args).length ? (
+            <ul style={{ listStyleType: 'none' }}>
+              {fields[k].args.map((arg, i) => (
+                <li key={i}>
+                  {arg.name}
+                  <HigherOrderInput
+                    {...props}
+                    ofType={arg.type}
+                    onChange={val => console.log(val)}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {!isLeafType(fields[k].type) || _.keys(fields[k].args).length ? (
+            <hr />
+          ) : null}
           <HigherOrderOutput
             {...props}
             ofType={fields[k].type}

@@ -3,7 +3,8 @@ import { render } from 'react-dom';
 import {
   GraphQLObjectType,
   GraphQLInputObjectType,
-  GraphQLString
+  GraphQLString,
+  GraphQLInt
 } from 'graphql';
 import { Put, HigherOrderOutput } from '../../src';
 import { Tab } from 'semantic-ui-react';
@@ -13,58 +14,55 @@ const Demo = () => (
   <Put
     type={
       new GraphQLObjectType({
-        name: 'typed-ui Demo',
+        name: 'Query',
         fields: {
-          a: {
-            type: new GraphQLInputObjectType({
-              name: 'This is the name of the first object.',
-              fields: {
-                b: { type: GraphQLString }
+          f: {
+            args: {
+              x: {
+                type: GraphQLInt
+              },
+              y: {
+                type: new GraphQLInputObjectType({
+                  name: 'Y',
+                  fields: {
+                    a: {
+                      type: GraphQLInt
+                    },
+                    b: {
+                      type: new GraphQLInputObjectType({
+                        name: 'B',
+                        fields: {
+                          c: {
+                            type: GraphQLInt
+                          }
+                        }
+                      })
+                    }
+                  }
+                })
               }
-            })
-          },
-          c: {
-            type: new GraphQLInputObjectType({
-              name: 'This is the name of the second object',
+            },
+            type: new GraphQLObjectType({
+              name: 'T',
               fields: {
-                d: { type: GraphQLString }
+                m: {
+                  type: GraphQLInt
+                },
+                n: {
+                  args: {
+                    x: {
+                      type: GraphQLInt
+                    }
+                  },
+                  type: GraphQLInt
+                }
               }
             })
           }
         }
       })
     }
-    data={{ a: { b: '' }, c: { d: '' } }}
-    typeComponentMap={{
-      output: {
-        GraphQLObjectType: ({ data, fields, onChange, ...props }) => (
-          <div>
-            <div>{props.name}</div>
-            <Tab
-              panes={_.keys(data).map(k => ({
-                menuItem: k,
-                render: () => (
-                  <Tab.Pane>
-                    <HigherOrderOutput
-                      {...props}
-                      ofType={fields[k].type}
-                      data={data[k]}
-                      onChange={val => {
-                        onChange(
-                          _.assign({}, data, {
-                            [k]: _.pick(val, _.keys(data[k]))
-                          })
-                        );
-                      }}
-                    />
-                  </Tab.Pane>
-                )
-              }))}
-            />
-          </div>
-        )
-      }
-    }}
+    data={{ f: { m: 0, n: 0 } }}
     onChange={console.log}
   />
 );
