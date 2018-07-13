@@ -34655,7 +34655,7 @@ webpackJsonp(
     VM2n: function(e, t, n) {
       'use strict';
       n.d(t, 'a', function() {
-        return f;
+        return d;
       });
       var r = n('GiK3'),
         i = n.n(r),
@@ -34680,7 +34680,147 @@ webpackJsonp(
             (Object.prototype.hasOwnProperty.call(e, r) && (n[r] = e[r]));
         return n;
       }
-      var p = {
+      var p = (function(e) {
+          function t(n) {
+            !(function(e, t) {
+              if (!(e instanceof t))
+                throw new TypeError('Cannot call a class as a function');
+            })(this, t);
+            var r = (function(e, t) {
+              if (!e)
+                throw new ReferenceError(
+                  "this hasn't been initialised - super() hasn't been called"
+                );
+              return !t || ('object' != typeof t && 'function' != typeof t)
+                ? e
+                : t;
+            })(this, e.call(this, n));
+            return (
+              (r.state = _.mapValues(n.fields, function() {
+                return !0;
+              })),
+              r
+            );
+          }
+          return (
+            (function(e, t) {
+              if ('function' != typeof t && null !== t)
+                throw new TypeError(
+                  'Super expression must either be null or a function, not ' +
+                    typeof t
+                );
+              (e.prototype = Object.create(t && t.prototype, {
+                constructor: {
+                  value: e,
+                  enumerable: !1,
+                  writable: !0,
+                  configurable: !0
+                }
+              })),
+                t &&
+                  (Object.setPrototypeOf
+                    ? Object.setPrototypeOf(e, t)
+                    : (e.__proto__ = t));
+            })(t, e),
+            (t.prototype.toggleField = function(e) {
+              var t;
+              this.setState((((t = {})[e] = !this.state[e]), t));
+            }),
+            (t.prototype.renderReturn = function(e, t) {
+              var n = e.type,
+                r = this.props,
+                o = r.data,
+                a = (r.fields, r.onChange);
+              return i.a.createElement(
+                d,
+                s({}, this.props, {
+                  ofType: n,
+                  data: o[t],
+                  onChange: function(e) {
+                    var n;
+                    return a(_.assign({}, o, (((n = {})[t] = e), n)));
+                  }
+                })
+              );
+            }),
+            (t.prototype.renderArgs = function(e) {
+              var t = this,
+                n = e.args;
+              return _.keys(n).length
+                ? i.a.createElement(
+                    'ul',
+                    { style: { listStyleType: 'none' } },
+                    n.map(function(e, n) {
+                      var r = e.name,
+                        o = e.type;
+                      return i.a.createElement(
+                        'li',
+                        { key: n },
+                        r,
+                        i.a.createElement(u.a, s({}, t.props, { ofType: o }))
+                      );
+                    })
+                  )
+                : null;
+            }),
+            (t.prototype.renderDivider = function(e) {
+              var t = e.type,
+                n = e.args;
+              return !Object(o.f)(t) || _.keys(n).length
+                ? i.a.createElement('hr', null)
+                : null;
+            }),
+            (t.prototype.renderField = function(e, t) {
+              var n = this;
+              return i.a.createElement(
+                'div',
+                null,
+                i.a.createElement('input', {
+                  type: 'checkbox',
+                  checked: this.state[t],
+                  onChange: function() {
+                    return n.toggleField(t);
+                  }
+                }),
+                t,
+                this.state[t]
+                  ? i.a.createElement(
+                      'div',
+                      null,
+                      this.renderArgs(e),
+                      this.renderDivider(e),
+                      this.renderReturn(e, t)
+                    )
+                  : null
+              );
+            }),
+            (t.prototype.render = function() {
+              var e = this,
+                t = this.props,
+                n = t.data,
+                r = t.name,
+                o = t.fields;
+              return i.a.createElement(
+                'div',
+                null,
+                i.a.createElement('div', null, r),
+                i.a.createElement(
+                  'ul',
+                  { style: { listStyleType: 'none' } },
+                  _.keys(n).map(function(t) {
+                    return i.a.createElement(
+                      'li',
+                      { key: t },
+                      e.renderField(o[t], t)
+                    );
+                  })
+                )
+              );
+            }),
+            t
+          );
+        })(r.Component),
+        f = {
           Int: a.d,
           Float: a.c,
           Boolean: a.a,
@@ -34688,66 +34828,7 @@ webpackJsonp(
           ID: a.e,
           GraphQLEnumType: a.b,
           GraphQLObjectType: function(e) {
-            var t = e.data,
-              n = e.fields,
-              r = e.onChange,
-              a = l(e, ['data', 'fields', 'onChange']);
-            return i.a.createElement(
-              'div',
-              null,
-              i.a.createElement('div', null, a.name),
-              i.a.createElement(
-                'ul',
-                { style: { listStyleType: 'none' } },
-                _.keys(t).map(function(e) {
-                  return i.a.createElement(
-                    'li',
-                    { key: e },
-                    i.a.createElement('input', {
-                      type: 'checkbox',
-                      onClick: function(e) {
-                        return r(e.target);
-                      }
-                    }),
-                    e,
-                    i.a.createElement(
-                      'ul',
-                      { style: { listStyleType: 'none' } },
-                      n[e].args.map(function(e, t) {
-                        return i.a.createElement(
-                          'li',
-                          { key: t },
-                          e.name,
-                          i.a.createElement(
-                            u.a,
-                            s({}, a, {
-                              ofType: e.type,
-                              onChange: function(e) {
-                                return console.log(e);
-                              }
-                            })
-                          )
-                        );
-                      })
-                    ),
-                    !Object(o.f)(n[e].type) || _.keys(n[e].args).length
-                      ? i.a.createElement('hr', null)
-                      : null,
-                    i.a.createElement(
-                      f,
-                      s({}, a, {
-                        ofType: n[e].type,
-                        data: t[e],
-                        onChange: function(n) {
-                          var i;
-                          return r(_.assign({}, t, (((i = {})[e] = n), i)));
-                        }
-                      })
-                    )
-                  );
-                })
-              )
-            );
+            return i.a.createElement(p, e);
           },
           GraphQLInputObjectType: u.b,
           GraphQLList: function(e) {
@@ -34760,7 +34841,7 @@ webpackJsonp(
                 return i.a.createElement(
                   'li',
                   { key: r },
-                  i.a.createElement(f, s({}, n, { data: t[r] }))
+                  i.a.createElement(d, s({}, n, { data: t[r] }))
                 );
               })
             );
@@ -34768,10 +34849,10 @@ webpackJsonp(
           GraphQLNonNull: function(e) {
             var t = e.ofType.name,
               n = l(e, ['ofType']);
-            return Object(c.a)(p, n)[t](s({}, n, { defaultComponent: p[t] }));
+            return Object(c.a)(f, n)[t](s({}, n, { defaultComponent: f[t] }));
           }
         },
-        f = Object(c.b)(p);
+        d = Object(c.b)(f);
     },
     VORN: function(e, t, n) {
       var r = n('yCNF'),
@@ -48617,4 +48698,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.0da08d17.js.map
+//# sourceMappingURL=demo.0e1a659e.js.map

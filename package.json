@@ -21,7 +21,7 @@
     "docs:publish": "yarn docs:build && yarn gh-pages -d _book",
     "dev": "yarn && run-p docs:serve test:watch demo",
     "precommit": "pretty-quick --staged && yarn prepublishOnly",
-    "prepublishOnly": "run-s clean build test clean build",
+    "prepublishOnly": "run-s clean test clean build",
     "postpublish": "yarn docs:publish",
     "cz": "git-cz",
     "travis-deploy-once": "travis-deploy-once",
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.47",
     "@babel/preset-env": "^7.0.0-beta.49",
+    "@material-ui/core": "^1.3.1",
     "babel-core": "^6.26.3",
     "babel-plugin-inline-dotenv": "^1.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -58,10 +59,8 @@
     "pretty-quick": "^1.4.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "semantic-release": "^15.4.2",
-    "semantic-ui-css": "^2.3.2",
-    "semantic-ui-react": "^0.82.0",
-    "travis-deploy-once": "^5.0.0"
+    "travis-deploy-once": "^5.0.0",
+    "typeface-roboto": "^0.0.54"
   },
   "author": "Pi Cubed",
   "homepage": "https://github.com/pi-cubed/typed-ui",

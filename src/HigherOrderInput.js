@@ -192,7 +192,7 @@ export class ObjectInputComponent extends Component {
               <HigherOrderInput
                 {...this.props}
                 ofType={this.props.fields[key].type}
-                data={this.state.fields}
+                data={this.state.fields[key]}
                 onChange={this.onChange(key)}
               />
             </li>

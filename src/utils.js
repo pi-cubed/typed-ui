@@ -15,8 +15,10 @@ export const updateArray = (array, index, value) => {
  *
  * @private
  */
-const getComponent = (map, ofType) =>
-  map[ofType.constructor.name] || map[getNamedType(ofType).name];
+const getComponent = (map, ofType) => {
+  const c = map[ofType.constructor.name] || map[getNamedType(ofType).name];
+  return ofType in ['Int', 'Float', 'String', 'Boolean', 'ID'] ? 0 : c;
+};
 
 /**
  * TODO docs

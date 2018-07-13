@@ -37,8 +37,14 @@ import { ListOutput, ObjectOutput } from 'src/HigherOrderOutput';
 const putEquals = (data, type, Expected, props) => () => {
   const onChange = () => {};
   equals(
-    <Put type={type} data={data} onChange={onChange} />,
-    <Expected type={type} data={data} onChange={onChange} {...props} />
+    <Put type={type} data={data} onChange={onChange} defaultToggle={true} />,
+    <Expected
+      type={type}
+      data={data}
+      onChange={onChange}
+      defaultToggle={true}
+      {...props}
+    />
   );
 };
 
@@ -57,6 +63,7 @@ const handlesInput = (obj, type, data, value) => async () => {
       }
       data={{ x: null }}
       onChange={res}
+      defaultToggle={true}
     />
   ));
   expect(actual).toEqual({ x: data });
@@ -177,6 +184,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { String: abc }
           }}
+          defaultToggle={true}
         />,
         abc()
       ));
@@ -188,6 +196,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { Int: abc }
           }}
+          defaultToggle={true}
         />,
         abc()
       ));
@@ -199,6 +208,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { Float: abc }
           }}
+          defaultToggle={true}
         />,
         abc()
       ));
@@ -210,6 +220,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { Boolean: abc }
           }}
+          defaultToggle={true}
         />,
         abc()
       ));
@@ -221,6 +232,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { ID: abc }
           }}
+          defaultToggle={true}
         />,
         abc()
       ));
@@ -236,8 +248,9 @@ describe('Put', () => {
                 defaultComponent({ data: data + 1, ...props })
             }
           }}
+          defaultToggle={true}
         />,
-        <Put type={GraphQLNonNull(GraphQLInt)} data={6} />
+        <Put type={GraphQLNonNull(GraphQLInt)} data={6} defaultToggle={true} />
       ));
 
     it('can customize non null types', () =>
@@ -251,8 +264,9 @@ describe('Put', () => {
                 defaultComponent({ data: data + 1, ...props })
             }
           }}
+          defaultToggle={true}
         />,
-        <Put type={GraphQLNonNull(GraphQLInt)} data={6} />
+        <Put type={GraphQLNonNull(GraphQLInt)} data={6} defaultToggle={true} />
       ));
 
     it('can customize lists', () =>
@@ -266,8 +280,13 @@ describe('Put', () => {
                 defaultComponent({ data: _.concat(data, 4), ...props })
             }
           }}
+          defaultToggle={true}
         />,
-        <Put type={GraphQLList(GraphQLInt)} data={[1, 2, 3, 4]} />
+        <Put
+          type={GraphQLList(GraphQLInt)}
+          data={[1, 2, 3, 4]}
+          defaultToggle={true}
+        />
       ));
 
     it('can customize enums', () =>
@@ -286,6 +305,7 @@ describe('Put', () => {
                 defaultComponent({ data: ['b'], ...props })
             }
           }}
+          defaultToggle={true}
         />,
         <Put
           type={
@@ -295,6 +315,7 @@ describe('Put', () => {
             })
           }
           data={['b']}
+          defaultToggle={true}
         />
       ));
 
@@ -314,6 +335,7 @@ describe('Put', () => {
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
+          defaultToggle={true}
         />,
         <Put
           type={
@@ -323,6 +345,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 1 }}
+          defaultToggle={true}
         />
       ));
 
@@ -342,6 +365,7 @@ describe('Put', () => {
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
+          defaultToggle={true}
         />,
         <Put
           type={
@@ -351,6 +375,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 1 }}
+          defaultToggle={true}
         />
       ));
 
@@ -372,6 +397,7 @@ describe('Put', () => {
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
+          defaultToggle={true}
         />,
         <Put
           type={
@@ -381,6 +407,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 2 }}
+          defaultToggle={true}
         />
       ));
   });

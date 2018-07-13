@@ -10,7 +10,7 @@ const containsInt = (w, n) =>
 
 describe('ListOutput', () => {
   const wrap = (ofType, data) =>
-    mount(<ListOutput ofType={ofType} data={data} />);
+    mount(<ListOutput ofType={ofType} data={data} defaultToggle={true} />);
 
   it('displays list of strings', () => {
     const data = ['abc', '1', 'xyz'];
@@ -46,7 +46,7 @@ describe('ListOutput', () => {
 });
 
 describe('ObjectOutput', () => {
-  const wrap = props => mount(<ObjectOutput {...props} />);
+  const wrap = props => mount(<ObjectOutput {...props} defaultToggle={true} />);
 
   it('displays name of object', () => {
     const data = 5;

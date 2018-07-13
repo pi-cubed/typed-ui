@@ -40,7 +40,10 @@ import { withProps, makeComponent, getTypeComponentMap } from './utils';
  * @example <caption>Display a list of strings</caption>
  * <ListOutput ofType={GraphQLString} data={['abc', 'd', 'xyz']} />
  * @example <caption>Display a list of list of integers</caption>
- * <ListOutput ofType={new GraphQLList(GraphQLInt)} data={[[0, 1, 2], [10, 11, 12], [50, 100]]} />
+ * <ListOutput
+ *  ofType={new GraphQLList(GraphQLInt)}
+ *  data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
+ * />
  */
 export const ListOutput = ({ data, ...props }) => (
   <ul>
@@ -51,7 +54,6 @@ export const ListOutput = ({ data, ...props }) => (
     ))}
   </ul>
 );
-// props => listOutput(getOutput(props.ofType))(props);
 /**
  * This callback handles ListOutput change events.
  *
@@ -79,17 +81,29 @@ export const ListOutput = ({ data, ...props }) => (
  * />;
  */
 export const ObjectOutput = props => <ObjectOutputComponent {...props} />;
+/**
+ * This callback handles ObjectOutput change events.
+ *
+ * @callback ObjectOutput~onChange
+ * @param {Object} value
+ */
 
+/**
+ * TODO docs
+ *
+ * @private
+ */
 class ObjectOutputComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = _.mapValues(props.fields, () => true);
+    this.state = _.mapValues(props.fields, () => !!props.defaultToggle);
   }
 
-  toggleField(field) {
-    this.setState({ [field]: !this.state[field] });
-  }
-
+  /**
+   * TODO docs
+   *
+   * @private
+   */
   renderReturn({ type }, k) {
     const { data, fields, onChange } = this.props;
     return (
@@ -102,7 +116,12 @@ class ObjectOutputComponent extends Component {
     );
   }
 
-  renderArgs({ args }) {
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderArgs({ args }, key) {
     return _.keys(args).length ? (
       <ul style={{ listStyleType: 'none' }}>
         {args.map(({ name, type }, i) => (
@@ -115,30 +134,51 @@ class ObjectOutputComponent extends Component {
     ) : null;
   }
 
+  /**
+   * TODO docs
+   *
+   * @private
+   */
   renderDivider({ type, args }) {
     return !isLeafType(type) || _.keys(args).length ? <hr /> : null;
   }
 
-  renderField(field, k) {
+  renderToggle(key) {
+    return (
+      <input
+        type="checkbox"
+        checked={this.state[key]}
+        onChange={() => this.setState(prev => ({ [key]: !prev[key] }))}
+      />
+    );
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderField(field, key) {
     return (
       <div>
-        <input
-          type="checkbox"
-          checked={this.state[k]}
-          onChange={() => this.toggleField(k)}
-        />
-        {k}
-        {this.state[k] ? (
+        {this.renderToggle(key)}
+        {key}
+        {this.state[key] ? (
           <div>
             {this.renderArgs(field)}
             {this.renderDivider(field)}
-            {this.renderReturn(field, k)}
+            {this.renderReturn(field, key)}
           </div>
         ) : null}
       </div>
     );
   }
 
+  /**
+   * TODO docs
+   *
+   * @private
+   */
   render() {
     const { data, name, fields } = this.props;
     return (
@@ -153,12 +193,6 @@ class ObjectOutputComponent extends Component {
     );
   }
 }
-/**
- * This callback handles ObjectOutput change events.
- *
- * @callback ObjectOutput~onChange
- * @param {Object} value
- */
 
 /**
  * TODO
