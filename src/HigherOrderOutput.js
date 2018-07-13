@@ -143,6 +143,11 @@ class ObjectOutputComponent extends Component {
     return !isLeafType(type) || _.keys(args).length ? <hr /> : null;
   }
 
+  /**
+   * TODO docs
+   *
+   * @private
+   */
   renderToggle(key) {
     return (
       <input

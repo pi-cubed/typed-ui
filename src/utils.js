@@ -1,5 +1,5 @@
 import React from 'react';
-import { getNamedType } from 'graphql';
+import { getNamedType, isLeafType } from 'graphql';
 
 /**
  * TODO docs
@@ -16,9 +16,19 @@ export const updateArray = (array, index, value) => {
  * @private
  */
 const getComponent = (map, ofType) => {
-  const c = map[ofType.constructor.name] || map[getNamedType(ofType).name];
+  const c = map[getComponentName(ofType)];
   return ofType in ['Int', 'Float', 'String', 'Boolean', 'ID'] ? 0 : c;
 };
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+const getComponentName = type =>
+  type.constructor.name === 'GraphQLScalarType'
+    ? getNamedType(type).name
+    : type.constructor.name;
 
 /**
  * TODO docs
@@ -53,3 +63,31 @@ export const makeComponent = defaultTypeComponentMap => ({
     defaultComponent: getComponent(defaultTypeComponentMap, ofType)
   });
 };
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+const defaultInputs = {
+  Int: type => 0,
+  Float: type => 0,
+  Boolean: type => true,
+  String: type => '',
+  ID: type => '',
+  GraphQLEnumType: type => '',
+  GraphQLObjectType: type =>
+    _.mapValues(type.getFields(), ({ type }) => getDefaultInput(type)),
+  GraphQLInputObjectType: type =>
+    _.mapValues(type.getFields(), ({ type }) => getDefaultInput(type)),
+  GraphQLList: type => [],
+  GraphQLNonNull: ({ ofType }) => getDefaultInput(ofType)
+};
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+export const getDefaultInput = type =>
+  defaultInputs[getComponentName(type)](type);

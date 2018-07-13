@@ -16,7 +16,8 @@ import {
   isEnumType,
   isObjectType,
   isInputObjectType,
-  isWrappingType
+  isWrappingType,
+  isLeafType
 } from 'graphql';
 import {
   StringInput,
@@ -157,9 +158,7 @@ export const ObjectInput = props => <ObjectInputComponent {...props} />;
 export class ObjectInputComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      fields: _.mapValues(props.fields, val => defaultInput(val.type))
-    };
+    this.state = _.mapValues(props.fields, val => defaultInput(val.type));
   }
 
   /**
@@ -168,12 +167,48 @@ export class ObjectInputComponent extends Component {
    * @private
    */
   onChange(key) {
-    return value => {
-      this.setState(
-        { fields: _.assign({}, this.state.fields, { [key]: value }) },
-        () => this.props.onChange(this.state.fields)
-      );
-    };
+    return value =>
+      this.setState({ [key]: value }, () => this.props.onChange(this.state));
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderReturn({ type }, k) {
+    return (
+      <HigherOrderInput
+        {...this.props}
+        ofType={type}
+        data={this.state[k]}
+        onChange={this.onChange(k)}
+      />
+    );
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderDivider({ type, args }) {
+    return !isLeafType(type) ? <hr /> : null;
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderField(field, key) {
+    return (
+      <div>
+        {key}
+        {this.renderDivider(field)}
+        {this.renderReturn(field, key)}
+      </div>
+    );
   }
 
   /**
@@ -182,20 +217,13 @@ export class ObjectInputComponent extends Component {
    * @private
    */
   render() {
+    const { data, name, fields } = this.props;
     return (
       <div>
-        <div>{this.props.name}</div>
+        <div>{name}</div>
         <ul style={{ listStyleType: 'none' }}>
-          {_.keys(this.props.fields).map(key => (
-            <li key={key}>
-              {key}
-              <HigherOrderInput
-                {...this.props}
-                ofType={this.props.fields[key].type}
-                data={this.state.fields[key]}
-                onChange={this.onChange(key)}
-              />
-            </li>
+          {_.keys(fields).map(k => (
+            <li key={k}>{this.renderField(fields[k], k)}</li>
           ))}
         </ul>
       </div>

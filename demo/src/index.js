@@ -74,7 +74,6 @@ const Demo = () => (
         }
       })
     }
-    data={{ a: { b: '' }, c: { d: '' } }}
     typeComponentMap={{
       output: {
         GraphQLObjectType: ({ data, fields, onChange, ...props }) => (
