@@ -26,17 +26,18 @@ import {
   BooleanInput,
   EnumInput
 } from './PrimitiveInput';
-import { updateArray, makeComponent, getTypeComponentMap } from './utils';
+import {
+  updateArray,
+  makeComponent,
+  getTypeComponentMap,
+  getDefaultInput,
+  removeItem,
+  merge
+} from './utils';
 
 /**
- * TODO docs and do
- *
- * @private
- */
-const defaultInput = ofType => null;
-
-/**
- * Returns a list input component with change events handled by the given callback.
+ * Returns a list input component with change events handled by the given
+ *   callback.
  *
  * @param {Object} props - The component props.
  * @param {GraphQLInputType} props.ofType - The type of items in the list.
@@ -64,10 +65,9 @@ export const ListInput = props => <ListInputComponent {...props} />;
 class ListInputComponent extends Component {
   constructor(props) {
     super(props);
-    const { ofType } = props;
-    this.default = defaultInput(ofType);
+    this.defaultInput = () => getDefaultInput(props.ofType);
     this.state = {
-      list: [this.default]
+      data: props.data || [this.defaultInput()]
     };
   }
 
@@ -76,25 +76,60 @@ class ListInputComponent extends Component {
    *
    * @private
    */
-  onChange(index) {
-    return value =>
-      this.setState(
-        {
-          list: updateArray(this.state.list, index, value)
-        },
-        () => this.props.onChange(this.state.list)
-      );
+  onChange(index, value) {
+    return this.setState(
+      ({ data }) => ({
+        data: updateArray(data, index, value)
+      }),
+      () => this.props.onChange(this.state.data)
+    );
   }
 
-  /**
-   * TODO docs
-   *
-   * @private
-   */
-  addItem() {
-    this.setState({
-      list: this.state.list.concat(this.default)
-    });
+  renderItem(data, index) {
+    return (
+      <div>
+        <HigherOrderInput
+          {...this.props}
+          data={data}
+          onChange={val => this.onChange(index, val)}
+        />
+        {this.state.data.length > 1 ? this.renderRemove(index) : null}
+      </div>
+    );
+  }
+
+  renderRemove(index) {
+    return (
+      <input
+        type="button"
+        value="-"
+        onClick={() =>
+          this.setState(
+            {
+              data: removeItem(this.state.data, index)
+            },
+            () => this.props.onChange(this.state.data)
+          )
+        }
+      />
+    );
+  }
+
+  renderAdd() {
+    return (
+      <input
+        type="button"
+        value="+"
+        onClick={() =>
+          this.setState(
+            {
+              data: this.state.data.concat(this.defaultInput())
+            },
+            () => this.props.onChange(this.state.data)
+          )
+        }
+      />
+    );
   }
 
   /**
@@ -106,24 +141,19 @@ class ListInputComponent extends Component {
     return (
       <div>
         <ul>
-          {this.state.list.map((_, key) => (
-            <li key={key}>
-              <HigherOrderInput
-                {...this.props}
-                data={this.state.list}
-                onChange={this.onChange(key)}
-              />
-            </li>
+          {this.state.data.map((data, i) => (
+            <li key={i}>{this.renderItem(data, i)}</li>
           ))}
         </ul>
-        <input type="button" value="+" onClick={() => this.addItem()} />
+        {this.renderAdd()}
       </div>
     );
   }
 }
 
 /**
- * Returns an object input component with change events handled by the given callback.
+ * Returns an object input component with change events handled by the given
+ *   callback.
  *
  * @param {Object} props - The component props.
  * @param {string} props.name - The name of the input object.
@@ -155,10 +185,13 @@ export const ObjectInput = props => <ObjectInputComponent {...props} />;
  *
  * @private
  */
-export class ObjectInputComponent extends Component {
+class ObjectInputComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = _.mapValues(props.fields, val => defaultInput(val.type));
+    this.state = merge(
+      _.mapValues(props.fields, ({ type }) => getDefaultInput(type)),
+      props.data
+    );
   }
 
   /**
@@ -166,23 +199,15 @@ export class ObjectInputComponent extends Component {
    *
    * @private
    */
-  onChange(key) {
-    return value =>
-      this.setState({ [key]: value }, () => this.props.onChange(this.state));
-  }
-
-  /**
-   * TODO docs
-   *
-   * @private
-   */
-  renderReturn({ type }, k) {
+  renderReturn({ type }, key) {
     return (
       <HigherOrderInput
         {...this.props}
         ofType={type}
-        data={this.state[k]}
-        onChange={this.onChange(k)}
+        data={this.state[key]}
+        onChange={val =>
+          this.setState({ [key]: val }, () => this.props.onChange(this.state))
+        }
       />
     );
   }
@@ -217,7 +242,7 @@ export class ObjectInputComponent extends Component {
    * @private
    */
   render() {
-    const { data, name, fields } = this.props;
+    const { name, fields } = this.props;
     return (
       <div>
         <div>{name}</div>
@@ -234,11 +259,8 @@ export class ObjectInputComponent extends Component {
 /**
  * TODO
  * A component for non null inputs. Bases component selection on name of type.
- */ export const NonNullInput = ({ ofType: { name }, ...props }) =>
-  getTypeComponentMap(defaultTypeComponentMap, props)[name]({
-    ...props,
-    defaultComponent: defaultTypeComponentMap[name]
-  });
+ */
+export const NonNullInput = props => <HigherOrderInput {...props} />;
 
 /**
  * A map from GraphQL scalars to primitve inputs.
@@ -246,11 +268,11 @@ export class ObjectInputComponent extends Component {
  * @private
  */
 const defaultTypeComponentMap = {
-  Int: IntegerInput,
-  Float: FloatInput,
-  Boolean: BooleanInput,
-  String: StringInput,
-  ID: StringInput,
+  GraphQLInt: IntegerInput,
+  GraphQLFloat: FloatInput,
+  GraphQLBoolean: BooleanInput,
+  GraphQLString: StringInput,
+  GraphQLID: StringInput,
   GraphQLEnumType: EnumInput,
   GraphQLInputObjectType: ObjectInput,
   GraphQLList: ListInput,

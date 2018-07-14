@@ -52,7 +52,7 @@ describe('ObjectOutput', () => {
     const data = 5;
     const name = 'name';
     const fields = { data: { type: GraphQLInt } };
-    const wrapper = wrap({ name, fields, data: { data } });
+    const wrapper = wrap({ name, fields, data: { data: { output: data } } });
     expect(wrapper.contains(name)).toEqual(true);
   });
 
@@ -60,7 +60,7 @@ describe('ObjectOutput', () => {
     const data = 5;
     const name = 'name';
     const fields = { data: { type: GraphQLInt } };
-    const wrapper = wrap({ name, fields, data: { data } });
+    const wrapper = wrap({ name, fields, data: { data: { output: data } } });
     expect(containsInt(wrapper, data)).toEqual(true);
   });
 
@@ -68,7 +68,7 @@ describe('ObjectOutput', () => {
     const data = [0, 1, 2];
     const name = 'name';
     const fields = { data: { type: new GraphQLList(GraphQLInt) } };
-    const wrapper = wrap({ name, fields, data: { data } });
+    const wrapper = wrap({ name, fields, data: { data: { output: data } } });
     expect(containsInt(wrapper, data[0])).toEqual(true);
   });
 
@@ -76,13 +76,15 @@ describe('ObjectOutput', () => {
     const data = [0, 1, 2];
     const name = 'name';
     const fields = { data: { type: new GraphQLList(GraphQLInt) } };
-    const wrapper = wrap({ name, fields, data: { data } });
+    const wrapper = wrap({ name, fields, data: { data: { output: data } } });
     expect(wrapper.find('ul').exists()).toEqual(true);
   });
 
-  xit('displays checkboxes for fields', () => {
+  it('displays checkboxes for fields', () => {
     const data = 10;
     const name = 'hew';
-    const fields = { data: { type: new GraphQLList(GraphQLInt) } };
+    const fields = { data: { type: GraphQLInt } };
+    const wrapper = wrap({ name, fields, data: { data: { output: data } } });
+    expect(wrapper.find('input[type="checkbox"]').exists()).toEqual(true);
   });
 });

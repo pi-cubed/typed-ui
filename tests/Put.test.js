@@ -61,7 +61,6 @@ const handlesInput = (obj, type, data, value) => async () => {
           fields: { x: { type } }
         })
       }
-      data={{ x: null }}
       onChange={res}
       defaultToggle={true}
     />
@@ -145,7 +144,7 @@ describe('Put', () => {
     it('is ObjectOutput for object with single integer field', () => {
       const name = 'name';
       const fields = { data: { type: GraphQLInt } };
-      const data = { data: 5 };
+      const data = { data: { output: 5 } };
       putEquals(
         data,
         new GraphQLObjectType({
@@ -168,7 +167,7 @@ describe('Put', () => {
           name: 'inner',
           fields: { y: { type: GraphQLInt } }
         }),
-        { y: 5 },
+        { input: {}, output: { y: 5 } },
         5
       )
     );
@@ -182,7 +181,7 @@ describe('Put', () => {
         <Put
           type={GraphQLString}
           typeComponentMap={{
-            output: { String: abc }
+            output: { GraphQLString: abc }
           }}
           defaultToggle={true}
         />,
@@ -194,7 +193,7 @@ describe('Put', () => {
         <Put
           type={GraphQLInt}
           typeComponentMap={{
-            output: { Int: abc }
+            output: { GraphQLInt: abc }
           }}
           defaultToggle={true}
         />,
@@ -206,7 +205,7 @@ describe('Put', () => {
         <Put
           type={GraphQLFloat}
           typeComponentMap={{
-            output: { Float: abc }
+            output: { GraphQLFloat: abc }
           }}
           defaultToggle={true}
         />,
@@ -218,7 +217,7 @@ describe('Put', () => {
         <Put
           type={GraphQLBoolean}
           typeComponentMap={{
-            output: { Boolean: abc }
+            output: { GraphQLBoolean: abc }
           }}
           defaultToggle={true}
         />,
@@ -230,7 +229,7 @@ describe('Put', () => {
         <Put
           type={GraphQLID}
           typeComponentMap={{
-            output: { ID: abc }
+            output: { GraphQLID: abc }
           }}
           defaultToggle={true}
         />,
@@ -244,7 +243,7 @@ describe('Put', () => {
           data={5}
           typeComponentMap={{
             output: {
-              Int: ({ data, defaultComponent, ...props }) =>
+              GraphQLInt: ({ data, defaultComponent, ...props }) =>
                 defaultComponent({ data: data + 1, ...props })
             }
           }}
@@ -391,7 +390,7 @@ describe('Put', () => {
           data={{ a: 0 }}
           typeComponentMap={{
             output: {
-              Int: ({ data, defaultComponent, ...props }) =>
+              GraphQLInt: ({ data, defaultComponent, ...props }) =>
                 defaultComponent({ data: data + 1, ...props }),
               GraphQLObjectType: ({ data, defaultComponent, ...props }) =>
                 defaultComponent({ data: { a: 1 }, ...props })

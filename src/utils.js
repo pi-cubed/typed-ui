@@ -1,24 +1,43 @@
 import React from 'react';
-import { getNamedType, isLeafType } from 'graphql';
+import {
+  GraphQLInt,
+  GraphQLFloat,
+  GraphQLBoolean,
+  GraphQLString,
+  GraphQLID,
+  getNamedType,
+  isLeafType
+} from 'graphql';
+import deepmerge from 'deepmerge';
 
 /**
  * TODO docs
  *
  * @private
  */
-export const updateArray = (array, index, value) => {
-  return [...array.slice(0, index), value, ...array.slice(index + 1)];
-};
+export const updateArray = (array, index, value) => [
+  ...array.slice(0, index),
+  value,
+  ...array.slice(index + 1)
+];
 
 /**
  * TODO docs
  *
  * @private
  */
-const getComponent = (map, ofType) => {
-  const c = map[getComponentName(ofType)];
-  return ofType in ['Int', 'Float', 'String', 'Boolean', 'ID'] ? 0 : c;
-};
+export const removeItem = (array, index) => [
+  ...array.slice(0, index),
+  ...array.slice(index + 1)
+];
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+export const merge = (a, b) =>
+  deepmerge(a || {}, b || {}, { arrayMerge: (_, x) => x });
 
 /**
  * TODO docs
@@ -27,7 +46,7 @@ const getComponent = (map, ofType) => {
  */
 const getComponentName = type =>
   type.constructor.name === 'GraphQLScalarType'
-    ? getNamedType(type).name
+    ? `GraphQL${getNamedType(type).name}`
     : type.constructor.name;
 
 /**
@@ -52,35 +71,40 @@ export const makeComponent = defaultTypeComponentMap => ({
   ofType,
   ...props
 }) => {
-  return getComponent(
-    getTypeComponentMap(defaultTypeComponentMap, props),
-    ofType
-  )({
+  return getTypeComponentMap(defaultTypeComponentMap, props)[
+    getComponentName(ofType)
+  ]({
     ...props,
     ...ofType,
     options: ofType.getValues && _.keys(ofType.getValues()),
     fields: ofType.getFields && ofType.getFields(),
-    defaultComponent: getComponent(defaultTypeComponentMap, ofType)
+    defaultComponent: defaultTypeComponentMap[getComponentName(ofType)]
   });
 };
 
 /**
- * TODO docs
+ * TODO docs + outobj return
  *
  * @private
  */
-const defaultInputs = {
-  Int: type => 0,
-  Float: type => 0,
-  Boolean: type => true,
-  String: type => '',
-  ID: type => '',
+const defaultData = {
+  GraphQLInt: type => 0,
+  GraphQLFloat: type => 0,
+  GraphQLBoolean: type => true,
+  GraphQLString: type => '',
+  GraphQLID: type => '',
   GraphQLEnumType: type => '',
-  GraphQLObjectType: type =>
-    _.mapValues(type.getFields(), ({ type }) => getDefaultInput(type)),
+  GraphQLObjectType: t =>
+    _.mapValues(t.getFields(), ({ args, type }) => ({
+      input: args.reduce(
+        (acc, { name, type }) => merge(acc, { [name]: getDefaultInput(type) }),
+        {}
+      ),
+      output: getDefaultInput(type)
+    })),
   GraphQLInputObjectType: type =>
     _.mapValues(type.getFields(), ({ type }) => getDefaultInput(type)),
-  GraphQLList: type => [],
+  GraphQLList: ({ ofType }) => [getDefaultInput(ofType)],
   GraphQLNonNull: ({ ofType }) => getDefaultInput(ofType)
 };
 
@@ -90,4 +114,4 @@ const defaultInputs = {
  * @private
  */
 export const getDefaultInput = type =>
-  defaultInputs[getComponentName(type)](type);
+  defaultData[getComponentName(type)](type);

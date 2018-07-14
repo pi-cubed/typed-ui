@@ -2,16 +2,26 @@
 
 <dl>
 <dt><a href="#ListInput">ListInput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns a list input component with change events handled by the given callback.</p>
+<dd><p>Returns a list input component with change events handled by the given
+  callback.</p>
 </dd>
 <dt><a href="#ObjectInput">ObjectInput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns an object input component with change events handled by the given callback.</p>
+<dd><p>Returns an object input component with change events handled by the given
+  callback.</p>
+</dd>
+<dt><a href="#NonNullInput">NonNullInput</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
 <dt><a href="#HigherOrderInput">HigherOrderInput</a> ⇒ <code>React.Element</code></dt>
 <dd><p>Component for displaying GraphQL input types of higher order.</p>
 </dd>
 <dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a object surrounding the supplied object data.</p>
+</dd>
+<dt><a href="#NonNullOutput">NonNullOutput</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
 <dt><a href="#HigherOrderOutput">HigherOrderOutput</a> ⇒ <code>React.Element</code></dt>
 <dd><p>Component for displaying GraphQL output types of higher order.</p>
@@ -54,16 +64,8 @@
 ## Functions
 
 <dl>
-<dt><a href="#NonNullInput">NonNullInput()</a></dt>
-<dd><p>TODO
-A component for non null inputs. Bases component selection on name of type.</p>
-</dd>
 <dt><a href="#ListOutput">ListOutput(props)</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
-</dd>
-<dt><a href="#NonNullOutput">NonNullOutput()</a></dt>
-<dd><p>TODO
-A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
 </dl>
 
@@ -71,7 +73,8 @@ A component for non null inputs. Bases component selection on name of type.</p>
 
 ## ListInput ⇒ <code>Component</code>
 
-Returns a list input component with change events handled by the given callback.
+Returns a list input component with change events handled by the given
+callback.
 
 **Kind**: global variable  
 **Returns**: <code>Component</code> - A list input component.
@@ -104,7 +107,8 @@ This callback handles ListInput change events.
 
 ## ObjectInput ⇒ <code>Component</code>
 
-Returns an object input component with change events handled by the given callback.
+Returns an object input component with change events handled by the given
+callback.
 
 **Kind**: global variable  
 **Returns**: <code>Component</code> - An object input component.
@@ -140,6 +144,14 @@ This callback handles ObjectInput change events.
 | ----- | ------------------- |
 | value | <code>Object</code> |
 
+<a name="NonNullInput"></a>
+
+## NonNullInput
+
+TODO
+A component for non null inputs. Bases component selection on name of type.
+
+**Kind**: global variable  
 <a name="HigherOrderInput"></a>
 
 ## HigherOrderInput ⇒ <code>React.Element</code>
@@ -195,6 +207,14 @@ This callback handles ListOutput change events.
 | ----- | ----------------------------- |
 | value | <code>Array.&lt;\*&gt;</code> |
 
+<a name="NonNullOutput"></a>
+
+## NonNullOutput
+
+TODO
+A component for non null inputs. Bases component selection on name of type.
+
+**Kind**: global variable  
 <a name="HigherOrderOutput"></a>
 
 ## HigherOrderOutput ⇒ <code>React.Element</code>
@@ -552,14 +572,6 @@ This function renders GraphQL data.
 | type  | <code>GraphQLType</code> |
 | data  | <code>\*</code>          |
 
-<a name="NonNullInput"></a>
-
-## NonNullInput()
-
-TODO
-A component for non null inputs. Bases component selection on name of type.
-
-**Kind**: global function  
 <a name="ListOutput"></a>
 
 ## ListOutput(props) ⇒ <code>Component</code>
@@ -602,12 +614,3 @@ This callback handles ListOutput change events.
 | Param | Type                          |
 | ----- | ----------------------------- |
 | value | <code>Array.&lt;\*&gt;</code> |
-
-<a name="NonNullOutput"></a>
-
-## NonNullOutput()
-
-TODO
-A component for non null inputs. Bases component selection on name of type.
-
-**Kind**: global function

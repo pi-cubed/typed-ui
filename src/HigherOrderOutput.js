@@ -26,7 +26,13 @@ import {
   EnumOutput
 } from './PrimitiveOutput';
 import { ObjectInput, HigherOrderInput } from './HigherOrderInput';
-import { withProps, makeComponent, getTypeComponentMap } from './utils';
+import {
+  withProps,
+  makeComponent,
+  getTypeComponentMap,
+  getDefaultInput,
+  merge
+} from './utils';
 
 /**
  * Returns a list surrounding the supplied list data.
@@ -96,7 +102,20 @@ export const ObjectOutput = props => <ObjectOutputComponent {...props} />;
 class ObjectOutputComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = _.mapValues(props.fields, () => !!props.defaultToggle);
+    this.state = {
+      toggle: _.mapValues(props.fields, () => !!props.defaultToggle),
+      data: merge(
+        _.mapValues(props.fields, ({ args = [], type }) => ({
+          input: args.reduce(
+            (acc, { name, type }) =>
+              merge(acc, { [name]: getDefaultInput(type) }),
+            {}
+          ),
+          output: getDefaultInput(type)
+        })),
+        props.data
+      )
+    };
   }
 
   /**
@@ -104,14 +123,40 @@ class ObjectOutputComponent extends Component {
    *
    * @private
    */
-  renderReturn({ type }, k) {
-    const { data, fields, onChange } = this.props;
+  renderToggle(key) {
     return (
-      <HigherOrderOutput
+      <input
+        type="checkbox"
+        checked={this.state.toggle[key]}
+        onChange={() =>
+          this.setState(prev => ({
+            toggle: { ...prev.toggle, [key]: !prev.toggle[key] }
+          }))
+        }
+      />
+    );
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderArg(key, name, type) {
+    return (
+      <HigherOrderInput
         {...this.props}
+        data={this.state.data[key].input[name]}
         ofType={type}
-        data={data[k]}
-        onChange={val => onChange(_.assign({}, data, { [k]: val }))}
+        onChange={val =>
+          this.setState(
+            prev =>
+              merge(prev, {
+                data: { [key]: { input: { [name]: val } } }
+              }),
+            () => this.props.onChange(this.state.data)
+          )
+        }
       />
     );
   }
@@ -124,10 +169,10 @@ class ObjectOutputComponent extends Component {
   renderArgs({ args }, key) {
     return _.keys(args).length ? (
       <ul style={{ listStyleType: 'none' }}>
-        {args.map(({ name, type }, i) => (
-          <li key={i}>
+        {args.map(({ name, type }) => (
+          <li key={name}>
             {name}
-            <HigherOrderInput {...this.props} ofType={type} />
+            {this.renderArg(key, name, type)}
           </li>
         ))}
       </ul>
@@ -148,14 +193,22 @@ class ObjectOutputComponent extends Component {
    *
    * @private
    */
-  renderToggle(key) {
-    return (
-      <input
-        type="checkbox"
-        checked={this.state[key]}
-        onChange={() => this.setState(prev => ({ [key]: !prev[key] }))}
+  renderReturn({ type }, key) {
+    const { fields, onChange } = this.props;
+    const data = this.state.data[key].output;
+    return data ? (
+      <HigherOrderOutput
+        {...this.props}
+        ofType={type}
+        data={data}
+        onChange={val =>
+          this.setState(
+            prev => merge(prev, { data: { [key]: { output: val } } }),
+            () => onChange(this.state.data)
+          )
+        }
       />
-    );
+    ) : null;
   }
 
   /**
@@ -168,9 +221,9 @@ class ObjectOutputComponent extends Component {
       <div>
         {this.renderToggle(key)}
         {key}
-        {this.state[key] ? (
+        {this.state.toggle[key] ? (
           <div>
-            {this.renderArgs(field)}
+            {this.renderArgs(field, key)}
             {this.renderDivider(field)}
             {this.renderReturn(field, key)}
           </div>
@@ -203,11 +256,7 @@ class ObjectOutputComponent extends Component {
  * TODO
  * A component for non null inputs. Bases component selection on name of type.
  */
-export const NonNullOutput = ({ ofType: { name }, ...props }) =>
-  getTypeComponentMap(defaultTypeComponentMap, props)[name]({
-    ...props,
-    defaultComponent: defaultTypeComponentMap[name]
-  });
+export const NonNullOutput = props => <HigherOrderOutput {...props} />;
 
 /**
  * A map from GraphQL types to outputs.
@@ -215,11 +264,11 @@ export const NonNullOutput = ({ ofType: { name }, ...props }) =>
  * @private
  */
 const defaultTypeComponentMap = {
-  Int: IntegerOutput,
-  Float: FloatOutput,
-  Boolean: BooleanOutput,
-  String: StringOutput,
-  ID: StringOutput,
+  GraphQLInt: IntegerOutput,
+  GraphQLFloat: FloatOutput,
+  GraphQLBoolean: BooleanOutput,
+  GraphQLString: StringOutput,
+  GraphQLID: StringOutput,
   GraphQLEnumType: EnumOutput,
   GraphQLObjectType: ObjectOutput,
   GraphQLInputObjectType: ObjectInput,

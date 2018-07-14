@@ -192,8 +192,9 @@ class Input extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
+      data: props.data || getDefaultInput(props.type)
     };
+    // console.log(getDefaultInput(props.type));
   }
   /**
    * This callback handles Input change events.
