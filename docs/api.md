@@ -16,8 +16,8 @@ A component for non null inputs. Bases component selection on name of type.</p>
 <dt><a href="#HigherOrderInput">HigherOrderInput</a> ⇒ <code>React.Element</code></dt>
 <dd><p>Component for displaying GraphQL input types of higher order.</p>
 </dd>
-<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns a object surrounding the supplied object data.</p>
+<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Element</code></dt>
+<dd><p>Component for displaying GraphQLObjectType input and output data.</p>
 </dd>
 <dt><a href="#NonNullOutput">NonNullOutput</a></dt>
 <dd><p>TODO
@@ -168,20 +168,24 @@ Component for displaying GraphQL input types of higher order.
 
 <a name="ListOutput"></a>
 
-## ListOutput ⇒ <code>Component</code>
+## ListOutput ⇒ <code>Element</code>
 
-Returns a object surrounding the supplied object data.
+Component for displaying GraphQLObjectType input and output data.
 
 **Kind**: global variable  
-**Returns**: <code>Component</code> - A object surrounding the object items.
+**Returns**: <code>Element</code> - A object surrounding the object items.
 
-| Param          | Type                                             | Description                       |
-| -------------- | ------------------------------------------------ | --------------------------------- |
-| props          | <code>Object</code>                              | The component props.              |
-| props.name     | <code>string</code>                              | The name of the object.           |
-| props.fields   | <code>Object</code>                              | The type of fields of the object. |
-| props.data     | <code>Object</code>                              | The object data.                  |
-| props.onChange | [<code>onChange</code>](#ObjectOutput..onChange) | The handler for change events.    |
+| Param                               | Type                                             | Description                                    |
+| ----------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
+| props                               | <code>Object</code>                              | The component props.                           |
+| props.name                          | <code>string</code>                              | The name of the object.                        |
+| props.fields                        | <code>Object</code>                              | The type of fields of the object.              |
+| props.data                          | <code>Object</code>                              | The object field args and return data.         |
+| props.data[fieldName].selected      | <code>Boolean</code>                             | Whether the field is selected.                 |
+| props.data[fieldName].input         | <code>Object</code>                              | The input data for object field arguments.     |
+| props.data[fieldName].input[argName | <code>GraphQLInputType</code>                    | The input data for object field arguments.     |
+| props.data[fieldName].output        | <code>GraphQLType</code>                         | The output data for object field return types. |
+| props.onChange                      | [<code>onChange</code>](#ObjectOutput..onChange) | The handler for change events.                 |
 
 **Example** _(Display an object of one string)_
 

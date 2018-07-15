@@ -137,12 +137,14 @@ class ObjectOutputComponent extends Component {
     return (
       <input
         type="checkbox"
-        checked={this.state.data[key].selected}
+        value={this.state.data[key].selected}
         onChange={() =>
           this.setState(
-            ({ data }) =>
+            prev =>
               merge(prev, {
-                data: { [key]: { selected: { [name]: !data[key].selected } } }
+                data: {
+                  [key]: { selected: !prev.data[key].selected }
+                }
               }),
             () => this.props.onChange(this.state.data)
           )
@@ -252,12 +254,12 @@ class ObjectOutputComponent extends Component {
    * @private
    */
   render() {
-    const { data, name, fields } = this.props;
+    const { name, fields } = this.props;
     return (
       <div>
         <div>{name}</div>
         <ul style={{ listStyleType: 'none' }}>
-          {_.keys(data).map(k => (
+          {_.keys(this.state.data).map(k => (
             <li key={k}>{this.renderField(fields[k], k)}</li>
           ))}
         </ul>

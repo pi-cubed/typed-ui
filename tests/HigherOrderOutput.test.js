@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import { ListOutput, ObjectOutput } from 'src/HigherOrderOutput';
-import { fuzz, getInput } from './utils';
+import { fuzz, getInput, setTarget } from './utils';
 import { mount } from 'enzyme';
 import { GraphQLString, GraphQLList, GraphQLInt } from 'graphql';
 
@@ -99,7 +99,7 @@ describe('ObjectOutput', () => {
         data={{ data: { output: data } }}
       />
     );
-    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toNotExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('value')).toNotExist();
   });
 
   it('fields can be selected by data prop', () => {
@@ -113,7 +113,7 @@ describe('ObjectOutput', () => {
         data={{ data: { output: data, selected: true } }}
       />
     );
-    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('value')).toExist();
   });
 
   it('fields can be selected by default using defaultSelect prop', () => {
@@ -121,7 +121,7 @@ describe('ObjectOutput', () => {
     const name = 'hew';
     const fields = { data: { type: GraphQLInt } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('value')).toExist();
   });
 
   it('hides field if checkbox unchecked', () => {
@@ -142,7 +142,20 @@ describe('ObjectOutput', () => {
     const name = 'hew';
     const fields = { data: { type: GraphQLInt } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    console.log(wrapper.html());
     expect(wrapper.find('input[type="number"]').prop('value')).toEqual(data);
+  });
+
+  it('checkboxes can be deselected', async () => {
+    const value = await setTarget('input[type="checkbox"]', 'change', {
+      value: 'checked'
+    })(res => (
+      <ObjectOutput
+        defaultSelect={true}
+        name={''}
+        fields={{ x: { type: GraphQLInt } }}
+        onChange={res}
+      />
+    ));
+    expect(value.x.selected).toNotExist();
   });
 });

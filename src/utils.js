@@ -83,7 +83,7 @@ export const makeComponent = defaultTypeComponentMap => ({
 };
 
 /**
- * TODO docs + outobj return
+ * TODO docs
  *
  * @private
  */
@@ -93,7 +93,9 @@ const defaultData = {
   GraphQLBoolean: type => true,
   GraphQLString: type => '',
   GraphQLID: type => '',
-  GraphQLEnumType: type => '',
+  GraphQLEnumType: t => t.getValues()[0].value,
+  GraphQLList: ({ ofType }) => [getDefaultInput(ofType)],
+  GraphQLNonNull: ({ ofType }) => getDefaultInput(ofType),
   GraphQLObjectType: t =>
     _.mapValues(t.getFields(), ({ args, type }) => ({
       input: args.reduce(
@@ -103,9 +105,7 @@ const defaultData = {
       output: getDefaultInput(type)
     })),
   GraphQLInputObjectType: type =>
-    _.mapValues(type.getFields(), ({ type }) => getDefaultInput(type)),
-  GraphQLList: ({ ofType }) => [getDefaultInput(ofType)],
-  GraphQLNonNull: ({ ofType }) => getDefaultInput(ofType)
+    _.mapValues(type.getFields(), ({ type }) => getDefaultInput(type))
 };
 
 /**
