@@ -17,18 +17,18 @@ describe('StringOutput', () => {
   const fuzzed = fuzz('abc');
   const wrapper = shallow(<StringOutput data={fuzzed} />);
 
-  it('displays string', () => expect(wrapper.contains(fuzzed)).toEqual(true));
+  it('displays string', () => expect(wrapper.contains(fuzzed)).toExist());
 
-  it('is div', () => expect(wrapper.is('div')).toEqual(true));
+  it('is div', () => expect(wrapper.is('div')).toExist());
 });
 
 describe('EnumOutput', () => {
   const data = 'abc';
   const wrapper = shallow(<EnumOutput data={data} />);
 
-  it('displays enum', () => expect(wrapper.contains(data)).toEqual(true));
+  it('displays enum', () => expect(wrapper.contains(data)).toExist());
 
-  it('is div', () => expect(wrapper.is('div')).toEqual(true));
+  it('is div', () => expect(wrapper.is('div')).toExist());
 });
 
 describe('BooleanOutput', () => {
@@ -38,7 +38,7 @@ describe('BooleanOutput', () => {
 
   it('is checkbox', () => expect(input.type).toEqual('checkbox'));
 
-  it('is readonly', () => expect(input.readOnly).toEqual(true));
+  it('is readonly', () => expect(input.readOnly).toExist());
 });
 
 describe('IntegerOutput', () => {
@@ -49,7 +49,7 @@ describe('IntegerOutput', () => {
 
   it('is checkbox', () => expect(input.type).toEqual('number'));
 
-  it('is readonly', () => expect(input.readOnly).toEqual(true));
+  it('is readonly', () => expect(input.readOnly).toExist());
 });
 
 describe('FloatOutput', () => {
@@ -60,5 +60,5 @@ describe('FloatOutput', () => {
 
   it('is checkbox', () => expect(input.type).toEqual('number'));
 
-  it('is readonly', () => expect(input.readOnly).toEqual(true));
+  it('is readonly', () => expect(input.readOnly).toExist());
 });

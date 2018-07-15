@@ -104,7 +104,7 @@ describe('ObjectInput', () => {
         onChange={res}
       />
     ));
-    expect(value).toEqual({ data, n: null });
+    expect(value).toEqual({ data, n: 0 });
   });
 
   it('displays nested objects', async () => {

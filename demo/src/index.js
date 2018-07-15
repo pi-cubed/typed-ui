@@ -3,11 +3,11 @@ import { render } from 'react-dom';
 import {
   GraphQLObjectType,
   GraphQLInputObjectType,
-  GraphQLString
+  GraphQLString,
+  GraphQLList,
+  GraphQLNonNull
 } from 'graphql';
-import { Put, HigherOrderOutput } from '../../src';
-import { Tab } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Put } from '../../src';
 
 const Demo = () => (
   <Put
@@ -15,55 +15,29 @@ const Demo = () => (
       new GraphQLObjectType({
         name: 'typed-ui Demo',
         fields: {
-          a: {
-            type: new GraphQLInputObjectType({
-              name: 'This is the name of the first object.',
-              fields: {
-                b: { type: GraphQLString }
+          A: {
+            args: {
+              X: {
+                type: new GraphQLInputObjectType({
+                  name: 'X',
+                  fields: {
+                    xs: { type: GraphQLList(GraphQLNonNull(GraphQLString)) }
+                  }
+                })
               }
-            })
-          },
-          c: {
-            type: new GraphQLInputObjectType({
-              name: 'This is the name of the second object',
+            },
+            type: new GraphQLObjectType({
+              name: 'This is what A returned',
               fields: {
-                d: { type: GraphQLString }
+                B: { type: GraphQLList(GraphQLString) }
               }
             })
           }
         }
       })
     }
-    data={{ a: { b: '' }, c: { d: '' } }}
-    typeComponentMap={{
-      output: {
-        GraphQLObjectType: ({ data, fields, onChange, ...props }) => (
-          <div>
-            <div>{props.name}</div>
-            <Tab
-              panes={_.keys(data).map(k => ({
-                menuItem: k,
-                render: () => (
-                  <Tab.Pane>
-                    <HigherOrderOutput
-                      {...props}
-                      ofType={fields[k].type}
-                      data={data[k]}
-                      onChange={val => {
-                        onChange(
-                          _.assign({}, data, {
-                            [k]: _.pick(val, _.keys(data[k]))
-                          })
-                        );
-                      }}
-                    />
-                  </Tab.Pane>
-                )
-              }))}
-            />
-          </div>
-        )
-      }
+    data={{
+      A: { output: { B: { output: ['hew'] } } }
     }}
     onChange={console.log}
   />

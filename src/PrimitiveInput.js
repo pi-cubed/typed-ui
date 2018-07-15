@@ -19,8 +19,8 @@ const Input = props => (
  * @example <caption>Log string input to the console</caption>
  * <StringInput onChange={console.log} />
  */
-export const StringInput = ({ onChange }) => (
-  <Input type="text" defaultValue="" onChange={onChange} />
+export const StringInput = ({ data, onChange }) => (
+  <Input type="text" placeholder="" value={data || ''} onChange={onChange} />
 );
 /**
  * This callback handles StringInput change events.

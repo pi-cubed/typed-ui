@@ -37,8 +37,14 @@ import { ListOutput, ObjectOutput } from 'src/HigherOrderOutput';
 const putEquals = (data, type, Expected, props) => () => {
   const onChange = () => {};
   equals(
-    <Put type={type} data={data} onChange={onChange} />,
-    <Expected type={type} data={data} onChange={onChange} {...props} />
+    <Put type={type} data={data} onChange={onChange} defaultSelect={true} />,
+    <Expected
+      type={type}
+      data={data}
+      onChange={onChange}
+      defaultSelect={true}
+      {...props}
+    />
   );
 };
 
@@ -55,8 +61,8 @@ const handlesInput = (obj, type, data, value) => async () => {
           fields: { x: { type } }
         })
       }
-      data={{ x: null }}
       onChange={res}
+      defaultSelect={true}
     />
   ));
   expect(actual).toEqual({ x: data });
@@ -138,7 +144,7 @@ describe('Put', () => {
     it('is ObjectOutput for object with single integer field', () => {
       const name = 'name';
       const fields = { data: { type: GraphQLInt } };
-      const data = { data: 5 };
+      const data = { data: { output: 5 } };
       putEquals(
         data,
         new GraphQLObjectType({
@@ -148,7 +154,9 @@ describe('Put', () => {
         ObjectOutput,
         {
           fields,
-          name
+          name,
+          data,
+          defaultSelect: true
         }
       )();
     });
@@ -161,7 +169,7 @@ describe('Put', () => {
           name: 'inner',
           fields: { y: { type: GraphQLInt } }
         }),
-        { y: 5 },
+        { input: {}, output: { y: 5 }, selected: true },
         5
       )
     );
@@ -175,8 +183,9 @@ describe('Put', () => {
         <Put
           type={GraphQLString}
           typeComponentMap={{
-            output: { String: abc }
+            output: { GraphQLString: abc }
           }}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -186,8 +195,9 @@ describe('Put', () => {
         <Put
           type={GraphQLInt}
           typeComponentMap={{
-            output: { Int: abc }
+            output: { GraphQLInt: abc }
           }}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -197,8 +207,9 @@ describe('Put', () => {
         <Put
           type={GraphQLFloat}
           typeComponentMap={{
-            output: { Float: abc }
+            output: { GraphQLFloat: abc }
           }}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -208,8 +219,9 @@ describe('Put', () => {
         <Put
           type={GraphQLBoolean}
           typeComponentMap={{
-            output: { Boolean: abc }
+            output: { GraphQLBoolean: abc }
           }}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -219,8 +231,9 @@ describe('Put', () => {
         <Put
           type={GraphQLID}
           typeComponentMap={{
-            output: { ID: abc }
+            output: { GraphQLID: abc }
           }}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -232,12 +245,13 @@ describe('Put', () => {
           data={5}
           typeComponentMap={{
             output: {
-              Int: ({ data, defaultComponent, ...props }) =>
+              GraphQLInt: ({ data, defaultComponent, ...props }) =>
                 defaultComponent({ data: data + 1, ...props })
             }
           }}
+          defaultSelect={true}
         />,
-        <Put type={GraphQLNonNull(GraphQLInt)} data={6} />
+        <Put type={GraphQLNonNull(GraphQLInt)} data={6} defaultSelect={true} />
       ));
 
     it('can customize non null types', () =>
@@ -251,8 +265,9 @@ describe('Put', () => {
                 defaultComponent({ data: data + 1, ...props })
             }
           }}
+          defaultSelect={true}
         />,
-        <Put type={GraphQLNonNull(GraphQLInt)} data={6} />
+        <Put type={GraphQLNonNull(GraphQLInt)} data={6} defaultSelect={true} />
       ));
 
     it('can customize lists', () =>
@@ -266,8 +281,13 @@ describe('Put', () => {
                 defaultComponent({ data: _.concat(data, 4), ...props })
             }
           }}
+          defaultSelect={true}
         />,
-        <Put type={GraphQLList(GraphQLInt)} data={[1, 2, 3, 4]} />
+        <Put
+          type={GraphQLList(GraphQLInt)}
+          data={[1, 2, 3, 4]}
+          defaultSelect={true}
+        />
       ));
 
     it('can customize enums', () =>
@@ -286,6 +306,7 @@ describe('Put', () => {
                 defaultComponent({ data: ['b'], ...props })
             }
           }}
+          defaultSelect={true}
         />,
         <Put
           type={
@@ -295,6 +316,7 @@ describe('Put', () => {
             })
           }
           data={['b']}
+          defaultSelect={true}
         />
       ));
 
@@ -314,6 +336,7 @@ describe('Put', () => {
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
+          defaultSelect={true}
         />,
         <Put
           type={
@@ -323,6 +346,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 1 }}
+          defaultSelect={true}
         />
       ));
 
@@ -342,6 +366,7 @@ describe('Put', () => {
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
+          defaultSelect={true}
         />,
         <Put
           type={
@@ -351,6 +376,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 1 }}
+          defaultSelect={true}
         />
       ));
 
@@ -366,12 +392,13 @@ describe('Put', () => {
           data={{ a: 0 }}
           typeComponentMap={{
             output: {
-              Int: ({ data, defaultComponent, ...props }) =>
+              GraphQLInt: ({ data, defaultComponent, ...props }) =>
                 defaultComponent({ data: data + 1, ...props }),
               GraphQLObjectType: ({ data, defaultComponent, ...props }) =>
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
+          defaultSelect={true}
         />,
         <Put
           type={
@@ -381,6 +408,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 2 }}
+          defaultSelect={true}
         />
       ));
   });

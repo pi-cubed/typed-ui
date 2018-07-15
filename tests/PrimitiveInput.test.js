@@ -62,11 +62,11 @@ describe('FloatInput', () => {
 describe('BooleanInput', () => {
   it('handles boolean', async () => {
     const value = await setTarget('input', 'click')(makeInput(BooleanInput));
-    expect(value).toEqual(true);
+    expect(value).toExist();
   });
 
   it('is false by default', () => {
-    expect(getInput(mount(<BooleanInput />)).checked).toEqual(false);
+    expect(getInput(mount(<BooleanInput />)).checked).toNotExist();
   });
 });
 
