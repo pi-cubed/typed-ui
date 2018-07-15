@@ -68,14 +68,22 @@ export const ListOutput = ({ data, ...props }) => (
  */
 
 /**
- * Returns a object surrounding the supplied object data.
+ * Component for displaying GraphQLObjectType input and output data.
  *
  * @param {Object} props - The component props.
  * @param {string} props.name - The name of the object.
  * @param {Object} props.fields - The type of fields of the object.
- * @param {Object} props.data - The object data.
+ * @param {Object} props.data - The object field args and return data.
+ * @param {Boolean} props.data[fieldName].selected - Whether the field is
+ *   selected.
+ * @param {Object} props.data[fieldName].input - The input data for object
+ *   field arguments.
+ * @param {GraphQLInputType} props.data[fieldName].input[argName] - The input
+ *   data for object field arguments.
+ * @param {GraphQLType} props.data[fieldName].output - The output data for
+ *   object field return types.
  * @param {ObjectOutput~onChange} props.onChange - The handler for change events.
- * @returns {Component} A object surrounding the object items.
+ * @returns {Element} A object surrounding the object items.
  *
  * @example <caption>Display an object of one string</caption>
  * <ObjectOutput
@@ -103,15 +111,17 @@ class ObjectOutputComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggle: _.mapValues(props.fields, () => !!props.defaultToggle),
       data: merge(
-        _.mapValues(props.fields, ({ args = [], type }) => ({
+        _.mapValues(props.fields, ({ args = [], type }, field) => ({
           input: args.reduce(
             (acc, { name, type }) =>
               merge(acc, { [name]: getDefaultInput(type) }),
             {}
           ),
-          output: getDefaultInput(type)
+          output: getDefaultInput(type),
+          selected:
+            props.defaultSelect ||
+            (props.data && props.data[field] && props.data[field].selected)
         })),
         props.data
       )
@@ -127,11 +137,15 @@ class ObjectOutputComponent extends Component {
     return (
       <input
         type="checkbox"
-        checked={this.state.toggle[key]}
+        checked={this.state.data[key].selected}
         onChange={() =>
-          this.setState(prev => ({
-            toggle: { ...prev.toggle, [key]: !prev.toggle[key] }
-          }))
+          this.setState(
+            ({ data }) =>
+              merge(prev, {
+                data: { [key]: { selected: { [name]: !data[key].selected } } }
+              }),
+            () => this.props.onChange(this.state.data)
+          )
         }
       />
     );
@@ -221,7 +235,7 @@ class ObjectOutputComponent extends Component {
       <div>
         {this.renderToggle(key)}
         {key}
-        {this.state.toggle[key] ? (
+        {this.state.data[key].selected ? (
           <div>
             {this.renderArgs(field, key)}
             {this.renderDivider(field)}

@@ -10,7 +10,7 @@ const containsInt = (w, n) =>
 
 describe('ListOutput', () => {
   const wrap = (ofType, data) =>
-    mount(<ListOutput ofType={ofType} data={data} defaultToggle={true} />);
+    mount(<ListOutput ofType={ofType} data={data} defaultSelect={true} />);
 
   it('displays list of strings', () => {
     const data = ['abc', '1', 'xyz'];
@@ -19,13 +19,13 @@ describe('ListOutput', () => {
         .find('li')
         .at(0)
         .contains('abc')
-    ).toEqual(true);
+    ).toExist();
   });
 
   it('displays list of list of integers', () => {
     const data = [[0, 1, 2], [10, 11, 12], [50, 100]];
     const wrapper = wrap(new GraphQLList(GraphQLInt), data);
-    expect(containsInt(wrapper, data[0][0])).toEqual(true);
+    expect(containsInt(wrapper, data[0][0])).toExist();
   });
 
   it('is ul', () =>
@@ -33,7 +33,7 @@ describe('ListOutput', () => {
       wrap(GraphQLInt, [])
         .find('ul')
         .exists()
-    ).toEqual(true));
+    ).toExist());
 
   it("of list of list is ul's within ul", () =>
     expect(
@@ -42,18 +42,18 @@ describe('ListOutput', () => {
         .at(0)
         .find('ul')
         .exists()
-    ).toEqual(true));
+    ).toExist());
 });
 
 describe('ObjectOutput', () => {
-  const wrap = props => mount(<ObjectOutput {...props} defaultToggle={true} />);
+  const wrap = props => mount(<ObjectOutput defaultSelect={true} {...props} />);
 
   it('displays name of object', () => {
     const data = 5;
     const name = 'name';
     const fields = { data: { type: GraphQLInt } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    expect(wrapper.contains(name)).toEqual(true);
+    expect(wrapper.contains(name)).toExist();
   });
 
   it('displays singular field of object', () => {
@@ -61,7 +61,7 @@ describe('ObjectOutput', () => {
     const name = 'name';
     const fields = { data: { type: GraphQLInt } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    expect(containsInt(wrapper, data)).toEqual(true);
+    expect(containsInt(wrapper, data)).toExist();
   });
 
   it('displays multiple fields of object', () => {
@@ -69,7 +69,7 @@ describe('ObjectOutput', () => {
     const name = 'name';
     const fields = { data: { type: new GraphQLList(GraphQLInt) } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    expect(containsInt(wrapper, data[0])).toEqual(true);
+    expect(containsInt(wrapper, data[0])).toExist();
   });
 
   it('has ul for fields', () => {
@@ -77,7 +77,7 @@ describe('ObjectOutput', () => {
     const name = 'name';
     const fields = { data: { type: new GraphQLList(GraphQLInt) } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    expect(wrapper.find('ul').exists()).toEqual(true);
+    expect(wrapper.find('ul').exists()).toExist();
   });
 
   it('displays checkboxes for fields', () => {
@@ -85,6 +85,64 @@ describe('ObjectOutput', () => {
     const name = 'hew';
     const fields = { data: { type: GraphQLInt } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    expect(wrapper.find('input[type="checkbox"]').exists()).toEqual(true);
+    expect(wrapper.find('input[type="checkbox"]').exists()).toExist();
+  });
+
+  it('fields are deselected by default', () => {
+    const data = 10;
+    const name = 'hew';
+    const fields = { data: { type: GraphQLInt } };
+    const wrapper = mount(
+      <ObjectOutput
+        name={name}
+        fields={fields}
+        data={{ data: { output: data } }}
+      />
+    );
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toNotExist();
+  });
+
+  it('fields can be selected by data prop', () => {
+    const data = 10;
+    const name = 'hew';
+    const fields = { data: { type: GraphQLInt } };
+    const wrapper = mount(
+      <ObjectOutput
+        name={name}
+        fields={fields}
+        data={{ data: { output: data, selected: true } }}
+      />
+    );
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toExist();
+  });
+
+  it('fields can be selected by default using defaultSelect prop', () => {
+    const data = 10;
+    const name = 'hew';
+    const fields = { data: { type: GraphQLInt } };
+    const wrapper = wrap({ name, fields, data: { data: { output: data } } });
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toExist();
+  });
+
+  it('hides field if checkbox unchecked', () => {
+    const data = 10;
+    const name = 'hew';
+    const fields = { data: { type: GraphQLInt } };
+    const wrapper = wrap({
+      name,
+      fields,
+      data: { data: { output: data } },
+      defaultSelect: false
+    });
+    expect(wrapper.contains(data)).toNotExist();
+  });
+
+  it('displays field if checkbox checked', () => {
+    const data = 10;
+    const name = 'hew';
+    const fields = { data: { type: GraphQLInt } };
+    const wrapper = wrap({ name, fields, data: { data: { output: data } } });
+    console.log(wrapper.html());
+    expect(wrapper.find('input[type="number"]').prop('value')).toEqual(data);
   });
 });

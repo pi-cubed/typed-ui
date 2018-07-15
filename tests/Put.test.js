@@ -37,12 +37,12 @@ import { ListOutput, ObjectOutput } from 'src/HigherOrderOutput';
 const putEquals = (data, type, Expected, props) => () => {
   const onChange = () => {};
   equals(
-    <Put type={type} data={data} onChange={onChange} defaultToggle={true} />,
+    <Put type={type} data={data} onChange={onChange} defaultSelect={true} />,
     <Expected
       type={type}
       data={data}
       onChange={onChange}
-      defaultToggle={true}
+      defaultSelect={true}
       {...props}
     />
   );
@@ -62,7 +62,7 @@ const handlesInput = (obj, type, data, value) => async () => {
         })
       }
       onChange={res}
-      defaultToggle={true}
+      defaultSelect={true}
     />
   ));
   expect(actual).toEqual({ x: data });
@@ -154,7 +154,9 @@ describe('Put', () => {
         ObjectOutput,
         {
           fields,
-          name
+          name,
+          data,
+          defaultSelect: true
         }
       )();
     });
@@ -167,7 +169,7 @@ describe('Put', () => {
           name: 'inner',
           fields: { y: { type: GraphQLInt } }
         }),
-        { input: {}, output: { y: 5 } },
+        { input: {}, output: { y: 5 }, selected: true },
         5
       )
     );
@@ -183,7 +185,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { GraphQLString: abc }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -195,7 +197,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { GraphQLInt: abc }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -207,7 +209,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { GraphQLFloat: abc }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -219,7 +221,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { GraphQLBoolean: abc }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -231,7 +233,7 @@ describe('Put', () => {
           typeComponentMap={{
             output: { GraphQLID: abc }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         abc()
       ));
@@ -247,9 +249,9 @@ describe('Put', () => {
                 defaultComponent({ data: data + 1, ...props })
             }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
-        <Put type={GraphQLNonNull(GraphQLInt)} data={6} defaultToggle={true} />
+        <Put type={GraphQLNonNull(GraphQLInt)} data={6} defaultSelect={true} />
       ));
 
     it('can customize non null types', () =>
@@ -263,9 +265,9 @@ describe('Put', () => {
                 defaultComponent({ data: data + 1, ...props })
             }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
-        <Put type={GraphQLNonNull(GraphQLInt)} data={6} defaultToggle={true} />
+        <Put type={GraphQLNonNull(GraphQLInt)} data={6} defaultSelect={true} />
       ));
 
     it('can customize lists', () =>
@@ -279,12 +281,12 @@ describe('Put', () => {
                 defaultComponent({ data: _.concat(data, 4), ...props })
             }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         <Put
           type={GraphQLList(GraphQLInt)}
           data={[1, 2, 3, 4]}
-          defaultToggle={true}
+          defaultSelect={true}
         />
       ));
 
@@ -304,7 +306,7 @@ describe('Put', () => {
                 defaultComponent({ data: ['b'], ...props })
             }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         <Put
           type={
@@ -314,7 +316,7 @@ describe('Put', () => {
             })
           }
           data={['b']}
-          defaultToggle={true}
+          defaultSelect={true}
         />
       ));
 
@@ -334,7 +336,7 @@ describe('Put', () => {
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         <Put
           type={
@@ -344,7 +346,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 1 }}
-          defaultToggle={true}
+          defaultSelect={true}
         />
       ));
 
@@ -364,7 +366,7 @@ describe('Put', () => {
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         <Put
           type={
@@ -374,7 +376,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 1 }}
-          defaultToggle={true}
+          defaultSelect={true}
         />
       ));
 
@@ -396,7 +398,7 @@ describe('Put', () => {
                 defaultComponent({ data: { a: 1 }, ...props })
             }
           }}
-          defaultToggle={true}
+          defaultSelect={true}
         />,
         <Put
           type={
@@ -406,7 +408,7 @@ describe('Put', () => {
             })
           }
           data={{ a: 2 }}
-          defaultToggle={true}
+          defaultSelect={true}
         />
       ));
   });
