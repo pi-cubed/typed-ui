@@ -30,7 +30,8 @@ import {
   withProps,
   makeComponent,
   getTypeComponentMap,
-  getDefaultInput,
+  getDefaultData,
+  getFieldData,
   merge
 } from './utils';
 
@@ -112,16 +113,13 @@ class ObjectOutputComponent extends Component {
     super(props);
     this.state = {
       data: merge(
-        _.mapValues(props.fields, ({ args = [], type }, field) => ({
-          input: args.reduce(
-            (acc, { name, type }) =>
-              merge(acc, { [name]: getDefaultInput(type) }),
-            {}
-          ),
-          output: getDefaultInput(type),
-          selected:
-            props.defaultSelect ||
-            (props.data && props.data[field] && props.data[field].selected)
+        _.mapValues(props.fields, (field, key) => ({
+          ...getFieldData(field),
+          ...{
+            selected:
+              props.defaultSelect ||
+              (props.data && props.data[key] && props.data[key].selected)
+          }
         })),
         props.data
       )

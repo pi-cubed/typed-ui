@@ -30,7 +30,7 @@ import {
   updateArray,
   makeComponent,
   getTypeComponentMap,
-  getDefaultInput,
+  getDefaultData,
   removeItem,
   merge
 } from './utils';
@@ -65,7 +65,7 @@ export const ListInput = props => <ListInputComponent {...props} />;
 class ListInputComponent extends Component {
   constructor(props) {
     super(props);
-    this.defaultInput = () => getDefaultInput(props.ofType);
+    this.defaultInput = () => getDefaultData(props.ofType);
     this.state = {
       data: props.data || [this.defaultInput()]
     };
@@ -189,7 +189,7 @@ class ObjectInputComponent extends Component {
   constructor(props) {
     super(props);
     this.state = merge(
-      _.mapValues(props.fields, ({ type }) => getDefaultInput(type)),
+      _.mapValues(props.fields, ({ type }) => getDefaultData(type)),
       props.data
     );
   }

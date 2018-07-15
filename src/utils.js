@@ -87,6 +87,19 @@ export const makeComponent = defaultTypeComponentMap => ({
  *
  * @private
  */
+export const getFieldData = ({ args = [], type }) => ({
+  input: args.reduce(
+    (acc, { name, type }) => merge(acc, { [name]: getDefaultData(type) }),
+    {}
+  ),
+  output: getDefaultData(type)
+});
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
 const defaultData = {
   GraphQLInt: type => 0,
   GraphQLFloat: type => 0,
@@ -94,24 +107,19 @@ const defaultData = {
   GraphQLString: type => '',
   GraphQLID: type => '',
   GraphQLEnumType: t => t.getValues()[0].value,
-  GraphQLList: ({ ofType }) => [getDefaultInput(ofType)],
-  GraphQLNonNull: ({ ofType }) => getDefaultInput(ofType),
-  GraphQLObjectType: t =>
-    _.mapValues(t.getFields(), ({ args, type }) => ({
-      input: args.reduce(
-        (acc, { name, type }) => merge(acc, { [name]: getDefaultInput(type) }),
-        {}
-      ),
-      output: getDefaultInput(type)
-    })),
+  GraphQLList: ({ ofType }) => [getDefaultData(ofType)],
+  GraphQLNonNull: ({ ofType }) => getDefaultData(ofType),
+  GraphQLObjectType: t => _.mapValues(t.getFields(), getFieldData),
   GraphQLInputObjectType: type =>
-    _.mapValues(type.getFields(), ({ type }) => getDefaultInput(type))
+    _.mapValues(type.getFields(), ({ type }) => getDefaultData(type))
 };
 
 /**
- * TODO docs
+ * Return default data for a given GraphQL type.
+ *
+ * @param {GraphQLType} type - The GraphQL type.
+ * @returns {*} data.
  *
  * @private
  */
-export const getDefaultInput = type =>
-  defaultData[getComponentName(type)](type);
+export const getDefaultData = type => defaultData[getComponentName(type)](type);

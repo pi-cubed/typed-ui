@@ -12,43 +12,43 @@ import {
   GraphQLObjectType,
   GraphQLInputObjectType
 } from 'graphql';
-import { getDefaultInput } from 'src/utils';
+import { getDefaultData } from 'src/utils';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 // setup Enzyme
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('getDefaultInput', () => {
+describe('getDefaultData', () => {
   it('is empty string for GraphQLString', () =>
-    expect(getDefaultInput(GraphQLString)).toEqual(''));
+    expect(getDefaultData(GraphQLString)).toEqual(''));
 
   it('is empty string for GraphQLID', () =>
-    expect(getDefaultInput(GraphQLID)).toEqual(''));
+    expect(getDefaultData(GraphQLID)).toEqual(''));
 
   it('is 0 for GraphQLInt', () =>
-    expect(getDefaultInput(GraphQLInt)).toEqual(0));
+    expect(getDefaultData(GraphQLInt)).toEqual(0));
 
   it('is 0 for GraphQLFloat', () =>
-    expect(getDefaultInput(GraphQLFloat)).toEqual(0));
+    expect(getDefaultData(GraphQLFloat)).toEqual(0));
 
   it('is true for GraphQLBoolean', () =>
-    expect(getDefaultInput(GraphQLBoolean)).toExist());
+    expect(getDefaultData(GraphQLBoolean)).toExist());
 
   it('is first value of enum for GraphQLEnumType', () =>
     expect(
-      getDefaultInput(new GraphQLEnumType({ name: '', values: { a: {} } }))
+      getDefaultData(new GraphQLEnumType({ name: '', values: { a: {} } }))
     ).toEqual('a'));
 
   it('is list of single default data for wrapped type for GraphQLList', () =>
-    expect(getDefaultInput(GraphQLList(GraphQLInt))).toEqual([0]));
+    expect(getDefaultData(GraphQLList(GraphQLInt))).toEqual([0]));
 
   it('is default data for wrapped type for GraphQLNonNull', () =>
-    expect(getDefaultInput(GraphQLNonNull(GraphQLInt))).toEqual(0));
+    expect(getDefaultData(GraphQLNonNull(GraphQLInt))).toEqual(0));
 
   it('is object with IO fields for GraphQLObjectType', () =>
     expect(
-      getDefaultInput(
+      getDefaultData(
         new GraphQLObjectType({
           name: '',
           fields: {
@@ -60,7 +60,7 @@ describe('getDefaultInput', () => {
 
   it('is object for GraphQLInputObjectType', () =>
     expect(
-      getDefaultInput(
+      getDefaultData(
         new GraphQLInputObjectType({
           name: '',
           fields: {
