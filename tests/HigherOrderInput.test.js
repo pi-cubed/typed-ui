@@ -64,9 +64,7 @@ describe('ListInput', () => {
     const wrapper = mount(
       <ListInput ofType={GraphQLString} onChange={() => {}} />
     );
-    wrapper.find('input[type="button"]').simulate('click');
-
-    expect(wrapper.find('input[type="text"]').length).toEqual(2);
+    expect(wrapper.find('input[type="button"]').prop('value')).toEqual('+');
   });
 
   it('displays nested button to add item for nested lists', async () => {
@@ -74,11 +72,43 @@ describe('ListInput', () => {
       <ListInput ofType={new GraphQLList(GraphQLString)} onChange={() => {}} />
     );
     wrapper.find('input[type="button"]').forEach(w => w.simulate('click'));
-
     expect(wrapper.find('input[type="text"]').length).toEqual(3);
   });
 
-  // TODO test add
+  it('does not display remove button for list with one item', () => {
+    const wrapper = mount(
+      <ListInput ofType={GraphQLString} onChange={() => {}} />
+    );
+    expect(wrapper.find('input[type="text"]').length).toEqual(1);
+  });
+
+  it('displays remove button for list with more than one item', () => {
+    const wrapper = mount(
+      <ListInput ofType={GraphQLString} onChange={() => {}} />
+    );
+    wrapper.find('input[type="button"]').simulate('click');
+    expect(wrapper.find('input[type="button"]').length).toEqual(3);
+  });
+
+  it('clicking remove button removes item from list', () => {
+    const wrapper = mount(
+      <ListInput ofType={GraphQLString} onChange={() => {}} />
+    );
+    wrapper.find('input[type="button"]').simulate('click'); // add
+    wrapper
+      .find('input[type="button"]')
+      .first()
+      .simulate('click'); // remove
+    expect(wrapper.find('input[type="text"]').length).toEqual(1);
+  });
+
+  it('clicking add button adds new item to list', () => {
+    const wrapper = mount(
+      <ListInput ofType={GraphQLString} onChange={() => {}} />
+    );
+    wrapper.find('input[type="button"]').simulate('click');
+    expect(wrapper.find('input[type="text"]').length).toEqual(2);
+  });
 });
 
 const setInput = 0;
@@ -104,7 +134,7 @@ describe('ObjectInput', () => {
         onChange={res}
       />
     ));
-    expect(value).toEqual({ data, n: null });
+    expect(value).toEqual({ data, n: 0 });
   });
 
   it('displays nested objects', async () => {

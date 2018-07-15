@@ -15,7 +15,8 @@ import {
   isEnumType,
   isObjectType,
   isInputObjectType,
-  isWrappingType
+  isWrappingType,
+  isLeafType
 } from 'graphql';
 import {
   StringOutput,
@@ -24,8 +25,15 @@ import {
   BooleanOutput,
   EnumOutput
 } from './PrimitiveOutput';
-import { ObjectInput } from './HigherOrderInput';
-import { withProps, makeComponent, getTypeComponentMap } from './utils';
+import { ObjectInput, HigherOrderInput } from './HigherOrderInput';
+import {
+  withProps,
+  makeComponent,
+  getTypeComponentMap,
+  getDefaultData,
+  getFieldData,
+  merge
+} from './utils';
 
 /**
  * Returns a list surrounding the supplied list data.
@@ -39,7 +47,10 @@ import { withProps, makeComponent, getTypeComponentMap } from './utils';
  * @example <caption>Display a list of strings</caption>
  * <ListOutput ofType={GraphQLString} data={['abc', 'd', 'xyz']} />
  * @example <caption>Display a list of list of integers</caption>
- * <ListOutput ofType={new GraphQLList(GraphQLInt)} data={[[0, 1, 2], [10, 11, 12], [50, 100]]} />
+ * <ListOutput
+ *  ofType={new GraphQLList(GraphQLInt)}
+ *  data={[[0, 1, 2], [10, 11, 12], [50, 100]]}
+ * />
  */
 export const ListOutput = ({ data, ...props }) => (
   <ul>
@@ -50,7 +61,6 @@ export const ListOutput = ({ data, ...props }) => (
     ))}
   </ul>
 );
-// props => listOutput(getOutput(props.ofType))(props);
 /**
  * This callback handles ListOutput change events.
  *
@@ -59,14 +69,22 @@ export const ListOutput = ({ data, ...props }) => (
  */
 
 /**
- * Returns a object surrounding the supplied object data.
+ * Component for displaying GraphQLObjectType input and output data.
  *
  * @param {Object} props - The component props.
  * @param {string} props.name - The name of the object.
  * @param {Object} props.fields - The type of fields of the object.
- * @param {Object} props.data - The object data.
+ * @param {Object} props.data - The object field args and return data.
+ * @param {Boolean} props.data[fieldName].selected - Whether the field is
+ *   selected.
+ * @param {Object} props.data[fieldName].input - The input data for object
+ *   field arguments.
+ * @param {GraphQLInputType} props.data[fieldName].input[argName] - The input
+ *   data for object field arguments.
+ * @param {GraphQLType} props.data[fieldName].output - The output data for
+ *   object field return types.
  * @param {ObjectOutput~onChange} props.onChange - The handler for change events.
- * @returns {Component} A object surrounding the object items.
+ * @returns {Element} A object surrounding the object items.
  *
  * @example <caption>Display an object of one string</caption>
  * <ObjectOutput
@@ -77,23 +95,7 @@ export const ListOutput = ({ data, ...props }) => (
  *     data={{ hew: 'This is a string field called hew.' }}
  * />;
  */
-export const ObjectOutput = ({ data, fields, onChange, ...props }) => (
-  <div>
-    <div>{props.name}</div>
-    <ul>
-      {_.keys(data).map(k => (
-        <li key={k}>
-          <HigherOrderOutput
-            {...props}
-            ofType={fields[k].type}
-            data={data[k]}
-            onChange={val => onChange(_.assign({}, data, { [k]: val }))}
-          />
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+export const ObjectOutput = props => <ObjectOutputComponent {...props} />;
 /**
  * This callback handles ObjectOutput change events.
  *
@@ -102,14 +104,173 @@ export const ObjectOutput = ({ data, fields, onChange, ...props }) => (
  */
 
 /**
+ * TODO docs
+ *
+ * @private
+ */
+class ObjectOutputComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: merge(
+        _.mapValues(props.fields, (field, key) => ({
+          ...getFieldData(field),
+          ...{
+            selected:
+              props.defaultSelect ||
+              (props.data && props.data[key] && props.data[key].selected)
+          }
+        })),
+        props.data
+      )
+    };
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderToggle(key) {
+    return (
+      <input
+        type="checkbox"
+        value={this.state.data[key].selected}
+        onChange={() =>
+          this.setState(
+            prev =>
+              merge(prev, {
+                data: {
+                  [key]: { selected: !prev.data[key].selected }
+                }
+              }),
+            () => this.props.onChange(this.state.data)
+          )
+        }
+      />
+    );
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderArg(key, name, type) {
+    return (
+      <HigherOrderInput
+        {...this.props}
+        data={this.state.data[key].input[name]}
+        ofType={type}
+        onChange={val =>
+          this.setState(
+            prev =>
+              merge(prev, {
+                data: { [key]: { input: { [name]: val } } }
+              }),
+            () => this.props.onChange(this.state.data)
+          )
+        }
+      />
+    );
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderArgs({ args }, key) {
+    return _.keys(args).length ? (
+      <ul style={{ listStyleType: 'none' }}>
+        {args.map(({ name, type }) => (
+          <li key={name}>
+            {name}
+            {this.renderArg(key, name, type)}
+          </li>
+        ))}
+      </ul>
+    ) : null;
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderDivider({ type, args }) {
+    return !isLeafType(type) || _.keys(args).length ? <hr /> : null;
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderReturn({ type }, key) {
+    const { fields, onChange } = this.props;
+    const data = this.state.data[key].output;
+    return data ? (
+      <HigherOrderOutput
+        {...this.props}
+        ofType={type}
+        data={data}
+        onChange={val =>
+          this.setState(
+            prev => merge(prev, { data: { [key]: { output: val } } }),
+            () => onChange(this.state.data)
+          )
+        }
+      />
+    ) : null;
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderField(field, key) {
+    return (
+      <div>
+        {this.renderToggle(key)}
+        {key}
+        {this.state.data[key].selected ? (
+          <div>
+            {this.renderArgs(field, key)}
+            {this.renderDivider(field)}
+            {this.renderReturn(field, key)}
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  render() {
+    const { name, fields } = this.props;
+    return (
+      <div>
+        <div>{name}</div>
+        <ul style={{ listStyleType: 'none' }}>
+          {_.keys(this.state.data).map(k => (
+            <li key={k}>{this.renderField(fields[k], k)}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+/**
  * TODO
  * A component for non null inputs. Bases component selection on name of type.
  */
-export const NonNullOutput = ({ ofType: { name }, ...props }) =>
-  getTypeComponentMap(defaultTypeComponentMap, props)[name]({
-    ...props,
-    defaultComponent: defaultTypeComponentMap[name]
-  });
+export const NonNullOutput = props => <HigherOrderOutput {...props} />;
 
 /**
  * A map from GraphQL types to outputs.
@@ -117,11 +278,11 @@ export const NonNullOutput = ({ ofType: { name }, ...props }) =>
  * @private
  */
 const defaultTypeComponentMap = {
-  Int: IntegerOutput,
-  Float: FloatOutput,
-  Boolean: BooleanOutput,
-  String: StringOutput,
-  ID: StringOutput,
+  GraphQLInt: IntegerOutput,
+  GraphQLFloat: FloatOutput,
+  GraphQLBoolean: BooleanOutput,
+  GraphQLString: StringOutput,
+  GraphQLID: StringOutput,
   GraphQLEnumType: EnumOutput,
   GraphQLObjectType: ObjectOutput,
   GraphQLInputObjectType: ObjectInput,

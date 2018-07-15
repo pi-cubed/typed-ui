@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { isInputObjectType, isWrappingType } from 'graphql';
 import { HigherOrderOutput } from './HigherOrderOutput';
 import { HigherOrderInput } from './HigherOrderInput';
+import { getDefaultData } from './utils';
 
 /**
  * TODO docs
@@ -107,7 +108,7 @@ class Output extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
+      data: props.data || getDefaultData(props.type)
     };
   }
   /**
@@ -191,7 +192,7 @@ class Input extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
+      data: props.data || getDefaultData(props.type)
     };
   }
   /**

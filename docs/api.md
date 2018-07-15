@@ -2,18 +2,24 @@
 
 <dl>
 <dt><a href="#ListInput">ListInput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns a list input component with change events handled by the given callback.</p>
+<dd><p>Returns a list input component with change events handled by the given
+  callback.</p>
 </dd>
 <dt><a href="#ObjectInput">ObjectInput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns an object input component with change events handled by the given callback.</p>
+<dd><p>Returns an object input component with change events handled by the given
+  callback.</p>
+</dd>
+<dt><a href="#NonNullInput">NonNullInput</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
 <dt><a href="#HigherOrderInput">HigherOrderInput</a> ⇒ <code>React.Element</code></dt>
 <dd><p>Component for displaying GraphQL input types of higher order.</p>
 </dd>
-<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Component</code></dt>
-<dd><p>Returns a object surrounding the supplied object data.</p>
+<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Element</code></dt>
+<dd><p>Component for displaying GraphQLObjectType input and output data.</p>
 </dd>
-<dt><a href="#ObjectOutput">ObjectOutput</a></dt>
+<dt><a href="#NonNullOutput">NonNullOutput</a></dt>
 <dd><p>TODO
 A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
@@ -58,10 +64,6 @@ A component for non null inputs. Bases component selection on name of type.</p>
 ## Functions
 
 <dl>
-<dt><a href="#NonNullInput">NonNullInput()</a></dt>
-<dd><p>TODO
-A component for non null inputs. Bases component selection on name of type.</p>
-</dd>
 <dt><a href="#ListOutput">ListOutput(props)</a> ⇒ <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
 </dd>
@@ -71,7 +73,8 @@ A component for non null inputs. Bases component selection on name of type.</p>
 
 ## ListInput ⇒ <code>Component</code>
 
-Returns a list input component with change events handled by the given callback.
+Returns a list input component with change events handled by the given
+callback.
 
 **Kind**: global variable  
 **Returns**: <code>Component</code> - A list input component.
@@ -104,7 +107,8 @@ This callback handles ListInput change events.
 
 ## ObjectInput ⇒ <code>Component</code>
 
-Returns an object input component with change events handled by the given callback.
+Returns an object input component with change events handled by the given
+callback.
 
 **Kind**: global variable  
 **Returns**: <code>Component</code> - An object input component.
@@ -140,6 +144,14 @@ This callback handles ObjectInput change events.
 | ----- | ------------------- |
 | value | <code>Object</code> |
 
+<a name="NonNullInput"></a>
+
+## NonNullInput
+
+TODO
+A component for non null inputs. Bases component selection on name of type.
+
+**Kind**: global variable  
 <a name="HigherOrderInput"></a>
 
 ## HigherOrderInput ⇒ <code>React.Element</code>
@@ -156,20 +168,24 @@ Component for displaying GraphQL input types of higher order.
 
 <a name="ListOutput"></a>
 
-## ListOutput ⇒ <code>Component</code>
+## ListOutput ⇒ <code>Element</code>
 
-Returns a object surrounding the supplied object data.
+Component for displaying GraphQLObjectType input and output data.
 
 **Kind**: global variable  
-**Returns**: <code>Component</code> - A object surrounding the object items.
+**Returns**: <code>Element</code> - A object surrounding the object items.
 
-| Param          | Type                                             | Description                       |
-| -------------- | ------------------------------------------------ | --------------------------------- |
-| props          | <code>Object</code>                              | The component props.              |
-| props.name     | <code>string</code>                              | The name of the object.           |
-| props.fields   | <code>Object</code>                              | The type of fields of the object. |
-| props.data     | <code>Object</code>                              | The object data.                  |
-| props.onChange | [<code>onChange</code>](#ObjectOutput..onChange) | The handler for change events.    |
+| Param                               | Type                                             | Description                                    |
+| ----------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
+| props                               | <code>Object</code>                              | The component props.                           |
+| props.name                          | <code>string</code>                              | The name of the object.                        |
+| props.fields                        | <code>Object</code>                              | The type of fields of the object.              |
+| props.data                          | <code>Object</code>                              | The object field args and return data.         |
+| props.data[fieldName].selected      | <code>Boolean</code>                             | Whether the field is selected.                 |
+| props.data[fieldName].input         | <code>Object</code>                              | The input data for object field arguments.     |
+| props.data[fieldName].input[argName | <code>GraphQLInputType</code>                    | The input data for object field arguments.     |
+| props.data[fieldName].output        | <code>GraphQLType</code>                         | The output data for object field return types. |
+| props.onChange                      | [<code>onChange</code>](#ObjectOutput..onChange) | The handler for change events.                 |
 
 **Example** _(Display an object of one string)_
 
@@ -195,26 +211,14 @@ This callback handles ListOutput change events.
 | ----- | ----------------------------- |
 | value | <code>Array.&lt;\*&gt;</code> |
 
-<a name="ObjectOutput"></a>
+<a name="NonNullOutput"></a>
 
-## ObjectOutput
+## NonNullOutput
 
 TODO
 A component for non null inputs. Bases component selection on name of type.
 
 **Kind**: global variable  
-<a name="ObjectOutput..onChange"></a>
-
-### ObjectOutput~onChange : <code>function</code>
-
-This callback handles ObjectOutput change events.
-
-**Kind**: inner typedef of [<code>ObjectOutput</code>](#ObjectOutput)
-
-| Param | Type                |
-| ----- | ------------------- |
-| value | <code>Object</code> |
-
 <a name="HigherOrderOutput"></a>
 
 ## HigherOrderOutput ⇒ <code>React.Element</code>
@@ -572,14 +576,6 @@ This function renders GraphQL data.
 | type  | <code>GraphQLType</code> |
 | data  | <code>\*</code>          |
 
-<a name="NonNullInput"></a>
-
-## NonNullInput()
-
-TODO
-A component for non null inputs. Bases component selection on name of type.
-
-**Kind**: global function  
 <a name="ListOutput"></a>
 
 ## ListOutput(props) ⇒ <code>Component</code>
