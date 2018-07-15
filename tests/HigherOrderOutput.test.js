@@ -158,4 +158,12 @@ describe('ObjectOutput', () => {
     ));
     expect(value.x.selected).toNotExist();
   });
+
+  it('field arguments are displayed', () => {
+    const fields = {
+      data: { args: [{ name: 'x', type: GraphQLInt }], type: GraphQLString }
+    };
+    const wrapper = wrap({ name: '', fields });
+    expect(wrapper.find('input[type="number"]').exists()).toExist();
+  });
 });
