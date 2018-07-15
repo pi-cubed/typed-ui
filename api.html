@@ -87,7 +87,7 @@
 
     
         
-        <li class="header">typed-ui (0.4.0)</li>
+        <li class="header">typed-ui (0.5.0)</li>
         
         
     
@@ -412,18 +412,24 @@
                                 <h2 id="members">Members</h2>
 <dl>
 <dt><a href="#ListInput">ListInput</a> &#x21D2; <code>Component</code></dt>
-<dd><p>Returns a list input component with change events handled by the given callback.</p>
+<dd><p>Returns a list input component with change events handled by the given
+  callback.</p>
 </dd>
 <dt><a href="#ObjectInput">ObjectInput</a> &#x21D2; <code>Component</code></dt>
-<dd><p>Returns an object input component with change events handled by the given callback.</p>
+<dd><p>Returns an object input component with change events handled by the given
+  callback.</p>
+</dd>
+<dt><a href="#NonNullInput">NonNullInput</a></dt>
+<dd><p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
 <dt><a href="#HigherOrderInput">HigherOrderInput</a> &#x21D2; <code>React.Element</code></dt>
 <dd><p>Component for displaying GraphQL input types of higher order.</p>
 </dd>
-<dt><a href="#ListOutput">ListOutput</a> &#x21D2; <code>Component</code></dt>
-<dd><p>Returns a object surrounding the supplied object data.</p>
+<dt><a href="#ListOutput">ListOutput</a> &#x21D2; <code>Element</code></dt>
+<dd><p>Component for displaying GraphQLObjectType input and output data.</p>
 </dd>
-<dt><a href="#ObjectOutput">ObjectOutput</a></dt>
+<dt><a href="#NonNullOutput">NonNullOutput</a></dt>
 <dd><p>TODO
 A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
@@ -467,10 +473,6 @@ A component for non null inputs. Bases component selection on name of type.</p>
 
 <h2 id="functions">Functions</h2>
 <dl>
-<dt><a href="#NonNullInput">NonNullInput()</a></dt>
-<dd><p>TODO
-A component for non null inputs. Bases component selection on name of type.</p>
-</dd>
 <dt><a href="#ListOutput">ListOutput(props)</a> &#x21D2; <code>Component</code></dt>
 <dd><p>Returns a list surrounding the supplied list data.</p>
 </dd>
@@ -478,7 +480,8 @@ A component for non null inputs. Bases component selection on name of type.</p>
 
 <p><a name="ListInput"></a></p>
 <h2 id="listinput-&#x21D2;-component">ListInput &#x21D2; <code>Component</code></h2>
-<p>Returns a list input component with change events handled by the given callback.</p>
+<p>Returns a list input component with change events handled by the given
+  callback.</p>
 <p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>Component</code> - A list input component.  </p>
 <table>
 <thead>
@@ -529,7 +532,8 @@ A component for non null inputs. Bases component selection on name of type.</p>
 </table>
 <p><a name="ObjectInput"></a></p>
 <h2 id="objectinput-&#x21D2;-component">ObjectInput &#x21D2; <code>Component</code></h2>
-<p>Returns an object input component with change events handled by the given callback.</p>
+<p>Returns an object input component with change events handled by the given
+  callback.</p>
 <p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>Component</code> - An object input component.  </p>
 <table>
 <thead>
@@ -589,7 +593,11 @@ A component for non null inputs. Bases component selection on name of type.</p>
 </tr>
 </tbody>
 </table>
-<p><a name="HigherOrderInput"></a></p>
+<p><a name="NonNullInput"></a></p>
+<h2 id="nonnullinput">NonNullInput</h2>
+<p>TODO
+A component for non null inputs. Bases component selection on name of type.</p>
+<p><strong>Kind</strong>: global variable<br><a name="HigherOrderInput"></a></p>
 <h2 id="higherorderinput-&#x21D2;-reactelement">HigherOrderInput &#x21D2; <code>React.Element</code></h2>
 <p>Component for displaying GraphQL input types of higher order.</p>
 <p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>React.Element</code> - An element displaying the input.  </p>
@@ -615,9 +623,9 @@ A component for non null inputs. Bases component selection on name of type.</p>
 </tbody>
 </table>
 <p><a name="ListOutput"></a></p>
-<h2 id="listoutput-&#x21D2;-component">ListOutput &#x21D2; <code>Component</code></h2>
-<p>Returns a object surrounding the supplied object data.</p>
-<p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>Component</code> - A object surrounding the object items.  </p>
+<h2 id="listoutput-&#x21D2;-element">ListOutput &#x21D2; <code>Element</code></h2>
+<p>Component for displaying GraphQLObjectType input and output data.</p>
+<p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>Element</code> - A object surrounding the object items.  </p>
 <table>
 <thead>
 <tr>
@@ -645,7 +653,27 @@ A component for non null inputs. Bases component selection on name of type.</p>
 <tr>
 <td>props.data</td>
 <td><code>Object</code></td>
-<td>The object data.</td>
+<td>The object field args and return data.</td>
+</tr>
+<tr>
+<td>props.data[fieldName].selected</td>
+<td><code>Boolean</code></td>
+<td>Whether the field is   selected.</td>
+</tr>
+<tr>
+<td>props.data[fieldName].input</td>
+<td><code>Object</code></td>
+<td>The input data for object   field arguments.</td>
+</tr>
+<tr>
+<td>props.data[fieldName].input[argName</td>
+<td><code>GraphQLInputType</code></td>
+<td>The input   data for object field arguments.</td>
+</tr>
+<tr>
+<td>props.data[fieldName].output</td>
+<td><code>GraphQLType</code></td>
+<td>The output data for   object field return types.</td>
 </tr>
 <tr>
 <td>props.onChange</td>
@@ -681,29 +709,11 @@ A component for non null inputs. Bases component selection on name of type.</p>
 </tr>
 </tbody>
 </table>
-<p><a name="ObjectOutput"></a></p>
-<h2 id="objectoutput">ObjectOutput</h2>
+<p><a name="NonNullOutput"></a></p>
+<h2 id="nonnulloutput">NonNullOutput</h2>
 <p>TODO
 A component for non null inputs. Bases component selection on name of type.</p>
-<p><strong>Kind</strong>: global variable<br><a name="ObjectOutput..onChange"></a></p>
-<h3 id="objectoutputonchange--function">ObjectOutput~onChange : <code>function</code></h3>
-<p>This callback handles ObjectOutput change events.</p>
-<p><strong>Kind</strong>: inner typedef of <a href="#ObjectOutput"><code>ObjectOutput</code></a>  </p>
-<table>
-<thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>value</td>
-<td><code>Object</code></td>
-</tr>
-</tbody>
-</table>
-<p><a name="HigherOrderOutput"></a></p>
+<p><strong>Kind</strong>: global variable<br><a name="HigherOrderOutput"></a></p>
 <h2 id="higherorderoutput-&#x21D2;-reactelement">HigherOrderOutput &#x21D2; <code>React.Element</code></h2>
 <p>Component for displaying GraphQL output types of higher order.</p>
 <p><strong>Kind</strong>: global variable<br><strong>Returns</strong>: <code>React.Element</code> - An element displaying the input.  </p>
@@ -1215,11 +1225,7 @@ A component for non null inputs. Bases component selection on name of type.</p>
 </tr>
 </tbody>
 </table>
-<p><a name="NonNullInput"></a></p>
-<h2 id="nonnullinput">NonNullInput()</h2>
-<p>TODO
-A component for non null inputs. Bases component selection on name of type.</p>
-<p><strong>Kind</strong>: global function<br><a name="ListOutput"></a></p>
+<p><a name="ListOutput"></a></p>
 <h2 id="listoutputprops-&#x21D2;-component">ListOutput(props) &#x21D2; <code>Component</code></h2>
 <p>Returns a list surrounding the supplied list data.</p>
 <p><strong>Kind</strong>: global function<br><strong>Returns</strong>: <code>Component</code> - A list surrounding the list items.  </p>
@@ -1258,7 +1264,10 @@ A component for non null inputs. Bases component selection on name of type.</p>
 <pre><code class="lang-js">&lt;ListOutput ofType={GraphQLString} data={[<span class="hljs-string">&apos;abc&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>, <span class="hljs-string">&apos;xyz&apos;</span>]} /&gt;
 </code></pre>
 <p><strong>Example</strong> <em>(Display a list of list of integers)</em>  </p>
-<pre><code class="lang-js">&lt;ListOutput ofType={<span class="hljs-keyword">new</span> GraphQLList(GraphQLInt)} data={[[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>], [<span class="hljs-number">50</span>, <span class="hljs-number">100</span>]]} /&gt;
+<pre><code class="lang-js">&lt;ListOutput
+ ofType={<span class="hljs-keyword">new</span> GraphQLList(GraphQLInt)}
+ data={[[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>], [<span class="hljs-number">50</span>, <span class="hljs-number">100</span>]]}
+/&gt;
 </code></pre>
 <p><a name="ListOutput..onChange"></a></p>
 <h3 id="listoutputonchange--function">ListOutput~onChange : <code>function</code></h3>
@@ -1321,7 +1330,7 @@ A component for non null inputs. Bases component selection on name of type.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"API Reference","level":"1.2","depth":1,"next":{"title":"Put","level":"1.2.1","depth":2,"anchor":"#Put","path":"api.md","ref":"api.md#Put","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"intro.md","ref":"intro.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{},"gitbook":"3.2.2"},"file":{"path":"api.md","mtime":"2018-07-08T14:47:57.586Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-08T14:47:58.505Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"API Reference","level":"1.2","depth":1,"next":{"title":"Put","level":"1.2.1","depth":2,"anchor":"#Put","path":"api.md","ref":"api.md#Put","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"intro.md","ref":"intro.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{},"gitbook":"3.2.2"},"file":{"path":"api.md","mtime":"2018-07-15T23:01:47.206Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-15T23:01:48.250Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
