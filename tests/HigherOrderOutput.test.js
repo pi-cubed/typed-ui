@@ -158,4 +158,29 @@ describe('ObjectOutput', () => {
     ));
     expect(value.x.selected).toNotExist();
   });
+
+  it('field arguments are displayed', () => {
+    const fields = {
+      data: { args: [{ name: 'x', type: GraphQLInt }], type: GraphQLString }
+    };
+    const wrapper = wrap({ name: '', fields });
+    expect(wrapper.find('input[type="number"]').exists()).toExist();
+  });
+
+  it('field arguments handle input', async () => {
+    const data = 5;
+    const value = await setTarget('input[type="number"]', 'change', {
+      value: data
+    })(res => (
+      <ObjectOutput
+        defaultSelect={true}
+        name={''}
+        fields={{
+          f: { args: [{ name: 'x', type: GraphQLInt }], type: GraphQLString }
+        }}
+        onChange={res}
+      />
+    ));
+    expect(value.f.input.x).toEqual(data);
+  });
 });

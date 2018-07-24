@@ -6990,7 +6990,7 @@ webpackJsonp(
               return this.setState(
                 function(n) {
                   var r = n.data;
-                  return { data: Object(l.e)(r, e, t) };
+                  return { data: Object(l.f)(r, e, t) };
                 },
                 function() {
                   return n.props.onChange(n.state.data);
@@ -7021,7 +7021,7 @@ webpackJsonp(
                 value: '-',
                 onClick: function() {
                   return t.setState(
-                    { data: Object(l.d)(t.state.data, e) },
+                    { data: Object(l.e)(t.state.data, e) },
                     function() {
                       return t.props.onChange(t.state.data);
                     }
@@ -7074,7 +7074,7 @@ webpackJsonp(
             f(this, t);
             var r = p(this, e.call(this, n));
             return (
-              (r.state = Object(l.c)(
+              (r.state = Object(l.d)(
                 a.a.mapValues(n.fields, function(e) {
                   var t = e.type;
                   return Object(l.a)(t);
@@ -7157,7 +7157,7 @@ webpackJsonp(
             return i.a.createElement(g, e);
           }
         },
-        g = Object(l.b)(m);
+        g = Object(l.c)(m);
     },
     '5IOP': function(e, t, n) {
       'use strict';
@@ -13666,20 +13666,23 @@ webpackJsonp(
     },
     'L/hj': function(e, t, n) {
       'use strict';
-      n.d(t, 'e', function() {
+      n.d(t, 'f', function() {
         return u;
       }),
-        n.d(t, 'd', function() {
+        n.d(t, 'e', function() {
           return c;
         }),
-        n.d(t, 'c', function() {
+        n.d(t, 'd', function() {
           return l;
         }),
-        n.d(t, 'b', function() {
+        n.d(t, 'c', function() {
           return f;
         }),
+        n.d(t, 'b', function() {
+          return p;
+        }),
         n.d(t, 'a', function() {
-          return d;
+          return h;
         });
       var r = n('GiK3'),
         i = (n.n(r), n('s8Fo')),
@@ -13737,7 +13740,21 @@ webpackJsonp(
             );
           };
         },
-        p = {
+        p = function(e) {
+          var t = e.args,
+            n = void 0 === t ? [] : t,
+            r = e.type;
+          return {
+            input: n.reduce(function(e, t) {
+              var n,
+                r = t.name,
+                i = t.type;
+              return l(e, (((n = {})[r] = h(i)), n));
+            }, {}),
+            output: h(r)
+          };
+        },
+        d = {
           GraphQLInt: function(e) {
             return 0;
           },
@@ -13758,36 +13775,24 @@ webpackJsonp(
           },
           GraphQLList: function(e) {
             var t = e.ofType;
-            return [d(t)];
+            return [h(t)];
           },
           GraphQLNonNull: function(e) {
             var t = e.ofType;
-            return d(t);
+            return h(t);
           },
           GraphQLObjectType: function(e) {
-            return _.mapValues(e.getFields(), function(e) {
-              var t = e.args,
-                n = e.type;
-              return {
-                input: t.reduce(function(e, t) {
-                  var n,
-                    r = t.name,
-                    i = t.type;
-                  return l(e, (((n = {})[r] = d(i)), n));
-                }, {}),
-                output: d(n)
-              };
-            });
+            return _.mapValues(e.getFields(), p);
           },
           GraphQLInputObjectType: function(e) {
             return _.mapValues(e.getFields(), function(e) {
               var t = e.type;
-              return d(t);
+              return h(t);
             });
           }
         },
-        d = function(e) {
-          return p[s(e)](e);
+        h = function(e) {
+          return d[s(e)](e);
         };
     },
     LNDt: function(e, t, n) {
@@ -19628,25 +19633,13 @@ webpackJsonp(
             })(this, e.call(this, n));
             return (
               (r.state = {
-                data: Object(c.c)(
+                data: Object(c.d)(
                   _.mapValues(n.fields, function(e, t) {
-                    var r = e.args,
-                      i = void 0 === r ? [] : r,
-                      o = e.type;
-                    return {
-                      input: i.reduce(function(e, t) {
-                        var n,
-                          r = t.name,
-                          i = t.type;
-                        return Object(
-                          c.c
-                        )(e, (((n = {})[r] = Object(c.a)(i)), n));
-                      }, {}),
-                      output: Object(c.a)(o),
+                    return l({}, Object(c.b)(e), {
                       selected:
                         n.defaultSelect ||
                         (n.data && n.data[t] && n.data[t].selected)
-                    };
+                    });
                   }),
                   n.data
                 )
@@ -19683,7 +19676,7 @@ webpackJsonp(
                   return t.setState(
                     function(t) {
                       var n;
-                      return Object(c.c)(t, {
+                      return Object(c.d)(t, {
                         data: ((n = {}),
                         (n[e] = { selected: !t.data[e].selected }),
                         n)
@@ -19707,7 +19700,7 @@ webpackJsonp(
                     return r.setState(
                       function(r) {
                         var i, o;
-                        return Object(c.c)(r, {
+                        return Object(c.d)(r, {
                           data: ((o = {}),
                           (o[e] = { input: ((i = {}), (i[t] = n), i) }),
                           o)
@@ -19764,7 +19757,7 @@ webpackJsonp(
                         return n.setState(
                           function(n) {
                             var r;
-                            return Object(c.c)(n, {
+                            return Object(c.d)(n, {
                               data: ((r = {}), (r[t] = { output: e }), r)
                             });
                           },
@@ -19856,7 +19849,7 @@ webpackJsonp(
             return i.a.createElement(p, e);
           }
         },
-        p = Object(c.b)(f);
+        p = Object(c.c)(f);
     },
     W2nU: function(e, t) {
       var n,
@@ -24266,4 +24259,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.ecd260ce.js.map
+//# sourceMappingURL=demo.7ccd6643.js.map
