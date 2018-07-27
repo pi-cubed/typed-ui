@@ -412,4 +412,12 @@ describe('Put', () => {
         />
       ));
   });
+
+  it('retrieving default data is deffered until selection', () => {
+    const type = new GraphQLObjectType({
+      name: '',
+      fields: () => ({ t: { type } })
+    });
+    expect(mount(<Put type={type} />)).toExist();
+  });
 });

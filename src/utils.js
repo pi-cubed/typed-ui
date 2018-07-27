@@ -109,7 +109,7 @@ const defaultData = {
   GraphQLEnumType: t => t.getValues()[0].value,
   GraphQLList: ({ ofType }) => [getDefaultData(ofType)],
   GraphQLNonNull: ({ ofType }) => getDefaultData(ofType),
-  GraphQLObjectType: t => _.mapValues(t.getFields(), getFieldData),
+  GraphQLObjectType: t => ({}),
   GraphQLInputObjectType: type =>
     _.mapValues(type.getFields(), ({ type }) => getDefaultData(type))
 };

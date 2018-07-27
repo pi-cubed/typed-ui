@@ -113,14 +113,17 @@ class ObjectOutputComponent extends Component {
     super(props);
     this.state = {
       data: merge(
-        _.mapValues(props.fields, (field, key) => ({
-          ...getFieldData(field),
-          ...{
-            selected:
-              props.defaultSelect ||
-              (props.data && props.data[key] && props.data[key].selected)
-          }
-        })),
+        _.mapValues(props.fields, (field, key) => {
+          const selected =
+            props.defaultSelect ||
+            (props.data && props.data[key] && props.data[key].selected);
+          return {
+            ...(selected ? getFieldData(field) : {}),
+            ...{
+              selected
+            }
+          };
+        }),
         props.data
       )
     };
