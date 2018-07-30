@@ -31,7 +31,7 @@ import {
   makeComponent,
   getTypeComponentMap,
   getDefaultData,
-  getFieldData,
+  getDefaultFieldData,
   merge
 } from './utils';
 
@@ -67,6 +67,16 @@ export const ListOutput = ({ data, ...props }) => (
  * @callback ListOutput~onChange
  * @param {Array.<*>} value
  */
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+const getFieldData = (selected, field) => ({
+  ...(selected ? getDefaultFieldData(field) : {}),
+  selected
+});
 
 /**
  * Component for displaying GraphQLObjectType input and output data.
@@ -113,14 +123,13 @@ class ObjectOutputComponent extends Component {
     super(props);
     this.state = {
       data: merge(
-        _.mapValues(props.fields, (field, key) => ({
-          ...getFieldData(field),
-          ...{
-            selected:
-              props.defaultSelect ||
-              (props.data && props.data[key] && props.data[key].selected)
-          }
-        })),
+        _.mapValues(props.fields, (field, key) =>
+          getFieldData(
+            props.defaultSelect ||
+              (props.data && props.data[key] && props.data[key].selected),
+            field
+          )
+        ),
         props.data
       )
     };
@@ -131,7 +140,7 @@ class ObjectOutputComponent extends Component {
    *
    * @private
    */
-  renderToggle(key) {
+  renderToggle(field, key) {
     return (
       <input
         type="checkbox"
@@ -141,7 +150,7 @@ class ObjectOutputComponent extends Component {
             prev =>
               merge(prev, {
                 data: {
-                  [key]: { selected: !prev.data[key].selected }
+                  [key]: getFieldData(!prev.data[key].selected, field)
                 }
               }),
             () => this.props.onChange(this.state.data)
@@ -210,7 +219,7 @@ class ObjectOutputComponent extends Component {
   renderReturn({ type }, key) {
     const { fields, onChange } = this.props;
     const data = this.state.data[key].output;
-    return data ? (
+    return data !== null ? (
       <HigherOrderOutput
         {...this.props}
         ofType={type}
@@ -233,7 +242,7 @@ class ObjectOutputComponent extends Component {
   renderField(field, key) {
     return (
       <div>
-        {this.renderToggle(key)}
+        {this.renderToggle(field, key)}
         {key}
         {this.state.data[key].selected ? (
           <div>

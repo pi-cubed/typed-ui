@@ -412,4 +412,47 @@ describe('Put', () => {
         />
       ));
   });
+
+  it('retrieving default data is deffered until selection', () => {
+    const type = new GraphQLObjectType({
+      name: '',
+      fields: () => ({ t: { type } })
+    });
+    expect(mount(<Put type={type} />)).toExist();
+  });
+
+  it('default data for field is retrieved when selected', () => {
+    const wrapper = mount(
+      <Put
+        type={
+          new GraphQLObjectType({
+            name: '',
+            fields: { t: { type: GraphQLInt } }
+          })
+        }
+      />
+    );
+    wrapper
+      .find('input[type="checkbox"]')
+      .simulate('change', { value: 'checked' });
+    expect(wrapper.find('input[type="number"]').prop('value')).toEqual(0);
+  });
+
+  it('fields can be selected from data prop', () => {
+    expect(
+      mount(
+        <Put
+          type={
+            new GraphQLObjectType({
+              name: '',
+              fields: { t: { type: GraphQLInt } }
+            })
+          }
+          data={{ t: { selected: true } }}
+        />
+      )
+        .find('input[type="number"]')
+        .prop('value')
+    ).toEqual(0);
+  });
 });
