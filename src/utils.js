@@ -87,7 +87,7 @@ export const makeComponent = defaultTypeComponentMap => ({
  *
  * @private
  */
-export const getFieldData = ({ args = [], type }) => ({
+export const getDefaultFieldData = ({ args = [], type }) => ({
   input: args.reduce(
     (acc, { name, type }) => merge(acc, { [name]: getDefaultData(type) }),
     {}
