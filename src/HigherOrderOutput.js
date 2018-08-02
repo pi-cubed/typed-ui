@@ -144,7 +144,8 @@ class ObjectOutputComponent extends Component {
     return (
       <input
         type="checkbox"
-        value={this.state.data[key].selected}
+        checked={this.state.data[key].selected}
+        key={key}
         onChange={() =>
           this.setState(
             prev =>

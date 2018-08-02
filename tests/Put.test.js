@@ -68,6 +68,8 @@ const handlesInput = (obj, type, data, value) => async () => {
   expect(actual).toEqual({ x: data });
 };
 
+const abc = () => <div>abc</div>;
+
 describe('Put', () => {
   describe('Input', () => {
     it('is ObjectInput for object with single integer field', () => {
@@ -173,11 +175,24 @@ describe('Put', () => {
         5
       )
     );
+
+    it('data is passed to children', () =>
+      equals(
+        <Put type={GraphQLInt} data={5}>
+          {(() => {
+            const _ = ({ data }) => <div>{data + 1}</div>;
+            return <_ />;
+          })()}
+        </Put>,
+        <div>
+          <Put type={GraphQLInt} data={5} />
+          <br />
+          <div>{6}</div>
+        </div>
+      ));
   });
 
   describe('typeComponentMap', () => {
-    const abc = () => <div>abc</div>;
-
     it('can customize strings', () =>
       equals(
         <Put
@@ -278,7 +293,10 @@ describe('Put', () => {
           typeComponentMap={{
             output: {
               GraphQLList: ({ data, defaultComponent, ...props }) =>
-                defaultComponent({ data: _.concat(data, 4), ...props })
+                defaultComponent({
+                  data: _.concat(data, 4),
+                  ...props
+                })
             }
           }}
           defaultSelect={true}
@@ -454,5 +472,70 @@ describe('Put', () => {
         .find('input[type="number"]')
         .prop('value')
     ).toEqual(0);
+  });
+
+  xit('mutated data is passed to children', () => {
+    const value = 'abc';
+    const wrapper = mount(
+      <Put
+        type={
+          new GraphQLObjectType({
+            name: '',
+            fields: {
+              f: {
+                args: { x: { type: GraphQLString } },
+                type: GraphQLString
+              }
+            }
+          })
+        }
+        data={{ f: { selected: true } }}
+      >
+        <Put />
+      </Put>
+    );
+    wrapper
+      .find('input[type="text"]')
+      .first()
+      .simulate('change', { target: { value } });
+    expect(wrapper.find('input[type="text"]').get(1).props.value).toEqual(
+      value
+    );
+  });
+
+  xit('onChange is triggered when passed new data through props', done => {
+    const value = 'abc';
+    const wrapper = mount(
+      <Put
+        type={
+          new GraphQLObjectType({
+            name: '',
+            fields: {
+              f: {
+                args: { x: { type: GraphQLString } },
+                type: GraphQLString
+              }
+            }
+          })
+        }
+        data={{ f: { selected: true } }}
+      >
+        <Put
+          onChange={data =>
+            expect(data).toEqual({
+              f: {
+                input: { x: value },
+                output: '',
+                selected: true
+              }
+            })
+          }
+        />
+      </Put>
+    );
+    wrapper
+      .find('input[type="text"]')
+      .first()
+      .simulate('change', { target: { value } });
   });
 });

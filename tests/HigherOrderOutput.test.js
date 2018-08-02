@@ -99,7 +99,7 @@ describe('ObjectOutput', () => {
         data={{ data: { output: data } }}
       />
     );
-    expect(wrapper.find('input[type="checkbox"]').prop('value')).toNotExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toNotExist();
   });
 
   it('fields can be selected by data prop', () => {
@@ -113,7 +113,7 @@ describe('ObjectOutput', () => {
         data={{ data: { output: data, selected: true } }}
       />
     );
-    expect(wrapper.find('input[type="checkbox"]').prop('value')).toExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toExist();
   });
 
   it('fields can be selected by default using defaultSelect prop', () => {
@@ -121,7 +121,7 @@ describe('ObjectOutput', () => {
     const name = 'hew';
     const fields = { data: { type: GraphQLInt } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    expect(wrapper.find('input[type="checkbox"]').prop('value')).toExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toExist();
   });
 
   it('hides field if checkbox unchecked', () => {

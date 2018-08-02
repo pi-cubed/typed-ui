@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { isInputObjectType, isWrappingType } from 'graphql';
 import { HigherOrderOutput } from './HigherOrderOutput';
 import { HigherOrderInput } from './HigherOrderInput';
-import { getDefaultData } from './utils';
+import { getDefaultData, merge } from './utils';
 
 /**
  * TODO docs
@@ -110,6 +110,7 @@ class Output extends Component {
     this.state = {
       data: props.data || getDefaultData(props.type)
     };
+    this.createChild();
   }
   /**
    * This callback handles Output change events.
@@ -135,10 +136,29 @@ class Output extends Component {
    * @private
    */
   onChange = data => {
-    this.setState({ data }, () => this.props.onChange(this.state.data));
+    this.setState({ data }, () => {
+      this.props.onChange(this.state.data);
+      this.createChild();
+    });
   };
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  createChild() {
+    const { children, type } = this.props;
+    this.child = children && (
+      <children.type {...children.props} {...this.state} type={type} />
+    );
+  }
 
-  render() {
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderOutput() {
     return (
       <HigherOrderOutput
         {...this.props}
@@ -146,6 +166,19 @@ class Output extends Component {
         data={this.state.data}
         onChange={this.onChange}
       />
+    );
+  }
+
+  render() {
+    const { children } = this.props;
+    return children ? (
+      <div>
+        {this.renderOutput()}
+        <br />
+        {this.child}
+      </div>
+    ) : (
+      this.renderOutput()
     );
   }
 }
@@ -222,7 +255,12 @@ class Input extends Component {
     this.setState({ data }, () => this.props.onChange(this.state.data));
   };
 
-  render() {
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderInput() {
     return (
       <HigherOrderInput
         {...this.props}
@@ -230,6 +268,19 @@ class Input extends Component {
         data={this.state.data}
         onChange={this.onChange}
       />
+    );
+  }
+
+  render() {
+    const { children } = this.props;
+    return children ? (
+      <div>
+        {this.renderInput()}
+        <br />
+        {React.cloneElement(children, this.state)}
+      </div>
+    ) : (
+      this.renderInput()
     );
   }
 }
