@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import { isInputObjectType, isWrappingType } from 'graphql';
 import { HigherOrderOutput } from './HigherOrderOutput';
 import { HigherOrderInput } from './HigherOrderInput';
@@ -108,9 +108,9 @@ class Output extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data || getDefaultData(props.type)
+      data: props.data || getDefaultData(props.type),
+      key: 0
     };
-    this.createChild();
   }
   /**
    * This callback handles Output change events.
@@ -136,22 +136,13 @@ class Output extends Component {
    * @private
    */
   onChange = data => {
-    this.setState({ data }, () => {
-      this.props.onChange(this.state.data);
-      this.createChild();
-    });
-  };
-  /**
-   * TODO docs
-   *
-   * @private
-   */
-  createChild() {
-    const { children, type } = this.props;
-    this.child = children && (
-      <children.type {...children.props} {...this.state} type={type} />
+    this.setState(
+      ({ key }) => ({ data, key: key + 1 }),
+      () => {
+        this.props.onChange(this.state.data);
+      }
     );
-  }
+  };
 
   /**
    * TODO docs
@@ -170,12 +161,12 @@ class Output extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, type } = this.props;
     return children ? (
       <div>
         {this.renderOutput()}
         <br />
-        {this.child}
+        {cloneElement(children, { ...children.props, ...this.state, type })}
       </div>
     ) : (
       this.renderOutput()
@@ -225,7 +216,8 @@ class Input extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data || getDefaultData(props.type)
+      data: props.data || getDefaultData(props.type),
+      key: 0
     };
   }
   /**
@@ -252,7 +244,10 @@ class Input extends Component {
    * @private
    */
   onChange = data => {
-    this.setState({ data }, () => this.props.onChange(this.state.data));
+    this.setState(
+      ({ key }) => ({ data, key: key + 1 }),
+      () => this.props.onChange(this.state.data)
+    );
   };
 
   /**
@@ -277,7 +272,7 @@ class Input extends Component {
       <div>
         {this.renderInput()}
         <br />
-        {React.cloneElement(children, this.state)}
+        {cloneElement(children, { ...children.props, ...this.state, type })}
       </div>
     ) : (
       this.renderInput()

@@ -474,7 +474,7 @@ describe('Put', () => {
     ).toEqual(0);
   });
 
-  xit('mutated data is passed to children', () => {
+  it('mutated data is passed to children', () => {
     const value = 'abc';
     const wrapper = mount(
       <Put
@@ -501,41 +501,5 @@ describe('Put', () => {
     expect(wrapper.find('input[type="text"]').get(1).props.value).toEqual(
       value
     );
-  });
-
-  xit('onChange is triggered when passed new data through props', done => {
-    const value = 'abc';
-    const wrapper = mount(
-      <Put
-        type={
-          new GraphQLObjectType({
-            name: '',
-            fields: {
-              f: {
-                args: { x: { type: GraphQLString } },
-                type: GraphQLString
-              }
-            }
-          })
-        }
-        data={{ f: { selected: true } }}
-      >
-        <Put
-          onChange={data =>
-            expect(data).toEqual({
-              f: {
-                input: { x: value },
-                output: '',
-                selected: true
-              }
-            })
-          }
-        />
-      </Put>
-    );
-    wrapper
-      .find('input[type="text"]')
-      .first()
-      .simulate('change', { target: { value } });
   });
 });

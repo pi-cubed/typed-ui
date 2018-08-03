@@ -547,9 +547,9 @@ Component for displaying GraphQL data
 />
 ```
 
-- [Put](#Put) ⇒ <code>Component</code>
-  - [~onChange](#Put..onChange) : <code>function</code>
-  - [~render](#Put..render) : <code>function</code>
+* [Put](#Put) ⇒ <code>Component</code>
+  * [~onChange](#Put..onChange) : <code>function</code>
+  * [~render](#Put..render) : <code>function</code>
 
 <a name="Put..onChange"></a>
 
