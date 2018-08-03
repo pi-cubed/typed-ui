@@ -10,23 +10,6 @@ import {
 } from 'graphql';
 import { Put } from '../../src';
 
-const Demo = () => (
-  <Put
-    type={
-      new GraphQLObjectType({
-        name: '',
-        fields: {
-          f: {
-            args: { x: { type: GraphQLString } },
-            type: GraphQLString
-          }
-        }
-      })
-    }
-    data={{ f: { selected: true } }}
-  >
-    <Put onChange={console.log} />
-  </Put>
-);
+const Demo = () => <Put type={GraphQLInt}>{() => null}</Put>;
 
 render(<Demo />, document.querySelector('#demo'));

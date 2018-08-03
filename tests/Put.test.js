@@ -269,6 +269,15 @@ describe('Put', () => {
         </div>
       ));
 
+    it('children can be null', () =>
+      equals(
+        <Put type={GraphQLInt}>{() => null}</Put>,
+        <div>
+          <Put type={GraphQLInt} />
+          <br />
+        </div>
+      ));
+
     it('mutated data is passed to children', () => {
       const value = 'abc';
       const wrapper = mount(
