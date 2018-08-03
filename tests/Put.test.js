@@ -1,6 +1,5 @@
 import expect from 'expect';
 import React from 'react';
-import { setTarget } from './utils';
 import { mount } from 'enzyme';
 import {
   GraphQLString,
@@ -16,6 +15,7 @@ import {
   getNamedType,
   isListType
 } from 'graphql';
+import { setTarget } from './utils';
 import { Put } from 'src';
 import {
   StringInput,

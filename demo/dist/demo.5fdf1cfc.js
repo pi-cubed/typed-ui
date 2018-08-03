@@ -11724,16 +11724,18 @@ webpackJsonp(
               );
             }),
             (t.prototype.render = function() {
-              var e = this.props.children;
-              return e
+              var e = this.props,
+                t = e.children,
+                n = e.type;
+              return t
                 ? i.a.createElement(
                     'div',
                     null,
                     this.renderInput(),
                     i.a.createElement('br', null),
                     Object(r.cloneElement)(
-                      e,
-                      l({}, e.props, this.state, { type: type })
+                      t,
+                      l({}, t.props, this.state, { type: n })
                     )
                   )
                 : this.renderInput();
@@ -24281,4 +24283,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.dd1c87ba.js.map
+//# sourceMappingURL=demo.5fdf1cfc.js.map

@@ -1,6 +1,5 @@
 import expect from 'expect';
 import React from 'react';
-import { ListInput, ObjectInput } from 'src/HigherOrderInput';
 import { mount } from 'enzyme';
 import {
   GraphQLString,
@@ -11,6 +10,7 @@ import {
   GraphQLInputObjectType
 } from 'graphql';
 import { setTarget } from './utils';
+import { ListInput, ObjectInput } from 'src';
 
 describe('ListInput', () => {
   it('handles list of string inputs', async () => {
