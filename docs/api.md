@@ -16,7 +16,7 @@ A component for non null inputs. Bases component selection on name of type.</p>
 <dt><a href="#HigherOrderInput">HigherOrderInput</a> ⇒ <code>React.Element</code></dt>
 <dd><p>Component for displaying GraphQL input types of higher order.</p>
 </dd>
-<dt><a href="#ListOutput">ListOutput</a> ⇒ <code>Element</code></dt>
+<dt><a href="#ObjectOutput">ObjectOutput</a> ⇒ <code>Element</code></dt>
 <dd><p>Component for displaying GraphQLObjectType input and output data.</p>
 </dd>
 <dt><a href="#NonNullOutput">NonNullOutput</a></dt>
@@ -166,9 +166,9 @@ Component for displaying GraphQL input types of higher order.
 | ofType | <code>GraphQLInputType</code>                           | The type of the input.                      |
 | ofType | <code>Object.&lt;GraphQLInputType, Component&gt;</code> | Map from GraphQL input types to components. |
 
-<a name="ListOutput"></a>
+<a name="ObjectOutput"></a>
 
-## ListOutput ⇒ <code>Element</code>
+## ObjectOutput ⇒ <code>Element</code>
 
 Component for displaying GraphQLObjectType input and output data.
 
@@ -199,17 +199,17 @@ Component for displaying GraphQLObjectType input and output data.
 />
 ```
 
-<a name="ListOutput..onChange"></a>
+<a name="ObjectOutput..onChange"></a>
 
-### ListOutput~onChange : <code>function</code>
+### ObjectOutput~onChange : <code>function</code>
 
-This callback handles ListOutput change events.
+This callback handles ObjectOutput change events.
 
-**Kind**: inner typedef of [<code>ListOutput</code>](#ListOutput)
+**Kind**: inner typedef of [<code>ObjectOutput</code>](#ObjectOutput)
 
-| Param | Type                          |
-| ----- | ----------------------------- |
-| value | <code>Array.&lt;\*&gt;</code> |
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>Object</code> |
 
 <a name="NonNullOutput"></a>
 

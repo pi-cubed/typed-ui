@@ -56,7 +56,7 @@ describe('getDefaultData', () => {
           }
         })
       )
-    ).toEqual({ x: { input: {}, output: 0 } }));
+    ).toEqual({}));
 
   it('is object for GraphQLInputObjectType', () =>
     expect(
