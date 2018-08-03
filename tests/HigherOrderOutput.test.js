@@ -1,9 +1,14 @@
 import expect from 'expect';
 import React from 'react';
-import { ListOutput, ObjectOutput } from 'src/HigherOrderOutput';
-import { fuzz, getInput, setTarget } from './utils';
 import { mount } from 'enzyme';
-import { GraphQLString, GraphQLList, GraphQLInt } from 'graphql';
+import {
+  GraphQLString,
+  GraphQLList,
+  GraphQLInt,
+  GraphQLNonNull
+} from 'graphql';
+import { fuzz, getInput, setTarget } from './utils';
+import { ListOutput, ObjectOutput } from 'src';
 
 const containsInt = (w, n) =>
   w.containsMatchingElement(<input readOnly type="number" value={n} />);
@@ -64,6 +69,16 @@ describe('ObjectOutput', () => {
     expect(containsInt(wrapper, data)).toExist();
   });
 
+  it('displays nothing for null data', () => {
+    const fields = { data: { type: GraphQLInt } };
+    const wrapper = wrap({
+      name: '',
+      fields,
+      data: { data: { output: null } }
+    });
+    expect(wrapper.find('input[type="number"]').exists()).toNotExist();
+  });
+
   it('displays multiple fields of object', () => {
     const data = [0, 1, 2];
     const name = 'name';
@@ -99,7 +114,7 @@ describe('ObjectOutput', () => {
         data={{ data: { output: data } }}
       />
     );
-    expect(wrapper.find('input[type="checkbox"]').prop('value')).toNotExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toNotExist();
   });
 
   it('fields can be selected by data prop', () => {
@@ -113,7 +128,7 @@ describe('ObjectOutput', () => {
         data={{ data: { output: data, selected: true } }}
       />
     );
-    expect(wrapper.find('input[type="checkbox"]').prop('value')).toExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toExist();
   });
 
   it('fields can be selected by default using defaultSelect prop', () => {
@@ -121,7 +136,7 @@ describe('ObjectOutput', () => {
     const name = 'hew';
     const fields = { data: { type: GraphQLInt } };
     const wrapper = wrap({ name, fields, data: { data: { output: data } } });
-    expect(wrapper.find('input[type="checkbox"]').prop('value')).toExist();
+    expect(wrapper.find('input[type="checkbox"]').prop('checked')).toExist();
   });
 
   it('hides field if checkbox unchecked', () => {

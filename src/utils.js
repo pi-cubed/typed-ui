@@ -87,7 +87,7 @@ export const makeComponent = defaultTypeComponentMap => ({
  *
  * @private
  */
-export const getFieldData = ({ args = [], type }) => ({
+export const getDefaultFieldData = ({ args = [], type }) => ({
   input: args.reduce(
     (acc, { name, type }) => merge(acc, { [name]: getDefaultData(type) }),
     {}
@@ -109,7 +109,7 @@ const defaultData = {
   GraphQLEnumType: t => t.getValues()[0].value,
   GraphQLList: ({ ofType }) => [getDefaultData(ofType)],
   GraphQLNonNull: ({ ofType }) => getDefaultData(ofType),
-  GraphQLObjectType: t => _.mapValues(t.getFields(), getFieldData),
+  GraphQLObjectType: t => ({}),
   GraphQLInputObjectType: type =>
     _.mapValues(type.getFields(), ({ type }) => getDefaultData(type))
 };
