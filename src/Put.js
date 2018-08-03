@@ -267,7 +267,7 @@ class Input extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, type } = this.props;
     return children ? (
       <div>
         {this.renderInput()}

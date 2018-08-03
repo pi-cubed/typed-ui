@@ -7106,7 +7106,7 @@ webpackJsonp(
             (t.prototype.renderDivider = function(e) {
               var t = e.type;
               e.args;
-              return Object(u.h)(t) ? null : i.a.createElement('hr', null);
+              return Object(u.e)(t) ? null : i.a.createElement('hr', null);
             }),
             (t.prototype.renderField = function(e, t) {
               return i.a.createElement(
@@ -11632,7 +11632,7 @@ webpackJsonp(
       var d = function(e) {
           var t,
             n = ((t = e.type),
-            Object(o.g)(t) || (Object(o.i)(t) && Object(o.g)(t.ofType))),
+            Object(o.d)(t) || (Object(o.f)(t) && Object(o.d)(t.ofType))),
             r = n ? y : h;
           return i.a.createElement(
             r,
@@ -11645,17 +11645,23 @@ webpackJsonp(
             var r = f(this, e.call(this, n));
             return (
               (r.onChange = function(e) {
-                r.setState({ data: e }, function() {
-                  return r.props.onChange(r.state.data);
-                });
+                r.setState(
+                  function(t) {
+                    var n = t.key;
+                    return { data: e, key: n + 1 };
+                  },
+                  function() {
+                    r.props.onChange(r.state.data);
+                  }
+                );
               }),
-              (r.state = { data: n.data || Object(c.a)(n.type) }),
+              (r.state = { data: n.data || Object(c.a)(n.type), key: 0 }),
               r
             );
           }
           return (
             p(t, e),
-            (t.prototype.render = function() {
+            (t.prototype.renderOutput = function() {
               return i.a.createElement(
                 a.a,
                 l({}, this.props, {
@@ -11664,6 +11670,23 @@ webpackJsonp(
                   onChange: this.onChange
                 })
               );
+            }),
+            (t.prototype.render = function() {
+              var e = this.props,
+                t = e.children,
+                n = e.type;
+              return t
+                ? i.a.createElement(
+                    'div',
+                    null,
+                    this.renderOutput(),
+                    i.a.createElement('br', null),
+                    Object(r.cloneElement)(
+                      t,
+                      l({}, t.props, this.state, { type: n })
+                    )
+                  )
+                : this.renderOutput();
             }),
             t
           );
@@ -11674,17 +11697,23 @@ webpackJsonp(
             var r = f(this, e.call(this, n));
             return (
               (r.onChange = function(e) {
-                r.setState({ data: e }, function() {
-                  return r.props.onChange(r.state.data);
-                });
+                r.setState(
+                  function(t) {
+                    var n = t.key;
+                    return { data: e, key: n + 1 };
+                  },
+                  function() {
+                    return r.props.onChange(r.state.data);
+                  }
+                );
               }),
-              (r.state = { data: n.data || Object(c.a)(n.type) }),
+              (r.state = { data: n.data || Object(c.a)(n.type), key: 0 }),
               r
             );
           }
           return (
             p(t, e),
-            (t.prototype.render = function() {
+            (t.prototype.renderInput = function() {
               return i.a.createElement(
                 u.a,
                 l({}, this.props, {
@@ -11693,6 +11722,21 @@ webpackJsonp(
                   onChange: this.onChange
                 })
               );
+            }),
+            (t.prototype.render = function() {
+              var e = this.props.children;
+              return e
+                ? i.a.createElement(
+                    'div',
+                    null,
+                    this.renderInput(),
+                    i.a.createElement('br', null),
+                    Object(r.cloneElement)(
+                      e,
+                      l({}, e.props, this.state, { type: type })
+                    )
+                  )
+                : this.renderInput();
             }),
             t
           );
@@ -13712,7 +13756,7 @@ webpackJsonp(
         },
         s = function(e) {
           return 'GraphQLScalarType' === e.constructor.name
-            ? 'GraphQL' + Object(i.f)(e).name
+            ? 'GraphQL' + Object(i.c)(e).name
             : e.constructor.name;
         },
         f = function(e) {
@@ -13782,7 +13826,7 @@ webpackJsonp(
             return h(t);
           },
           GraphQLObjectType: function(e) {
-            return _.mapValues(e.getFields(), p);
+            return {};
           },
           GraphQLInputObjectType: function(e) {
             return _.mapValues(e.getFields(), function(e) {
@@ -19598,7 +19642,7 @@ webpackJsonp(
     VM2n: function(e, t, n) {
       'use strict';
       n.d(t, 'a', function() {
-        return p;
+        return d;
       });
       var r = n('GiK3'),
         i = n.n(r),
@@ -19616,7 +19660,10 @@ webpackJsonp(
             }
             return e;
           };
-      var s = (function(e) {
+      var s = function(e, t) {
+          return l({}, e ? Object(c.b)(t) : {}, { selected: e });
+        },
+        f = (function(e) {
           function t(n) {
             !(function(e, t) {
               if (!(e instanceof t))
@@ -19635,11 +19682,11 @@ webpackJsonp(
               (r.state = {
                 data: Object(c.d)(
                   _.mapValues(n.fields, function(e, t) {
-                    return l({}, Object(c.b)(e), {
-                      selected:
-                        n.defaultSelect ||
-                        (n.data && n.data[t] && n.data[t].selected)
-                    });
+                    return s(
+                      n.defaultSelect ||
+                        (n.data && n.data[t] && n.data[t].selected),
+                      e
+                    );
                   }),
                   n.data
                 )
@@ -19667,23 +19714,22 @@ webpackJsonp(
                     ? Object.setPrototypeOf(e, t)
                     : (e.__proto__ = t));
             })(t, e),
-            (t.prototype.renderToggle = function(e) {
-              var t = this;
+            (t.prototype.renderToggle = function(e, t) {
+              var n = this;
               return i.a.createElement('input', {
                 type: 'checkbox',
-                value: this.state.data[e].selected,
+                checked: this.state.data[t].selected,
+                value: this.state.data[t].selected,
                 onChange: function() {
-                  return t.setState(
-                    function(t) {
-                      var n;
-                      return Object(c.d)(t, {
-                        data: ((n = {}),
-                        (n[e] = { selected: !t.data[e].selected }),
-                        n)
+                  return n.setState(
+                    function(n) {
+                      var r;
+                      return Object(c.d)(n, {
+                        data: ((r = {}), (r[t] = s(!n.data[t].selected, e)), r)
                       });
                     },
                     function() {
-                      return t.props.onChange(t.state.data);
+                      return n.props.onChange(n.state.data);
                     }
                   );
                 }
@@ -19737,7 +19783,7 @@ webpackJsonp(
             (t.prototype.renderDivider = function(e) {
               var t = e.type,
                 n = e.args;
-              return !Object(o.h)(t) || _.keys(n).length
+              return !Object(o.e)(t) || _.keys(n).length
                 ? i.a.createElement('hr', null)
                 : null;
             }),
@@ -19747,9 +19793,9 @@ webpackJsonp(
                 o = this.props,
                 a = (o.fields, o.onChange),
                 u = this.state.data[t].output;
-              return u
+              return null !== u
                 ? i.a.createElement(
-                    p,
+                    d,
                     l({}, this.props, {
                       ofType: r,
                       data: u,
@@ -19774,7 +19820,7 @@ webpackJsonp(
               return i.a.createElement(
                 'div',
                 null,
-                this.renderToggle(t),
+                this.renderToggle(e, t),
                 t,
                 this.state.data[t].selected
                   ? i.a.createElement(
@@ -19812,7 +19858,7 @@ webpackJsonp(
             t
           );
         })(r.Component),
-        f = {
+        p = {
           GraphQLInt: a.d,
           GraphQLFloat: a.c,
           GraphQLBoolean: a.a,
@@ -19820,7 +19866,7 @@ webpackJsonp(
           GraphQLID: a.e,
           GraphQLEnumType: a.b,
           GraphQLObjectType: function(e) {
-            return i.a.createElement(s, e);
+            return i.a.createElement(f, e);
           },
           GraphQLInputObjectType: u.b,
           GraphQLList: function(e) {
@@ -19840,16 +19886,16 @@ webpackJsonp(
                 return i.a.createElement(
                   'li',
                   { key: r },
-                  i.a.createElement(p, l({}, n, { data: t[r] }))
+                  i.a.createElement(d, l({}, n, { data: t[r] }))
                 );
               })
             );
           },
           GraphQLNonNull: function(e) {
-            return i.a.createElement(p, e);
+            return i.a.createElement(d, e);
           }
         },
-        p = Object(c.c)(f);
+        d = Object(c.c)(p);
     },
     W2nU: function(e, t) {
       var n,
@@ -20516,29 +20562,17 @@ webpackJsonp(
         u = n('lVK7');
       Object(o.render)(
         i.a.createElement(function() {
-          return i.a.createElement(u.a, {
-            type: new a.d({
-              name: 'typed-ui Demo',
-              fields: {
-                A: {
-                  args: {
-                    X: {
-                      type: new a.a({
-                        name: 'X',
-                        fields: { xs: { type: Object(a.b)(Object(a.c)(a.e)) } }
-                      })
-                    }
-                  },
-                  type: new a.d({
-                    name: 'This is what A returned',
-                    fields: { B: { type: Object(a.b)(a.e) } }
-                  })
-                }
-              }
-            }),
-            data: { A: { output: { B: { output: ['hew'] } } } },
-            onChange: console.log
-          });
+          return i.a.createElement(
+            u.a,
+            {
+              type: new a.a({
+                name: '',
+                fields: { f: { args: { x: { type: a.b } }, type: a.b } }
+              }),
+              data: { f: { selected: !0 } }
+            },
+            i.a.createElement(u.a, { onChange: console.log })
+          );
         }, null),
         document.querySelector('#demo')
       );
@@ -22156,39 +22190,27 @@ webpackJsonp(
         i = (n.n(r), n('vOy4'));
       n.n(i);
       n.o(i, 'GraphQLObjectType') &&
-        n.d(t, 'd', function() {
+        n.d(t, 'a', function() {
           return i.GraphQLObjectType;
         }),
-        n.o(i, 'GraphQLInputObjectType') &&
-          n.d(t, 'a', function() {
-            return i.GraphQLInputObjectType;
-          }),
-        n.o(i, 'GraphQLList') &&
-          n.d(t, 'b', function() {
-            return i.GraphQLList;
-          }),
-        n.o(i, 'GraphQLNonNull') &&
-          n.d(t, 'c', function() {
-            return i.GraphQLNonNull;
-          }),
         n.o(i, 'GraphQLString') &&
-          n.d(t, 'e', function() {
+          n.d(t, 'b', function() {
             return i.GraphQLString;
           }),
         n.o(i, 'isInputObjectType') &&
-          n.d(t, 'g', function() {
+          n.d(t, 'd', function() {
             return i.isInputObjectType;
           }),
         n.o(i, 'isLeafType') &&
-          n.d(t, 'h', function() {
+          n.d(t, 'e', function() {
             return i.isLeafType;
           }),
         n.o(i, 'isWrappingType') &&
-          n.d(t, 'i', function() {
+          n.d(t, 'f', function() {
             return i.isWrappingType;
           }),
         n.o(i, 'getNamedType') &&
-          n.d(t, 'f', function() {
+          n.d(t, 'c', function() {
             return i.getNamedType;
           });
       var o = n('Hamp'),
@@ -24259,4 +24281,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.7ccd6643.js.map
+//# sourceMappingURL=demo.dd1c87ba.js.map
