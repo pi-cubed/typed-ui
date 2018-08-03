@@ -1,4 +1,4 @@
-import React, { Component, cloneElement } from 'react';
+import React, { Component, Element, cloneElement } from 'react';
 import { isInputObjectType, isWrappingType } from 'graphql';
 import { HigherOrderOutput } from './HigherOrderOutput';
 import { HigherOrderInput } from './HigherOrderInput';
@@ -160,13 +160,25 @@ class Output extends Component {
     );
   }
 
-  render() {
+  /**
+   * TODO docs
+   *
+   * @private
+   */
+  renderChild() {
     const { children, type } = this.props;
-    return children ? (
+    const childProps = { ...children.props, ...this.state, type };
+    return typeof children === 'object'
+      ? cloneElement(children, childProps)
+      : children(childProps);
+  }
+
+  render() {
+    return this.props.children ? (
       <div>
         {this.renderOutput()}
         <br />
-        {cloneElement(children, { ...children.props, ...this.state, type })}
+        {this.renderChild()}
       </div>
     ) : (
       this.renderOutput()
@@ -267,7 +279,7 @@ class Input extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, type } = this.props;
     return children ? (
       <div>
         {this.renderInput()}

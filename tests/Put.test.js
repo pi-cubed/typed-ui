@@ -1,6 +1,5 @@
 import expect from 'expect';
 import React from 'react';
-import { setTarget } from './utils';
 import { mount } from 'enzyme';
 import {
   GraphQLString,
@@ -16,6 +15,7 @@ import {
   getNamedType,
   isListType
 } from 'graphql';
+import { setTarget } from './utils';
 import { Put } from 'src';
 import {
   StringInput,
@@ -90,6 +90,41 @@ describe('Put', () => {
     });
 
     it('handles input', handlesInput(GraphQLInputObjectType, GraphQLInt, 5, 5));
+
+    it('data is passed to children', () =>
+      equals(
+        <Put
+          type={
+            new GraphQLInputObjectType({
+              name: '',
+              fields: {
+                x: { type: GraphQLInt }
+              }
+            })
+          }
+          data={{ x: 5 }}
+        >
+          {(() => {
+            const _ = ({ data: { x } }) => <div>{x + 1}</div>;
+            return <_ />;
+          })()}
+        </Put>,
+        <div>
+          <Put
+            type={
+              new GraphQLInputObjectType({
+                name: '',
+                fields: {
+                  x: { type: GraphQLInt }
+                }
+              })
+            }
+            data={{ x: 5 }}
+          />
+          <br />
+          <div>{6}</div>
+        </div>
+      ));
   });
 
   describe('Output', () => {
@@ -176,6 +211,49 @@ describe('Put', () => {
       )
     );
 
+    it('retrieving default data is deffered until selection', () => {
+      const type = new GraphQLObjectType({
+        name: '',
+        fields: () => ({ t: { type } })
+      });
+      expect(mount(<Put type={type} />)).toExist();
+    });
+
+    it('default data for field is retrieved when selected', () => {
+      const wrapper = mount(
+        <Put
+          type={
+            new GraphQLObjectType({
+              name: '',
+              fields: { t: { type: GraphQLInt } }
+            })
+          }
+        />
+      );
+      wrapper
+        .find('input[type="checkbox"]')
+        .simulate('change', { value: 'checked' });
+      expect(wrapper.find('input[type="number"]').prop('value')).toEqual(0);
+    });
+
+    it('fields can be selected from data prop', () => {
+      expect(
+        mount(
+          <Put
+            type={
+              new GraphQLObjectType({
+                name: '',
+                fields: { t: { type: GraphQLInt } }
+              })
+            }
+            data={{ t: { selected: true } }}
+          />
+        )
+          .find('input[type="number"]')
+          .prop('value')
+      ).toEqual(0);
+    });
+
     it('data is passed to children', () =>
       equals(
         <Put type={GraphQLInt} data={5}>
@@ -190,6 +268,44 @@ describe('Put', () => {
           <div>{6}</div>
         </div>
       ));
+
+    it('children can be null', () =>
+      equals(
+        <Put type={GraphQLInt}>{() => null}</Put>,
+        <div>
+          <Put type={GraphQLInt} />
+          <br />
+        </div>
+      ));
+
+    it('mutated data is passed to children', () => {
+      const value = 'abc';
+      const wrapper = mount(
+        <Put
+          type={
+            new GraphQLObjectType({
+              name: '',
+              fields: {
+                f: {
+                  args: { x: { type: GraphQLString } },
+                  type: GraphQLString
+                }
+              }
+            })
+          }
+          data={{ f: { selected: true } }}
+        >
+          <Put />
+        </Put>
+      );
+      wrapper
+        .find('input[type="text"]')
+        .first()
+        .simulate('change', { target: { value } });
+      expect(wrapper.find('input[type="text"]').get(1).props.value).toEqual(
+        value
+      );
+    });
   });
 
   describe('typeComponentMap', () => {
@@ -429,77 +545,5 @@ describe('Put', () => {
           defaultSelect={true}
         />
       ));
-  });
-
-  it('retrieving default data is deffered until selection', () => {
-    const type = new GraphQLObjectType({
-      name: '',
-      fields: () => ({ t: { type } })
-    });
-    expect(mount(<Put type={type} />)).toExist();
-  });
-
-  it('default data for field is retrieved when selected', () => {
-    const wrapper = mount(
-      <Put
-        type={
-          new GraphQLObjectType({
-            name: '',
-            fields: { t: { type: GraphQLInt } }
-          })
-        }
-      />
-    );
-    wrapper
-      .find('input[type="checkbox"]')
-      .simulate('change', { value: 'checked' });
-    expect(wrapper.find('input[type="number"]').prop('value')).toEqual(0);
-  });
-
-  it('fields can be selected from data prop', () => {
-    expect(
-      mount(
-        <Put
-          type={
-            new GraphQLObjectType({
-              name: '',
-              fields: { t: { type: GraphQLInt } }
-            })
-          }
-          data={{ t: { selected: true } }}
-        />
-      )
-        .find('input[type="number"]')
-        .prop('value')
-    ).toEqual(0);
-  });
-
-  it('mutated data is passed to children', () => {
-    const value = 'abc';
-    const wrapper = mount(
-      <Put
-        type={
-          new GraphQLObjectType({
-            name: '',
-            fields: {
-              f: {
-                args: { x: { type: GraphQLString } },
-                type: GraphQLString
-              }
-            }
-          })
-        }
-        data={{ f: { selected: true } }}
-      >
-        <Put />
-      </Put>
-    );
-    wrapper
-      .find('input[type="text"]')
-      .first()
-      .simulate('change', { target: { value } });
-    expect(wrapper.find('input[type="text"]').get(1).props.value).toEqual(
-      value
-    );
   });
 });
