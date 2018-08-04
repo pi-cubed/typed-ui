@@ -1,4 +1,4 @@
-import expect from 'expect';
+import expect, { spyOn } from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 import {
@@ -197,5 +197,21 @@ describe('ObjectOutput', () => {
       />
     ));
     expect(value.f.input.x).toEqual(data);
+  });
+
+  it('checkboxes are fully controlled', async () => {
+    const spy = spyOn(console, 'error');
+    const value = await setTarget('input[type="checkbox"]', 'change', {
+      value: 'checked'
+    })(res => (
+      <ObjectOutput
+        name={''}
+        fields={{ x: { type: GraphQLInt } }}
+        onChange={res}
+      />
+    ));
+    expect(spy).toNotHaveBeenCalled();
+    spy.restore();
+    expect.restoreSpies();
   });
 });
