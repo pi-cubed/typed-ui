@@ -12,7 +12,7 @@ import {
   GraphQLObjectType,
   GraphQLInputObjectType
 } from 'graphql';
-import { getDefaultData } from 'src/utils';
+import { getDefaultData, merge } from 'src/utils';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -69,4 +69,9 @@ describe('getDefaultData', () => {
         })
       )
     ).toEqual({ x: 0 }));
+});
+
+describe('merge', () => {
+  it('accepts non truthy values as empty objects', () =>
+    expect(merge()).toEqual({}));
 });
