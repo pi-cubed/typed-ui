@@ -6,6 +6,7 @@ import {
   GraphQLString,
   GraphQLID,
   getNamedType,
+  GraphQLScalarType,
   isLeafType
 } from 'graphql';
 import deepmerge from 'deepmerge';
@@ -111,7 +112,8 @@ const defaultData = {
   GraphQLNonNull: ({ ofType }) => getDefaultData(ofType),
   GraphQLObjectType: t => ({}),
   GraphQLInputObjectType: type =>
-    _.mapValues(type.getFields(), ({ type }) => getDefaultData(type))
+    _.mapValues(type.getFields(), ({ type }) => getDefaultData(type)),
+  GraphQLFunction: () => () => {}
 };
 
 /**

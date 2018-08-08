@@ -6,9 +6,15 @@ import {
   GraphQLString,
   GraphQLList,
   GraphQLInt,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLScalarType
 } from 'graphql';
 import { Put } from '../../src';
+
+const data = {
+  body: 'alert(x + y)',
+  args: [{ name: 'x', type: GraphQLInt }, { name: 'y', type: GraphQLInt }]
+};
 
 const Demo = () => (
   <Put
@@ -16,13 +22,18 @@ const Demo = () => (
       new GraphQLObjectType({
         name: '',
         fields: {
-          f: {
-            args: { x: { type: GraphQLString } },
-            type: GraphQLString
+          alert: {
+            type: new GraphQLScalarType({
+              name: 'Function',
+              serialize: () => {},
+              parseValue: () => {},
+              parseLiteral: () => {}
+            })
           }
         }
       })
     }
+    data={{ alert: { output: data } }}
   />
 );
 

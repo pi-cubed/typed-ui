@@ -23,6 +23,9 @@ A component for non null inputs. Bases component selection on name of type.</p>
 <dd><p>TODO
 A component for non null inputs. Bases component selection on name of type.</p>
 </dd>
+<dt><a href="#FunctionOutput">FunctionOutput</a></dt>
+<dd><p>TODO docs</p>
+</dd>
 <dt><a href="#HigherOrderOutput">HigherOrderOutput</a> ⇒ <code>React.Element</code></dt>
 <dd><p>Component for displaying GraphQL output types of higher order.</p>
 </dd>
@@ -217,6 +220,13 @@ This callback handles ObjectOutput change events.
 
 TODO
 A component for non null inputs. Bases component selection on name of type.
+
+**Kind**: global variable  
+<a name="FunctionOutput"></a>
+
+## FunctionOutput
+
+TODO docs
 
 **Kind**: global variable  
 <a name="HigherOrderOutput"></a>

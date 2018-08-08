@@ -32,7 +32,8 @@ import {
   getTypeComponentMap,
   getDefaultData,
   getDefaultFieldData,
-  merge
+  merge,
+  updateArray
 } from './utils';
 
 /**
@@ -147,12 +148,24 @@ class ObjectOutputComponent extends Component {
         checked={!!this.state.data[key].selected}
         onChange={() =>
           this.setState(
-            prev =>
-              merge(prev, {
-                data: {
-                  [key]: getFieldData(!prev.data[key].selected, field)
+            prev => {
+              const selected = !prev.data[key].selected;
+              return merge(
+                merge(
+                  {
+                    data: {
+                      [key]: getFieldData(selected, field)
+                    }
+                  },
+                  prev
+                ),
+                {
+                  data: {
+                    [key]: { selected }
+                  }
                 }
-              }),
+              );
+            },
             () => this.props.onChange(this.state.data)
           )
         }
@@ -282,6 +295,57 @@ class ObjectOutputComponent extends Component {
 export const NonNullOutput = props => <HigherOrderOutput {...props} />;
 
 /**
+ * TODO docs
+ */
+export const FunctionOutput = props => <FunctionOutputComponent {...props} />;
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+class FunctionOutputComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      argVals: (props.args || []).map(() => '')
+    };
+  }
+
+  renderArg = ({ name, type }, index) => (
+    <div key={name}>
+      {name}
+      <br />
+      <HigherOrderInput
+        ofType={type}
+        onChange={data =>
+          this.setState(({ argVals }) => ({
+            argVals: updateArray(argVals, index, data)
+          }))
+        }
+      />
+    </div>
+  );
+  render() {
+    const {
+      data: { body, args = [] }
+    } = this.props;
+    const argNames = args.map(({ name }) => name);
+    console.log(argNames);
+    return (
+      <div>
+        {args.map(this.renderArg)}
+        <input
+          type="button"
+          value="|>"
+          onClick={() => new Function(...argNames, body)(...this.state.argVals)}
+        />
+      </div>
+    );
+  }
+}
+
+/**
  * A map from GraphQL types to outputs.
  *
  * @private
@@ -296,7 +360,8 @@ const defaultTypeComponentMap = {
   GraphQLObjectType: ObjectOutput,
   GraphQLInputObjectType: ObjectInput,
   GraphQLList: ListOutput,
-  GraphQLNonNull: NonNullOutput
+  GraphQLNonNull: NonNullOutput,
+  GraphQLFunction: FunctionOutput
 };
 
 /**

@@ -11581,7 +11581,7 @@ webpackJsonp(
     DUn5: function(e, t, n) {
       'use strict';
       n.d(t, 'a', function() {
-        return d;
+        return h;
       });
       var r = n('GiK3'),
         i = n.n(r),
@@ -11590,6 +11590,19 @@ webpackJsonp(
         u = n('4/mC'),
         c = n('L/hj'),
         l =
+          'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+            ? function(e) {
+                return typeof e;
+              }
+            : function(e) {
+                return e &&
+                  'function' == typeof Symbol &&
+                  e.constructor === Symbol &&
+                  e !== Symbol.prototype
+                  ? 'symbol'
+                  : typeof e;
+              },
+        s =
           Object.assign ||
           function(e) {
             for (var t = 1; t < arguments.length; t++) {
@@ -11599,18 +11612,18 @@ webpackJsonp(
             }
             return e;
           };
-      function s(e, t) {
+      function f(e, t) {
         if (!(e instanceof t))
           throw new TypeError('Cannot call a class as a function');
       }
-      function f(e, t) {
+      function p(e, t) {
         if (!e)
           throw new ReferenceError(
             "this hasn't been initialised - super() hasn't been called"
           );
         return !t || ('object' != typeof t && 'function' != typeof t) ? e : t;
       }
-      function p(e, t) {
+      function d(e, t) {
         if ('function' != typeof t && null !== t)
           throw new TypeError(
             'Super expression must either be null or a function, not ' +
@@ -11629,20 +11642,20 @@ webpackJsonp(
               ? Object.setPrototypeOf(e, t)
               : (e.__proto__ = t));
       }
-      var d = function(e) {
+      var h = function(e) {
           var t,
             n = ((t = e.type),
             Object(o.d)(t) || (Object(o.f)(t) && Object(o.d)(t.ofType))),
-            r = n ? y : h;
+            r = n ? v : y;
           return i.a.createElement(
             r,
-            l({ onChange: e.onChange || function() {}, isInput: n }, e)
+            s({ onChange: e.onChange || function() {}, isInput: n }, e)
           );
         },
-        h = (function(e) {
+        y = (function(e) {
           function t(n) {
-            s(this, t);
-            var r = f(this, e.call(this, n));
+            f(this, t);
+            var r = p(this, e.call(this, n));
             return (
               (r.onChange = function(e) {
                 r.setState(
@@ -11660,41 +11673,44 @@ webpackJsonp(
             );
           }
           return (
-            p(t, e),
+            d(t, e),
             (t.prototype.renderOutput = function() {
               return i.a.createElement(
                 a.a,
-                l({}, this.props, {
+                s({}, this.props, {
                   ofType: this.props.type,
                   data: this.state.data,
                   onChange: this.onChange
                 })
               );
             }),
-            (t.prototype.render = function() {
+            (t.prototype.renderChild = function() {
               var e = this.props,
                 t = e.children,
-                n = e.type;
-              return t
+                n = e.type,
+                i = s({}, t.props, this.state, { type: n });
+              return 'object' === (void 0 === t ? 'undefined' : l(t))
+                ? Object(r.cloneElement)(t, i)
+                : t(i);
+            }),
+            (t.prototype.render = function() {
+              return this.props.children
                 ? i.a.createElement(
                     'div',
                     null,
                     this.renderOutput(),
                     i.a.createElement('br', null),
-                    Object(r.cloneElement)(
-                      t,
-                      l({}, t.props, this.state, { type: n })
-                    )
+                    this.renderChild()
                   )
                 : this.renderOutput();
             }),
             t
           );
         })(r.Component),
-        y = (function(e) {
+        v = (function(e) {
           function t(n) {
-            s(this, t);
-            var r = f(this, e.call(this, n));
+            f(this, t);
+            var r = p(this, e.call(this, n));
             return (
               (r.onChange = function(e) {
                 r.setState(
@@ -11712,11 +11728,11 @@ webpackJsonp(
             );
           }
           return (
-            p(t, e),
+            d(t, e),
             (t.prototype.renderInput = function() {
               return i.a.createElement(
                 u.a,
-                l({}, this.props, {
+                s({}, this.props, {
                   ofType: this.props.type,
                   data: this.state.data,
                   onChange: this.onChange
@@ -11735,7 +11751,7 @@ webpackJsonp(
                     i.a.createElement('br', null),
                     Object(r.cloneElement)(
                       t,
-                      l({}, t.props, this.state, { type: n })
+                      s({}, t.props, this.state, { type: n })
                     )
                   )
                 : this.renderInput();
@@ -19720,8 +19736,7 @@ webpackJsonp(
               var n = this;
               return i.a.createElement('input', {
                 type: 'checkbox',
-                checked: this.state.data[t].selected,
-                value: this.state.data[t].selected,
+                checked: !!this.state.data[t].selected,
                 onChange: function() {
                   return n.setState(
                     function(n) {
@@ -20564,17 +20579,12 @@ webpackJsonp(
         u = n('lVK7');
       Object(o.render)(
         i.a.createElement(function() {
-          return i.a.createElement(
-            u.a,
-            {
-              type: new a.a({
-                name: '',
-                fields: { f: { args: { x: { type: a.b } }, type: a.b } }
-              }),
-              data: { f: { selected: !0 } }
-            },
-            i.a.createElement(u.a, { onChange: console.log })
-          );
+          return i.a.createElement(u.a, {
+            type: new a.a({
+              name: '',
+              fields: { f: { args: { x: { type: a.b } }, type: a.b } }
+            })
+          });
         }, null),
         document.querySelector('#demo')
       );
@@ -24283,4 +24293,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.5fdf1cfc.js.map
+//# sourceMappingURL=demo.783b09c0.js.map

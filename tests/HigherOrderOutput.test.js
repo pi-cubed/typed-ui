@@ -214,4 +214,21 @@ describe('ObjectOutput', () => {
     spy.restore();
     expect.restoreSpies();
   });
+
+  it('props data is preseved when field is checked', async () => {
+    const output = 'abc';
+    const value = await setTarget('input[type="checkbox"]', 'change', {
+      value: 'checked'
+    })(res => (
+      <ObjectOutput
+        name={''}
+        fields={{
+          f: { type: GraphQLString }
+        }}
+        data={{ f: { output } }}
+        onChange={res}
+      />
+    ));
+    expect(value.f.output).toEqual(output);
+  });
 });
