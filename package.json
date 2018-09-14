@@ -58,7 +58,7 @@
     "nwb": "0.21.x",
     "prettier": "^1.12.1",
     "pretty-quick": "^1.4.1",
-    "react": "^16.3.2",
+    "react": "16.5.0",
     "react-dom": "^16.3.2",
     "sinon": "^6.1.4",
     "travis-deploy-once": "^5.0.0",
