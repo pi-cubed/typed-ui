@@ -48,7 +48,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "fuzzer": "^0.2.1",
-    "gh-pages": "^1.1.0",
+    "gh-pages": "^2.0.1",
     "gitbook-cli": "^2.3.2",
     "gitbook-plugin-highlight": "^2.0.3",
     "husky": "^0.14.3",
