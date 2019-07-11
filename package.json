@@ -30,7 +30,7 @@
   "dependencies": {
     "deepmerge": "^2.1.1",
     "graphql": "^0.13.2",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.12"
   },
   "peerDependencies": {
     "react": "16.x"
