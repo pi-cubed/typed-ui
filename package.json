@@ -62,7 +62,7 @@
     "react-dom": "^16.3.2",
     "sinon": "^6.1.4",
     "travis-deploy-once": "^5.0.0",
-    "typeface-roboto": "^0.0.54"
+    "typeface-roboto": "^0.0.75"
   },
   "author": "Pi Cubed",
   "homepage": "https://github.com/pi-cubed/typed-ui",
